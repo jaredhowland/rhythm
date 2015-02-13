@@ -1,0 +1,73 @@
+@import "functions/conversions";
+@import "functions/sort-list";
+@import "functions/lists";
+@import "functions/math";
+
+@function fs($fs: $font-rem) {
+  $fs: to-rem($fs);
+  @if($fs == $font-rem) {
+    @return $font-rem;
+  }
+  @return $fs;
+}
+
+@function lh($fs: $font-px) {
+  $fs: to-px($fs);
+  @if($fs == $font-px) {
+    @return $line-height;
+  }
+  $lh: strip-units($font-px * $line-height) / strip-units($fs);
+  $i: 1;
+  @while $lh < strip-units(px-to-rem($fs)) {
+    $line-height: $line-height * $i;
+    $lh: strip-units($font-px * $line-height) / strip-units($fs);
+    $i: $i + 1;
+  }
+  @return $lh;
+}
+
+@function create-scale($fs: $font-rem, $modular-scale: $ms, $list: false) {
+  $fs: to-rem($fs);
+
+  $scale-values: ();
+  @if($list) {
+    $scale-values: append($list, $fs);
+  } @else {
+    $scale-values: $fs;
+  }
+
+  // larger font than base size
+  $i: 1;
+  @while $i < 5 {
+    $ms: power($modular-scale, $i);
+    $scale-values: append($scale-values, ($fs * $ms));
+    $i: $i + 1;
+  }
+
+  // smaller font than base size
+  $j: -4;
+  @while $j < 0 {
+    $ms: power($modular-scale, abs($j));
+    $scale-values: append($scale-values, ($fs / $ms));
+    $j: $j + 1;
+  }
+
+  @return sort-list($scale-values);
+}
+
+@function modular-scale($fs1: $font-rem, $fs2: false, $modular-scale: $ms) {
+  $scale-values: create-scale($fs1, $modular-scale);
+  @if($fs2) {
+    $scale-values: create-scale($fs2, $modular-scale, $scale-values);
+    $scale-values: slice($scale-values, 5, 13);
+  }
+  @return $scale-values;
+}
+
+@function rem($value) {
+  @return strip-units($value) * 1rem;
+}
+
+@function px($value) {
+  @return strip-units($value) * 1px;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "jaredhowland/rhythm",
+  "description": "Sass files to create a vertical rhythm based on modular scales",
+  "keywords": ["vertical","rhythm","scss","sass","modular-scale"],
+  "homepage": "http://github.com/jaredhowland/rhythm",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jared Howland",
+      "homepage": "http://jaredhowland.com",
+      "role": "developer"
+    }
+  ],
+  "require": {
+    "necolas/normalize.css": "~3.0"
+  }
+}

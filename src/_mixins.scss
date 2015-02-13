@@ -1,0 +1,71 @@
+@mixin rhythm($fs: $font-size, $lh: $line-height) {
+  @include set-font-size($fs);
+  @include set-line-height($lh);
+  @include set-scale();
+  font-size: $font-rem;
+  line-height: $line-height;
+}
+
+@mixin set-font-size($fs: $font-size) {
+  $font-rem:     to-rem($fs) !global;
+  $font-px:      to-px($fs) !global;
+  $font-percent: to-percent($fs) !global;
+}
+
+@mixin set-line-height($lh: $line-height) {
+  $line-height: strip-units(($lh * $font-px) / $font-px) !global;
+}
+
+@mixin set-scale() {
+  $scale: modular-scale($font-rem, to-rem($secondary-font-size), $ms);
+  @include sizes($scale);
+}
+
+@mixin fs-lh($fs: $font-rem) {
+  font-size: fs($fs);
+  line-height: lh($fs);
+}
+
+@mixin margin($top-multiplier: 1, $bottom-multiplier: $top-multiplier, $fs: $font-rem) {
+  $fs: to-rem($fs);
+  $lh: lh($fs);
+  margin-top: rem($top-multiplier * $lh * $fs);
+  margin-bottom: rem($bottom-multiplier * $lh * $fs);
+}
+
+@mixin font-margin($fs: $font-rem, $margin-top-multiplier: 1, $margin-bottom-multiplier: 1) {
+  @include fs-lh($fs);
+  @include margin($margin-top-multiplier, $margin-bottom-multiplier, $fs);
+}
+
+@mixin sizes($modular-scales) {
+  $i: 1;
+  @each $scale in $modular-scales {
+    @if($i == 1) {
+      $zeta: $scale !global;
+    } @else if($i == 2) {
+      $epsilon: $scale !global;
+      $h6:      $scale !global;
+    } @else if($i == 3) {
+      $delta: $scale !global;
+      $h5:    $scale !global;
+    } @else if($i == 4) {
+      $gamma: $scale !global;
+      $h4:    $scale !global;
+    } @else if($i == 5) {
+      $beta: $scale !global;
+      $h3:   $scale !global;
+    } @else if($i == 6) {
+      $alpha: $scale !global;
+      $h2:    $scale !global;
+    } @else if($i == 7) {
+      $mega: $scale !global;
+      $h1:   $scale !global;
+    } @else if ($i == 8) {
+      $giga: $scale !global;
+    } @else if($i == 9) {
+      $tera: $scale !global;
+    }
+    $i: $i + 1;
+  }
+}
