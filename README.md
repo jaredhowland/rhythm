@@ -9,26 +9,30 @@ Usage
     ```
     {
       "require": {
-        "jaredhowland/rhythm": "~0.0.1"
+        "jaredhowland/rhythm": "~0.0.2"
       }
     }
     ```
 
-2. Add the following to your primary `.scss` file:
+2. Add the following to the top of your primary `.scss` file:
 
     ```
-    @import "path/to/rhythm";
+    @import "path/to/vendor/jaredhowland/rhythm/src/rhythm";
     ```
-    
-    If you wish to override any default variables, create a `variables-custom.scss` file and import it before you import `rhythm`. Alternatively, redefine the variable(s) in your primary `.scss` file before you `@import "rhythm";`.
 
-3. Add the following to your primary `.scss` file:
+    If you want to override any default variables, create a `variables-custom.scss` file and import it before you import Rhythm. Alternatively, redefine the variable(s) in your primary `.scss` file before you `@import "rhythm";`.
+
+3. After importing Rhythm, set your base `font-size` and `line-height` in your primary `.scss` file:
 
     ```
     body {
-      @include rhythm(18px, 1.3); // base font-size: 18px; base line-height: 1.3
+      // Base font-size: 18px
+      // Base line-height: 1.3
+      @include rhythm(18px, 1.3);
     }
     ```
+
+    `font-size` can be set in `px`, `%`, or `rem`. [`line-height` should always be unitless][7].
 
 4. *Margins*. If you would like to add a top and bottom margin to an element:
 
@@ -38,7 +42,7 @@ Usage
     }
     ```
 
-    Generates (if you do not pass any variables to `margin` it assumes the base font-size and base line-height):
+    Will generate<sup> * </sup>:
 
     ```
     p {
@@ -46,8 +50,9 @@ Usage
       margin-bottom: 1.3rem;
     }
     ```
+    <sup> * </sup> <small>If you do not pass any variables to `margin` Rhythm assumes the element has the base `font-size` and base `line-height`.</small>
 
-    To maintain a vertical rhythm, your margins must be derived from your line-height. If you would like twice your line-height for a top margin and no margin on bottom, do the following:
+    To maintain a vertical rhythm, your margins must be derived from your `line-height`. If you would like twice your `line-height` for a top margin and no margin on bottom, do the following:
 
     ```
     p {
@@ -55,7 +60,7 @@ Usage
     }
     ```
 
-    Generates:
+    Will generate:
 
     ```
     p {
@@ -64,9 +69,9 @@ Usage
     }
     ```
 
-    The numbers passed to `@include margin()` must sum to a whole number to maintain the rhythm (*e.g.* cannot be 0.5 and 0.75 as that sums to 1.25).
+    The numbers passed to `@include margin();` must sum to a whole number to maintain the rhythm (*e.g.* cannot be 0.5 and 0.75 as that sums to 1.25).
 
-    If you are adding margin to an element that is a different size than your base sizes, you must also pass along the font-size:
+    If you are adding margin to an element that is a different size than your base sizes, you must also pass along the `font-size`:
 
     ```
     p {
@@ -75,7 +80,7 @@ Usage
     }
     ```
 
-5. *Font Sizes*. If you change a font size, you have to change the line-height to maintain the rhythm. Use the `fs-lh` mixin to do this automatically.
+5. *Font Sizes*. If you change a font size, you have to change the `line-height` to maintain the rhythm. Use the `fs-lh` mixin to do this automatically.
 
     ```
     p {
@@ -83,7 +88,7 @@ Usage
     }
     ```
 
-    Generates (assuming 18px is base font-size and 1.3 is base line-height):
+    Will generate<sup> * </sup>:
 
     ```
     p {
@@ -91,8 +96,9 @@ Usage
       line-height: 1.21875; // ([base font size] * [base line height]) / [new font size]: 23.4/19.2 = 1.21875
     }
     ```
+    <sup> * </sup> <small>This assumes 18px is the base `font-size` and 1.3 is the base `line-height`.</small>
 
-6. *Modular Scales*. When you first call Rhythm, a modular scale is generated for you based on the `$modular-scale` variable set in your `variables-custom.scss` file or in the file before you `@import "rhythm";`. It combines your base font-size and base line-height to create the [scale][5].The default scale is the `golden` ratio. Other options include:
+6. *Modular Scales*. When you first call Rhythm, a modular scale is generated for you based on the `$modular-scale` variable set in your `variables-custom.scss` file or in the `.scss` file before you `@import "rhythm";`. It combines your base `font-size` and base `line-height` to create the [scale][5].The default scale is the `golden` ratio. Other options include:
 
     * `minor-second`
     * `major-second`
@@ -129,7 +135,7 @@ Usage
     * `$epsilon`, `$h6`
     * `$zeta`
 
-    For example, if you want to set your `h1` font-size, you can do the following:
+    For example, if you want to set your `h1`'s `font-size`, you can do the following:
 
     ```
     h1 {
@@ -137,7 +143,7 @@ Usage
     }
     ```
 
-    Alternatively, if you want a slightly smaller `h1`, you could do the following:
+    Alternatively, if you want a slightly smaller `h1`, you can do the following:
     ```
     h1 {
       @include fs-lh($alpha);
@@ -150,3 +156,4 @@ Usage
 [4]: http://necolas.github.io/normalize.css/
 [5]: http://modularscale.com/scale/?px1=18&px2=27&ra1=1.5&ra2=0
 [6]: http://csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/
+[7]: http://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
