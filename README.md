@@ -4,31 +4,27 @@ Rhythm is a small set of [Sass files][1] to create a [vertical rhythm][2] for yo
 
 Usage
 =====
-1. Download [normalize.css][4] and Rhythm.
+1. Update your `composer.json` to require Rhythm:
+
+    ```
+    {
+      "require": {
+        "jaredhowland/rhythm": "~0.0.1"
+      }
+    }
+    ```
 
 2. Add the following to your primary `.scss` file:
-    ```
-    @import "path/to/normalize";
-    @import "path/to/rhythm";
 
-    …
     ```
+    @import "path/to/rhythm";
+    ```
+    
     If you wish to override any default variables, create a `variables-custom.scss` file and import it before you import `rhythm`. Alternatively, redefine the variable(s) in your primary `.scss` file before you `@import "rhythm";`.
 
 3. Add the following to your primary `.scss` file:
 
     ```
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      font-size: 100%;
-      line-height: 1;
-      text-rendering: optimizeLegibility;
-    }
-
     body {
       @include rhythm(18px, 1.3); // base font-size: 18px; base line-height: 1.3
     }
