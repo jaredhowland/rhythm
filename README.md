@@ -9,7 +9,7 @@ Usage
     ```json
     {
       "require": {
-        "jaredhowland/rhythm": "~0.0.2"
+        "jaredhowland/rhythm": "~0.1.3"
       }
     }
     ```
