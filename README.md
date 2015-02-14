@@ -98,8 +98,9 @@ Usage
     ```
     <sup> * </sup> <small>This assumes 18px is the base `font-size` and 1.3 is the base `line-height`.</small>
 
-6. *Modular Scales*. When you first call Rhythm, a modular scale is generated for you based on the `$modular-scale` variable set in your `variables-custom.scss` file or in the `.scss` file before you `@import "rhythm";`. It combines your base `font-size` and base `line-height` to create the [scale][5].The default scale is the `golden` ratio. Other options include:
+6. *Modular Scales*. When you first call Rhythm, a modular scale is generated for you based on the `$modular-scale` variable set in your `variables-custom.scss` file or in the `.scss` file before you `@import "rhythm";`. It combines your base `font-size` and base `line-height` to create the [scale][5].The default scale is the `golden` ratio. Options include:
 
+    * `golden`
     * `minor-second`
     * `major-second`
     * `minor-third`
