@@ -16,7 +16,7 @@ Usage
 
 2. Add the following to the top of your primary `.scss` file:
 
-    ```
+    ```scss
     @import "path/to/vendor/jaredhowland/rhythm/src/rhythm";
     ```
 
