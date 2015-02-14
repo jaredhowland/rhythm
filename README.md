@@ -209,7 +209,7 @@ Usage
     @import "path/to/_responsive.scss";
     ```
 
-    You will need the something like the following in your `_responsive.scss` file if you want larger screens to have a larger base `font-size` and base `line-height`:
+    You will need something like the following in your `_responsive.scss` file if you want larger screens to have a larger base `font-size` and base `line-height`:
 
     ```scss
     /* Extra small devices (phones, less than 768px) */
