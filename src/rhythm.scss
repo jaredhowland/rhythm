@@ -3,6 +3,9 @@
 @import "variables";
 @import "mixins";
 
+$base-font-size: $font-rem;
+$base-line-height: $line-height;
+
 * {
   margin: 0;
   padding: 0;

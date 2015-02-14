@@ -152,6 +152,96 @@ Usage
     }
     ```
 
+7. *Responsive*. If you want to have a responsive design, create a new file and name it `_responsive.scss`. Import it as the very last line of your primary `.scss` file:
+
+    ```scss
+    @import "path/to/vendor/jaredhowland/rhythm/src/rhythm";
+    …
+    @import "path/to/_responsive.scss";
+    ```
+
+    Place the following in your `_responsive.scss` file:
+
+    ```scss
+    /* Extra small devices (phones, less than 768px) */
+    /* No media query since this is the default in Rhythm */
+
+    /* Small devices (tablets, 768px and up) */
+    @media (min-width: $screen-sm-min) {
+
+    }
+
+    /* Medium devices (desktops, 992px and up) */
+    @media (min-width: $screen-md-min) {
+
+    }
+
+    /* Large devices (large desktops, 1200px and up) */
+    @media (min-width: $screen-lg-min) {
+
+    }
+    ```
+
+    Rhythm assumes your base style sheet defines styles for the smallest screens and any subsequent media queries define styles for larger screens.
+
+    For every element that you set a new `font-size`, `line-height`, or `margin` in your primary `.scss` file, you will need to redefine those elements if you want things to display differently at various breakpoints. For example, if your primary `.scss` file looks as follows:
+
+    ```scss
+    @import "path/to/vendor/jaredhowland/rhythm/src/rhythm";
+
+    body {
+      @include rhythm(18px, 1.3);
+    }
+
+    h1 {
+      @include fs-lh($h1);
+      @include margin(2, 0, $h1);
+    }
+
+    .title {
+      @include fs-lh($h2);
+    }
+
+    .subtitle {
+      text-transform: uppercase;
+    }
+
+    @import "path/to/_responsive.scss";
+    ```
+
+    You will need the something like the following in your `_responsive.scss` file if you want larger screens to have a larger base `font-size` and base `line-height`:
+
+    ```scss
+    /* Extra small devices (phones, less than 768px) */
+    /* No media query since this is the default in Rhythm */
+
+    /* Small devices (tablets, 768px and up) */
+    @media (min-width: $screen-sm-min) {
+      body {
+        @include rhythm(20px, 1.5);
+      }
+
+      h1 {
+        @include fs-lh($h2);
+        @include margin(2, 0, $h2);
+      }
+
+      .title {
+        @include fs-lh($h1);
+      }
+    }
+
+    /* Medium devices (desktops, 992px and up) */
+    @media (min-width: $screen-md-min) {
+
+    }
+
+    /* Large devices (large desktops, 1200px and up) */
+    @media (min-width: $screen-lg-min) {
+
+    }
+    ```
+
 [1]: http://sass-lang.com/
 [2]: http://24ways.org/2006/compose-to-a-vertical-rhythm
 [3]: http://alistapart.com/article/more-meaningful-typography
