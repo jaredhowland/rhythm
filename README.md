@@ -6,7 +6,7 @@ Usage
 =====
 1. Update your `composer.json` to require Rhythm:
 
-    ```
+    ```json
     {
       "require": {
         "jaredhowland/rhythm": "~0.0.2"
@@ -24,7 +24,7 @@ Usage
 
 3. After importing Rhythm, set your base `font-size` and `line-height` in your primary `.scss` file:
 
-    ```
+    ```scss
     body {
       // Base font-size: 18px
       // Base line-height: 1.3
@@ -36,7 +36,7 @@ Usage
 
 4. *Margins*. If you would like to add a top and bottom margin to an element:
 
-    ```
+    ```scss
     p {
       @include margin();
     }
@@ -44,7 +44,7 @@ Usage
 
     Will generate<sup> * </sup>:
 
-    ```
+    ```css
     p {
       margin-top: 1.3rem;
       margin-bottom: 1.3rem;
@@ -54,7 +54,7 @@ Usage
 
     To maintain a vertical rhythm, your margins must be derived from your `line-height`. If you would like twice your `line-height` for a top margin and no margin on bottom, do the following:
 
-    ```
+    ```scss
     p {
       @include margin(2, 0);
     }
@@ -62,7 +62,7 @@ Usage
 
     Will generate:
 
-    ```
+    ```css
     p {
       margin-top: 2.6rem;
       margin-bottom: 0;
@@ -73,7 +73,7 @@ Usage
 
     If you are adding margin to an element that is a different size than your base sizes, you must also pass along the `font-size`:
 
-    ```
+    ```scss
     p {
       font-size: 24px;
       @include margin(1, 1, 24px);
@@ -82,7 +82,7 @@ Usage
 
 5. *Font Sizes*. If you change a font size, you have to change the `line-height` to maintain the rhythm. Use the `fs-lh` mixin to do this automatically.
 
-    ```
+    ```scss
     p {
       @include fs-lh(1.2rem);
     }
@@ -90,7 +90,7 @@ Usage
 
     Will generate<sup> * </sup>:
 
-    ```
+    ```css
     p {
       font-size: 1.2rem;
       line-height: 1.21875; // ([base font size] * [base line height]) / [new font size]: 23.4/19.2 = 1.21875
@@ -120,7 +120,7 @@ Usage
 
     To change scales, simply redefine `$modular-scale`. If you wanted the `minor-second` scale, for example, do the following:
 
-    ```
+    ```scss
     $modular-scale: minor-second;
     ```
 
@@ -138,14 +138,15 @@ Usage
 
     For example, if you want to set your `h1`'s `font-size`, you can do the following:
 
-    ```
+    ```scss
     h1 {
       @include fs-lh($h1);
     }
     ```
 
     Alternatively, if you want a slightly smaller `h1`, you can do the following:
-    ```
+
+    ```scss
     h1 {
       @include fs-lh($alpha);
     }
