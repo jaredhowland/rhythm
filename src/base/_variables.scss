@@ -1,0 +1,97 @@
+// ! For the following Sass maps, enter values as if they would be px units.
+
+/*------------------------------------------------------------ */
+/* Breakpoints
+-------------------------------------------------------------- */
+
+$breakpoints: (
+  break-0: 0,     // 0px       Mobile first
+  break-1: 480,   // 480px   ~ Extra small screen up
+  break-2: 768,   // 768px   ~ Small screen/tablet up
+  break-3: 992,   // 992px   ~ Medium screen up
+  break-4: 1200,  // 1200px  ~ Desktop up
+) !default;
+
+/*------------------------------------------------------------ */
+/* Fonts
+-------------------------------------------------------------- */
+
+// Typefaces with weight and style details.
+// ! Set cap height to set to the baseline.
+
+// Serif fonts
+$serif-font-family: 'Georgia, serif' !default;
+$serif-cap-height:  0.66 !default;
+$serif-type: (
+  font-family: $serif-font-family,
+  regular: 400,
+  bold: 700,
+  italic: italic,
+  cap-height: $serif-cap-height
+) !default;
+
+// Sans-serif fonts
+$sans-serif-font-family: 'Helvetica, sans-serif' !default;
+$sans-serif-cap-height:  0.65 !default;
+$sans-serif-type: (
+  font-family: $sans-serif-font-family,
+  regular: 400,
+  bold: 700,
+  cap-height: $sans-serif-cap-height
+) !default;
+
+// Monospace fonts
+$monospace-font-family: 'Menlo, monospace' !default;
+$monospace-cap-height:  0.68 !default;
+$monospace-type: (
+  font-family: $monospace-font-family,
+  regular: 400,
+  cap-height: $monospace-cap-height
+) !default;
+
+// Here are some local fonts’ cap-height
+// sizes to get you started:
+/*--------------------------------------*/
+// Georgia:                 0.66
+// Helvetica:               0.65
+// Lucida Grande:           0.72
+// Palatino:                0.52
+// Tahoma:                  0.76
+// Times / Times New Roman: 0.65
+// Verdana:                 0.76
+
+// Selection of Typekit fonts’ cap-height sizes:
+/*----------------------------------------------*/
+// Adobe Caslon Pro:  0.36
+// Adelle:            0.66
+// Brandon Grotesque: 0.65
+// Chaparral Pro:     0.5
+// Clavo:             0.7
+// FF Tisa Pro:       0.82
+// Futura PT:         0.66
+// JAF Facit:         0.7
+// Jubilat:           0.66
+// Minion Pro:        0.66
+// Museo Slab:        0.66
+// Myriad Pro:        0.66
+// Proxima Nova:      0.57
+
+// Default font types
+$body-type:    $serif-type !default;
+$heading-type: $sans-serif-type !default;
+$code-type:    $monospace-type !default;
+
+/*------------------------------------------------------------ */
+/* Colors
+-------------------------------------------------------------- */
+
+// Background colors.
+$background-color:      #F5F5F5 !default;
+$code-background-color: #F5F4F2 !default;
+
+// Text colors.
+$heading-color:    #2E2E2E !default;
+$body-color:       #444444 !default;
+$body-color-muted: #CCCCCC !default;
+$link-color:       #265C83 !default;
+$link-hover-color: lighten($link-color, 10%) !default;

@@ -1,0 +1,21 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
+}
+
+body {
+  font-family: unquote(map-get($body-type, font-family));
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  &:hover {
+    color: $link-hover-color;
+    background-color: darken($background-color, 10%);
+  }
+}
