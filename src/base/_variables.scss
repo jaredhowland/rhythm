@@ -13,13 +13,56 @@ $breakpoints: (
 ) !default;
 
 /*------------------------------------------------------------ */
+/* Sizes and ratios
+-------------------------------------------------------------- */
+
+// Scales.
+$modular-scales: (
+  golden:           1.618,
+  minor-second:     1.067,
+  major-second:     1.125,
+  minor-third:      1.2,
+  major-third:      1.25,
+  perfect-fourth:   1.333,
+  augmented-fourth: 1.414,
+  perfect-fifth:    1.5,
+  minor-sixth:      1.6,
+  major-sixth:      1.667,
+  minor-seventh:    1.778,
+  major-seventh:    1.875,
+  octave:           2,
+  major-tenth:      2.5,
+  major-eleventh:   2.667,
+  major-twelfth:    3,
+  double-octave:    4
+) !default;
+
+$modular-scale: golden !default;
+$modular-scale: modular-scale($modular-scale); // Validates value submitted for $modular-scale. Uses `golden` if invalid value used.
+
+// Root font-sizes for each breakpoint.
+// ! Make sure to have as many sizes as breakpoints above.
+$root-sizes: (
+  root-size-0: 12,
+  root-size-1: 14,
+  root-size-2: 15,
+  root-size-3: 17,
+  root-size-4: 19
+) !default;
+
+$line-height: $modular-scale !default; // unitless line height value
+$line-heights: line-heights() !default; // line heights in pixels for each root-size and modular scale
+
+$line-widths: line-widths() !default; // Optimal max line lengths for given root-size and line-height
+
+/*------------------------------------------------------------ */
 /* Fonts
 -------------------------------------------------------------- */
 
 // Typefaces with weight and style details.
 // ! Set cap height to set to the baseline.
 
-// Serif fonts
+// Serif fonts.
 $serif-font-family: 'Georgia, serif' !default;
 $serif-cap-height:  0.66 !default;
 $serif-type: (
@@ -30,7 +73,7 @@ $serif-type: (
   cap-height: $serif-cap-height
 ) !default;
 
-// Sans-serif fonts
+// Sans-serif fonts.
 $sans-serif-font-family: 'Helvetica, sans-serif' !default;
 $sans-serif-cap-height:  0.65 !default;
 $sans-serif-type: (
@@ -40,7 +83,7 @@ $sans-serif-type: (
   cap-height: $sans-serif-cap-height
 ) !default;
 
-// Monospace fonts
+// Monospace fonts.
 $monospace-font-family: 'Menlo, monospace' !default;
 $monospace-cap-height:  0.68 !default;
 $monospace-type: (
@@ -76,7 +119,7 @@ $monospace-type: (
 // Myriad Pro:        0.66
 // Proxima Nova:      0.57
 
-// Default font types
+// Default font types.
 $body-type:    $serif-type !default;
 $heading-type: $sans-serif-type !default;
 $code-type:    $monospace-type !default;
@@ -90,8 +133,9 @@ $background-color:      #F5F5F5 !default;
 $code-background-color: #F5F4F2 !default;
 
 // Text colors.
-$heading-color:    #2E2E2E !default;
-$body-color:       #444444 !default;
-$body-color-muted: #CCCCCC !default;
-$link-color:       #265C83 !default;
-$link-hover-color: lighten($link-color, 10%) !default;
+$heading-color:         #2E2E2E !default;
+$body-color:            #444444 !default;
+$body-color-muted:      #CCCCCC !default;
+$link-color:            #265C83 !default;
+$link-hover-color:      lighten($link-color, 10%) !default;
+$link-background-color: transparent !default;

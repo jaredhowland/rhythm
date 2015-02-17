@@ -1,0 +1,56 @@
+@function add-custom-scale($name, $value) {
+  @if map-has-key($modular-scales, $name) {
+    @warn "`#{$name}` is already used and cannot be set to a different value. Use the add-custom-scale mixin to add a custom scale. $modular-scale variable will be set to `#{map-get($modular-scales, $name)}`.";
+  } @else {
+    $modular-scales: map-merge($modular-scales, ($name: $value)) !global;
+  }
+  @return $name;
+}
+
+@function modular-scale($scale-name) {
+  @if(type-of($scale-name) == number) {
+    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `#{to-unitless($scale-name)}` will be used as the modular scale (`#{$scale-name}` converted into unitless rem equivalent). Use the add-custom-scale mixin to add a custom scale.";
+    @return to-unitless($scale-name);
+  // Check to see if $scale-name is a valid value
+  } @else if map-has-key($modular-scales, unquote($scale-name)) {
+    @return map-get($modular-scales, $scale-name);
+  // Otherwise, set it as `golden`
+  } @else {
+    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `golden` was used instead. Use the add-custom-scale mixin to add a custom scale.";
+    @return map-get($modular-scales, golden); // default to golden ratio if invalid
+  }
+}
+
+@function line-height($font-size: map-get($root-sizes, root-size-0), $line-height: $line-height) {
+  @return $font-size * $line-height;
+}
+
+@function line-heights() {
+  $line-heights: null;
+  @for $i from 0 through (length($root-sizes) - 1){
+    $font-size:   map-get($root-sizes, root-size-#{$i});
+    $line-height: $font-size * $line-height;
+    @if $i == 0 {
+      $line-heights: (line-height-#{$i}: $line-height);
+    } @else {
+      $line-heights: map-merge($line-heights, (line-height-#{$i}: $line-height));
+    }
+
+  }
+  @return $line-heights;
+}
+
+@function line-widths() {
+  $line-widths: null;
+  @for $i from 0 through (length($root-sizes) - 1){
+    $font-size:   map-get($root-sizes, root-size-#{$i});
+    $line-height: line-height($font-size, $modular-scale);
+    $line-width:  pow($line-height, 2);
+    @if $i == 0 {
+      $line-widths: (line-width-#{$i}: $line-width);
+    } @else {
+      $line-widths: map-merge($line-widths, (line-width-#{$i}: $line-width));
+    }
+  }
+  @return $line-widths;
+}
