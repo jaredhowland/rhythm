@@ -6,6 +6,45 @@
 /*------------------------------------------------------------ */
 /* Mixins
 -------------------------------------------------------------- */
-@mixin add-custom-scale($name, $value) {
-  $modular-scales: map-merge($modular-scales, ($name: $value));
+
+// Breakpoints.
+// Parts based on https://gist.github.com/timknight/03e6335b8816aa534cf7 and
+// https://github.com/designbyjake/sassline/blob/master/assets/sass/base/_mixins.scss
+@mixin breakpoint($breakpoint-name: 0, $max: 0) {
+  // Type of break variable
+  $value: type-of($breakpoint-name);
+
+  $breakpoints: map-get($breakpoints, $breakpoint-name);
+
+  // If it is a string (i.e. a breakpoint variable).
+  @if $value == string {
+    // If using 'bp-1', 'bp-2' etc output the correct breakpoints from map.
+    @if map-has-key($breakpoints, breakpoint) {
+      @media screen and (min-width: #{to-px(map-get($breakpoints, breakpoint))} ) { @content; }
+    } @else {
+      @warn "#{$breakpoint-name} does not have a defined `breakpoint` value.";
+    }
+
+  // If it is a number, use this for the breakpoint.
+  } @else if $value == number {
+    // If using other numbers output value in px either for min width breakpoints.
+    $query: "all" !default;
+    @if      $breakpoint-name != 0 and $max != 0 { $query: "(min-width: #{to-px(map-get($breakpoints, breakpoint))}) and (max-width: #{to-px($max)})"; }
+    @else if $breakpoint-name != 0 and $max == 0 { $query: "(min-width: #{to-px(map-get($breakpoints, breakpoint))})"; }
+    @else if $breakpoint-name == 0 and $max != 0 { $query: "(max-width: #{to-px($max)})"; }
+    @media #{$query} { @content; }
+
+  } @else {
+    @warn "#{$breakpoint-name} is not valid to use as a breakpoint";
+  }
+}
+
+@mixin baseline($font-size, $breakpoint-name: bp-0) {
+  $base-font-size: to-px(map-fetch($breakpoints, $breakpoint-name font-size));
+  font-size: to-rem($font-size);
+  line-height: map-fetch($breakpoints, $breakpoint-name modular-scale);
+  // Loop through breakpoints.
+  @for $i from 1 through count($breakpoints) {
+    $breakpoint-name: bp-#{$i};
+  }
 }

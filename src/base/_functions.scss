@@ -1,56 +1,62 @@
-@function add-custom-scale($name, $value) {
-  @if map-has-key($modular-scales, $name) {
-    @warn "`#{$name}` is already used and cannot be set to a different value. Use the add-custom-scale mixin to add a custom scale. $modular-scale variable will be set to `#{map-get($modular-scales, $name)}`.";
+// https://gist.github.com/jlong/8760275
+// map-fetch($map, $keys)
+//
+// An easy way to fetch a deep value in a multi-level map. Works much like
+// map-get() except that you pass multiple keys as the second parameter to
+// go down multiple levels in the nested map.
+//
+@function map-fetch($map, $keys) {
+  $key: nth($keys, 1);
+  $length: length($keys);
+  $value: map-get($map, $key);
+  @if ($length > 1) {
+    $rest: ();
+    @for $i from 2 through $length {
+      $rest: append($rest, nth($keys, $i))
+    }
+    @return map-fetch($value, $rest)
   } @else {
-    $modular-scales: map-merge($modular-scales, ($name: $value)) !global;
+    @return $value;
+  }
+}
+
+@function add-custom-scale($name, $value) {
+  // Warn if $name is an existing $modular-scales key.
+  @if map-has-key($modular-scales, $name) {
+    @warn "`#{$name}` is already used and cannot be reused. Use the `add-custom-scale` function to create a custom scale. $modular-scale variable will be set to `#{map-get($modular-scales, $name)}`.";
+  // Otherwise, add custom $name and the unitless $value to the $modular-scales map.
+  } @else {
+    $modular-scales: map-merge($modular-scales, ($name: to-unitless($value))) !global;
   }
   @return $name;
 }
 
 @function modular-scale($scale-name) {
+  // If $scale-name is a number, return $scale-name as a unitless value.
   @if(type-of($scale-name) == number) {
-    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `#{to-unitless($scale-name)}` will be used as the modular scale (`#{$scale-name}` converted into unitless rem equivalent). Use the add-custom-scale mixin to add a custom scale.";
+    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `#{to-unitless($scale-name)}` will be used as the modular scale (`#{$scale-name}` converted into unitless rem equivalent). Use the `add-custom-scale` function to add a custom scale.";
     @return to-unitless($scale-name);
-  // Check to see if $scale-name is a valid value
+  // Check to see if $scale-name is a valid value. Return the value of $scale-name if it is valid.
   } @else if map-has-key($modular-scales, unquote($scale-name)) {
     @return map-get($modular-scales, $scale-name);
-  // Otherwise, set it as `golden`
+  // Otherwise, return the golden ratio scale (1.618).
   } @else {
-    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `golden` was used instead. Use the add-custom-scale mixin to add a custom scale.";
+    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `golden` was used instead. Use the `add-custom-scale` function to add a custom scale.";
     @return map-get($modular-scales, golden); // default to golden ratio if invalid
   }
 }
 
-@function line-height($font-size: map-get($root-sizes, root-size-0), $line-height: $line-height) {
-  @return $font-size * $line-height;
+@function line-width($font-size, $line-height: $modular-scale) {
+  // http://www.pearsonified.com/2011/12/golden-ratio-typography.php
+  // (font-size (in px) * line-height)^2
+  $font-size: strip-units(to-px($font-size));
+  @return #{pow(($font-size * $line-height), 2)}px;
 }
 
-@function line-heights() {
-  $line-heights: null;
-  @for $i from 0 through (length($root-sizes) - 1){
-    $font-size:   map-get($root-sizes, root-size-#{$i});
-    $line-height: $font-size * $line-height;
-    @if $i == 0 {
-      $line-heights: (line-height-#{$i}: $line-height);
-    } @else {
-      $line-heights: map-merge($line-heights, (line-height-#{$i}: $line-height));
-    }
-
-  }
-  @return $line-heights;
+@function get-font-size($breakpoint-name) {
+  @return to-rem(map-fetch($breakpoints, $breakpoint-name font-size));
 }
 
-@function line-widths() {
-  $line-widths: null;
-  @for $i from 0 through (length($root-sizes) - 1){
-    $font-size:   map-get($root-sizes, root-size-#{$i});
-    $line-height: line-height($font-size, $modular-scale);
-    $line-width:  pow($line-height, 2);
-    @if $i == 0 {
-      $line-widths: (line-width-#{$i}: $line-width);
-    } @else {
-      $line-widths: map-merge($line-widths, (line-width-#{$i}: $line-width));
-    }
-  }
-  @return $line-widths;
+@function get-line-height($breakpoint-name) {
+  @return modular-scale(map-fetch($breakpoints, $breakpoint-name modular-scale));
 }

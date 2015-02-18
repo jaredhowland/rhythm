@@ -1,23 +1,42 @@
 // ! For the following Sass maps, enter values as if they would be px units.
 
 /*------------------------------------------------------------ */
-/* Breakpoints
+/* Breakpoint defaults
 -------------------------------------------------------------- */
 
 $breakpoints: (
-  break-0: 0,     // 0px       Mobile first
-  break-1: 480,   // 480px   ~ Extra small screen up
-  break-2: 768,   // 768px   ~ Small screen/tablet up
-  break-3: 992,   // 992px   ~ Medium screen up
-  break-4: 1200,  // 1200px  ~ Desktop up
+  bp-0: (
+    breakpoint: 0px, // Mobile first
+    font-size: 12px,
+    modular-scale: perfect-fourth
+  ),
+  bp-1: (
+    breakpoint: 480px, // ~ Extra small screen up
+    font-size: 14px,
+    modular-scale: perfect-fifth
+  ),
+  bp-2: (
+    breakpoint: 768px, // ~ Small screen/tablet up
+    font-size: 15px,
+    modular-scale: golden
+  ),
+  bp-3: (
+    breakpoint: 992px, // ~ Medium screen up
+    font-size: 17px,
+    modular-scale: golden
+  ),
+  bp-4: (
+    breakpoint: 1200px, // ~Desktop up
+    font-size: 19px,
+    modular-scale: golden
+  )
 ) !default;
 
 /*------------------------------------------------------------ */
-/* Sizes and ratios
+/* Modular scales
 -------------------------------------------------------------- */
-
-// Scales.
-$modular-scales: (
+$modular-scales: () !default;
+$modular-scale-ratios: (
   golden:           1.618,
   minor-second:     1.067,
   major-second:     1.125,
@@ -35,94 +54,27 @@ $modular-scales: (
   major-eleventh:   2.667,
   major-twelfth:    3,
   double-octave:    4
-) !default;
+);
 
-$modular-scale: golden !default;
-$modular-scale: modular-scale($modular-scale); // Validates value submitted for $modular-scale. Uses `golden` if invalid value used.
-
-// Root font-sizes for each breakpoint.
-// ! Make sure to have as many sizes as breakpoints above.
-$root-sizes: (
-  root-size-0: 12,
-  root-size-1: 14,
-  root-size-2: 15,
-  root-size-3: 17,
-  root-size-4: 19
-) !default;
-
-$line-height: $modular-scale !default; // unitless line height value
-$line-heights: line-heights() !default; // line heights in pixels for each root-size and modular scale
-
-$line-widths: line-widths() !default; // Optimal max line lengths for given root-size and line-height
+$modular-scales: map-merge($modular-scale-ratios, $modular-scales);
 
 /*------------------------------------------------------------ */
 /* Fonts
 -------------------------------------------------------------- */
 
-// Typefaces with weight and style details.
-// ! Set cap height to set to the baseline.
-
 // Serif fonts.
 $serif-font-family: 'Georgia, serif' !default;
-$serif-cap-height:  0.66 !default;
-$serif-type: (
-  font-family: $serif-font-family,
-  regular: 400,
-  bold: 700,
-  italic: italic,
-  cap-height: $serif-cap-height
-) !default;
 
 // Sans-serif fonts.
 $sans-serif-font-family: 'Helvetica, sans-serif' !default;
-$sans-serif-cap-height:  0.65 !default;
-$sans-serif-type: (
-  font-family: $sans-serif-font-family,
-  regular: 400,
-  bold: 700,
-  cap-height: $sans-serif-cap-height
-) !default;
 
 // Monospace fonts.
 $monospace-font-family: 'Menlo, monospace' !default;
-$monospace-cap-height:  0.68 !default;
-$monospace-type: (
-  font-family: $monospace-font-family,
-  regular: 400,
-  cap-height: $monospace-cap-height
-) !default;
-
-// Here are some local fonts’ cap-height
-// sizes to get you started:
-/*--------------------------------------*/
-// Georgia:                 0.66
-// Helvetica:               0.65
-// Lucida Grande:           0.72
-// Palatino:                0.52
-// Tahoma:                  0.76
-// Times / Times New Roman: 0.65
-// Verdana:                 0.76
-
-// Selection of Typekit fonts’ cap-height sizes:
-/*----------------------------------------------*/
-// Adobe Caslon Pro:  0.36
-// Adelle:            0.66
-// Brandon Grotesque: 0.65
-// Chaparral Pro:     0.5
-// Clavo:             0.7
-// FF Tisa Pro:       0.82
-// Futura PT:         0.66
-// JAF Facit:         0.7
-// Jubilat:           0.66
-// Minion Pro:        0.66
-// Museo Slab:        0.66
-// Myriad Pro:        0.66
-// Proxima Nova:      0.57
 
 // Default font types.
-$body-type:    $serif-type !default;
-$heading-type: $sans-serif-type !default;
-$code-type:    $monospace-type !default;
+$body-font:      $serif-font-family !default;
+$heading-font:   $serif-font-family !default;
+$monospace-font: $monospace-font-family !default;
 
 /*------------------------------------------------------------ */
 /* Colors

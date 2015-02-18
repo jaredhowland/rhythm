@@ -5,9 +5,13 @@ html {
 }
 
 body {
-  font-family: unquote(map-get($body-type, font-family));
-  font-size: #{map-get($root-sizes, root-size-4) / 16}rem;
-  line-height: $modular-scale;
+  font-family: $body-font;
+  font-size: get-font-size(bp-0);
+  line-height: get-line-height(bp-0);
+  @include breakpoint(bp-1) {
+    font-size: get-font-size(bp-1);
+    line-height: get-line-height(bp-1);
+  }
 }
 
 a {
