@@ -23,7 +23,7 @@
 @function add-custom-scale($name, $value) {
   // Warn if $name is an existing $modular-scales key.
   @if map-has-key($modular-scales, $name) {
-    @warn "`#{$name}` is already used and cannot be reused. Use the `add-custom-scale` function to create a custom scale. $modular-scale variable will be set to `#{map-get($modular-scales, $name)}`.";
+    @warn "`#{$name}` is already defined and cannot be reused. Use the `add-custom-scale` function to create a custom scale. $modular-scale variable will be set to `#{map-get($modular-scales, $name)}`.";
   // Otherwise, add custom $name and the unitless $value to the $modular-scales map.
   } @else {
     $modular-scales: map-merge($modular-scales, ($name: to-unitless($value))) !global;
@@ -31,7 +31,7 @@
   @return $name;
 }
 
-@function modular-scale($scale-name) {
+@function modular-scale-value($scale-name) {
   // If $scale-name is a number, return $scale-name as a unitless value.
   @if(type-of($scale-name) == number) {
     @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `#{to-unitless($scale-name)}` will be used as the modular scale (`#{$scale-name}` converted into unitless rem equivalent). Use the `add-custom-scale` function to add a custom scale.";
@@ -46,17 +46,76 @@
   }
 }
 
-@function line-width($font-size, $line-height: $modular-scale) {
+@function create-scale($font-sizes, $modular-scale: golden) {
+  $modular-scale: modular-scale-value($modular-scale);
+  $scale-values: ();
+
+  @each $font-size in $font-sizes {
+    $scale: create-scale-values($font-size, $modular-scale); // returns 9 font-sizes on the same modular scale
+    $scale-values: sort-list(append($scale, $scale-values));
+  }
+
+  @if length($scale-values) > 9 {
+    $scale-values:       remove-duplicates($scale-values);
+    $base-font-size:     to-px(nth($font-sizes, 1));
+    $base-font-location: index($scale-values, $base-font-size);
+
+    $first-value: $base-font-location - 2;
+    $last-value: $base-font-location + 6;
+
+    $scale-values: slice($scale-values, $first-value, $last-value);
+  }
+
+  @return $scale-values;
+}
+
+@function create-scale-values($font-size, $modular-scale) {
+  $font-size:    to-px($font-size);
+  $scale-values: $font-size;
+
+  // larger font than base size (8 values)
+  $i: 1;
+  @while $i < 7 {
+    $ms: pow($modular-scale, $i);
+    $scale-values: append($scale-values, ceil($font-size * $ms));
+    $i: $i + 1;
+  }
+
+  // smaller font than base size (1 value)
+  $j: -2;
+  @while $j < 0 {
+    $ms: pow($modular-scale, abs($j));
+    $scale-values: append($scale-values, ceil($font-size / $ms));
+    $j: $j + 1;
+  }
+
+  @return $scale-values; // 9 values
+}
+
+@function line-height($font-size, $base-font-size, $base-line-height) {
+  $font-size:        to-px($font-size);
+  $base-font-size:   to-px($base-font-size);
+  $base-line-height: to-unitless($base-line-height);
+
+  $multiplier: ceil(to-unitless($font-size) / $base-line-height);
+  $base-line-height: $base-line-height * $multiplier;
+
+  @return strip-units($base-font-size * $base-line-height) / strip-units($font-size);
+}
+
+
+
+@function line-width($font-size, $line-height) {
   // http://www.pearsonified.com/2011/12/golden-ratio-typography.php
   // (font-size (in px) * line-height)^2
   $font-size: strip-units(to-px($font-size));
-  @return #{pow(($font-size * $line-height), 2)}px;
+  @return pow(($font-size * $line-height), 2) * 1px;
 }
 
-@function get-font-size($breakpoint-name) {
-  @return to-rem(map-fetch($breakpoints, $breakpoint-name font-size));
+@function get-font-sizes($breakpoint-name) {
+  @return map-fetch($breakpoints, $breakpoint-name font-size);
 }
 
 @function get-line-height($breakpoint-name) {
-  @return modular-scale(map-fetch($breakpoints, $breakpoint-name modular-scale));
+  @return modular-scale-value(map-fetch($breakpoints, $breakpoint-name modular-scale));
 }

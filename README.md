@@ -1,24 +1,67 @@
 Rhythm
 ======
-Rhythm is a small set of [Sass files][1] to create a [vertical rhythm][2] for your website using [modular scales][3].
+Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3]. Translated, Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.
 
-Usage
-=====
-1. Update your `composer.json` to require Rhythm:
+Installation
+============
+Rhythm is available as a [Composer][9] [package][10], but you can also manually download it and include it in your project.
+
+Composer
+--------
+1. If you have not done so already, install [Composer][9]
+
+2. Update your project's `composer.json` file to require Rhythm:
 
     ```json
     {
       "require": {
-        "jaredhowland/rhythm": "~0.1.3"
+        "jaredhowland/rhythm": "~0.2.0"
       }
     }
     ```
 
-2. Add the following to the top of your primary `.scss` file:
+3. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
 
-    ```scss
-    @import "path/to/vendor/jaredhowland/rhythm/src/rhythm";
-    ```
+Manual Installation
+-------------------
+1. [Download the latest `.zip` file][11].
+2. Extract into your project.
+3. SCSS: `@import "rhythm";`
+
+Usage
+=====
+Call Rhythm from your `.scss` file:
+
+```scss
+body {
+  @include rhythm();
+}
+```
+
+The `rhythm()` function automatically generates a vertical rhythm for you using modular scales for multiple breakpoints based on the values defined in `_variables.scss`. To change the defaults, redefine the variables before importing `rhythm`.
+
+Any time an element's vertical properties are changed, you must offset this change to maintain a vertical rhythm. Properties that change an element's vertical rhythm include:
+
+* `font-size`
+* `line-height`
+* `margin-top` and `margin-bottom`
+* `padding-top` and `padding-bottom`
+
+Use Rhythm any time you want to adjust those properties and it will perform the mathematical acrobatics required to restore the vertical rhythm to your site.
+
+Rhythm includes v2.0 of Eric Meyer's [reset stylesheet][12].
+
+
+
+
+
+
+
+
+
+
+
+
 
     If you want to override any default variables, create a `variables-custom.scss` file and import it before you import Rhythm. Alternatively, redefine the variable(s) in your primary `.scss` file before you `@import "rhythm";`.
 
@@ -242,10 +285,15 @@ Usage
     }
     ```
 
-[1]: http://sass-lang.com/
-[2]: http://24ways.org/2006/compose-to-a-vertical-rhythm
-[3]: http://alistapart.com/article/more-meaningful-typography
-[4]: http://necolas.github.io/normalize.css/
-[5]: http://modularscale.com/scale/?px1=18&px2=27&ra1=1.5&ra2=0
-[6]: http://csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/
-[7]: http://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
+[1]:  http://sass-lang.com/
+[2]:  http://24ways.org/2006/compose-to-a-vertical-rhythm
+[3]:  http://alistapart.com/article/more-meaningful-typography
+[4]:  http://necolas.github.io/normalize.css/
+[5]:  http://modularscale.com/scale/?px1=18&px2=27&ra1=1.5&ra2=0
+[6]:  http://csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/
+[7]:  http://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
+[8]:  http://bradfrost.com/blog/web/mobile-first-responsive-web-design/
+[9]:  https://getcomposer.org
+[10]: http://packagist.org/
+[11]: https://github.com/jaredhowland/rhythm/releases/latest
+[12]: http://meyerweb.com/eric/tools/css/reset/

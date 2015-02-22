@@ -7,27 +7,27 @@
 $breakpoints: (
   bp-0: (
     breakpoint: 0px, // Mobile first
-    font-size: 12px,
+    font-size: 14px 18px,
     modular-scale: perfect-fourth
   ),
   bp-1: (
     breakpoint: 480px, // ~ Extra small screen up
-    font-size: 14px,
+    font-size: 18px 20px,
     modular-scale: perfect-fifth
   ),
   bp-2: (
     breakpoint: 768px, // ~ Small screen/tablet up
-    font-size: 15px,
+    font-size: 20px 22px,
     modular-scale: golden
   ),
   bp-3: (
     breakpoint: 992px, // ~ Medium screen up
-    font-size: 17px,
+    font-size: 22px 24px,
     modular-scale: golden
   ),
   bp-4: (
     breakpoint: 1200px, // ~Desktop up
-    font-size: 19px,
+    font-size: 24px 26px,
     modular-scale: golden
   )
 ) !default;
@@ -72,9 +72,9 @@ $sans-serif-font-family: 'Helvetica, sans-serif' !default;
 $monospace-font-family: 'Menlo, monospace' !default;
 
 // Default font types.
-$body-font:      $serif-font-family !default;
-$heading-font:   $serif-font-family !default;
-$monospace-font: $monospace-font-family !default;
+$body-font:      unquote($serif-font-family) !default;
+$heading-font:   unquote($serif-font-family) !default;
+$monospace-font: unquote($monospace-font-family) !default;
 
 /*------------------------------------------------------------ */
 /* Colors

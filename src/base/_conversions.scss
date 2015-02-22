@@ -51,7 +51,7 @@
 }
 
 @function px-to-rem($value) {
-  @return 0rem + strip-units($value) / 16; // 16 is assumed default browser font size in px
+  @return strip-units($value) / 16 * 1rem; // 16 is assumed default browser font size in px
 }
 
 @function percent-to-rem($value) {

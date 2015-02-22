@@ -5,13 +5,8 @@ html {
 }
 
 body {
+  @include rhythm();
   font-family: $body-font;
-  font-size: get-font-size(bp-0);
-  line-height: get-line-height(bp-0);
-  @include breakpoint(bp-1) {
-    font-size: get-font-size(bp-1);
-    line-height: get-line-height(bp-1);
-  }
 }
 
 a {
@@ -22,4 +17,65 @@ a {
     background-color: $link-background-color;
     transition: background-color .4s, color .4s;
   }
+}
+
+strong, b, .bold {
+  font-weight: 700;
+}
+
+em, i, .italic {
+  font-style: italic;
+}
+
+ol li, ul li {
+  font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
+  margin-left: 2rem;
+  margin-left: 0;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+blockquote p {
+  border-left: .15rem solid $body-color-muted;
+  font-style: italic;
+  padding-left: 1rem;
+}
+
+code, pre {
+  font-family: $monospace-font;
+  background-color: $code-background-color;
+  border-radius: 1rem;
+  padding: 0 1rem;
+}
+
+small, .caption {
+
+}
+
+.caption {
+  color: lighten($body-color, 20%);
+}
+
+.upper {
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+}
+
+.small-caps {
+  font-feature-settings: 'smcp' 1, 'kern' 1;
+  letter-spacing: .1rem;
+}
+
+.lining-numerals {
+    font-feature-settings: 'lnum' 1, 'kern' 1;
+}
+
+.oldstyle-numerals {
+    font-feature-settings: 'onum' 1, 'kern' 1;
 }
