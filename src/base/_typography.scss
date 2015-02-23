@@ -29,7 +29,6 @@ em, i, .italic {
 
 ol li, ul li {
   font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
-  margin-left: 2rem;
   margin-left: 0;
 }
 
@@ -42,15 +41,19 @@ ol {
 }
 
 blockquote p {
-  border-left: .15rem solid $body-color-muted;
+  border-left: .25rem solid $body-color-muted;
   font-style: italic;
   padding-left: 1rem;
 }
 
 code, pre {
   font-family: $monospace-font;
+  @include font-size(70%);
+}
+
+pre {
   background-color: $code-background-color;
-  border-radius: 1rem;
+  border-radius: 4px;
   padding: 0 1rem;
 }
 

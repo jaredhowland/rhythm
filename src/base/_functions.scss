@@ -103,8 +103,6 @@
   @return strip-units($base-font-size * $base-line-height) / strip-units($font-size);
 }
 
-
-
 @function line-width($font-size, $line-height) {
   // http://www.pearsonified.com/2011/12/golden-ratio-typography.php
   // (font-size (in px) * line-height)^2
@@ -118,4 +116,40 @@
 
 @function get-line-height($breakpoint-name) {
   @return modular-scale-value(map-fetch($breakpoints, $breakpoint-name modular-scale));
+}
+
+@function get-breakpoint-names() {
+  @return map-keys($breakpoints);
+}
+
+@function breakpoint-name($i) {
+  @return nth(get-breakpoint-names(), $i);
+}
+
+@function get-breakpoint-data($i) {
+  @return nth(nth($breakpoints, $i), 2); // $breakpoints is a nested map. Bypass the name of the breakpoint and get to its properties.
+}
+
+@function breakpoint-size($i) {
+  @return map-get(get-breakpoint-data($i), breakpoint);
+}
+
+@function breakpoint-font-sizes($i) {
+  @return map-get(get-breakpoint-data($i), font-size);
+}
+
+@function breakpoint-scale($i) {
+  @return map-get(get-breakpoint-data($i), modular-scale);
+}
+
+@function breakpoint-base-font-size($i) {
+  @return nth(breakpoint-font-sizes($i), 1);
+}
+
+@function breakpoint-base-line-height($i) {
+  @return modular-scale-value(breakpoint-scale($i));
+}
+
+@function breakpoint-scale-values($i) {
+  @return create-scale(breakpoint-font-sizes($i), breakpoint-scale($i));
 }
