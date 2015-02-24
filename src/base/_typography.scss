@@ -20,8 +20,12 @@ a {
   }
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
   display: none;
+}
+
+h4, h6 {
+  display: block;
 }
 
 strong, b, .bold {

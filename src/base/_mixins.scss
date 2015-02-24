@@ -1,9 +1,4 @@
 /*------------------------------------------------------------ */
-/* Global variables used in mixins
--------------------------------------------------------------- */
-
-
-/*------------------------------------------------------------ */
 /* Mixins
 -------------------------------------------------------------- */
 
@@ -11,71 +6,75 @@
   // Loop through all breakpoints.
   @for $i from 1 through length($breakpoints) {
     @if $i == 1 {
-      @include set-sizes(bp-base-font-size($i), bp-base-line-height($i), bp-scale-values($i));
+      @include set-sizes($i);
     } @else {
       @include breakpoint(bp-name($i)) {
-        @include set-sizes(bp-base-font-size($i), bp-base-line-height($i), bp-scale-values($i));
+        @include set-sizes($i);
       }
     }
   }
 }
 
-@mixin set-sizes($base-font-size, $base-line-height, $scale-values) {
-  $base-line-height-ratio: to-unitless($base-line-height / $base-font-size);
-  $base-font-size: to-rem($base-font-size);
+// $i is breakpoint number (1 through number of breakpoints defined in $breakpoints map)
+@mixin set-sizes($i) {
+  $base-font-size:         bp-base-font-size($i);
+  $base-line-height:       bp-base-line-height($i);
+  $base-line-height-ratio: bp-base-line-height-ratio($i);
+  $scale-values:           bp-scale-values($i);
 
-  font-size:   $base-font-size;
+  font-size:   to-rem($base-font-size);
   line-height: $base-line-height-ratio;
 
   @at-root .tera {
     $tera: to-rem(nth($scale-values, 9));
     font-size: $tera;
-    line-height: line-height($tera, $base-font-size, $base-line-height);
+    line-height: line-height($tera, $i);
   }
   @at-root .giga {
     $giga: to-rem(nth($scale-values, 8));
     font-size: $giga;
-    line-height: line-height($giga, $base-font-size, $base-line-height);
+    line-height: line-height($giga, $i);
   }
   @at-root .mega {
     $mega: to-rem(nth($scale-values, 7));
     font-size: $mega;
-    line-height: line-height($mega, $base-font-size, $base-line-height);
+    line-height: line-height($mega, $i);
+    // line-height: line-height($mega, $base-font-size, $base-line-height);
   }
   @at-root h1, .h1, .alpha {
     $alpha: to-rem(nth($scale-values, 6));
     font-size: $alpha;
-    line-height: line-height($alpha, $base-font-size, $base-line-height);
+    line-height: line-height($alpha, $i);
   }
   @at-root h2, .h2, .beta {
     $beta: to-rem(nth($scale-values, 5));
     font-size: $beta;
-    line-height: line-height($beta, $base-font-size, $base-line-height);
+    line-height: line-height($beta, $i);
   }
   @at-root h3, .h3, .gamma {
     $gamma: to-rem(nth($scale-values, 4));
     font-size: $gamma;
-    line-height: line-height($gamma, $base-font-size, $base-line-height);
+    line-height: line-height($gamma, $i);
   }
   @at-root h4, .h4, .delta {
     $delta: to-rem(nth($scale-values, 3));
     font-size: $delta;
-    line-height: line-height($delta, $base-font-size, $base-line-height);
+    line-height: line-height($delta, $i);
   }
   @at-root h5, .h5, .epsilon {
     $epsilon: to-rem(nth($scale-values, 2));
     font-size: $epsilon;
-    line-height: line-height($epsilon, $base-font-size, $base-line-height);
+    line-height: line-height($epsilon, $i);
   }
   @at-root h6, .h6, .zeta {
     $zeta: to-rem(nth($scale-values, 1));
     font-size: $zeta;
-    line-height: line-height($zeta, $base-font-size, $base-line-height);
+    line-height: line-height($zeta, $i);
   }
 
   @at-root section, .section {
     margin: 0 auto;
-    max-width: to-rem(line-width($base-font-size, $base-line-height-ratio));
+    max-width: to-rem(max-line-width($base-font-size, $base-line-height-ratio));
   }
 }
 
