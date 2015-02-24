@@ -6,8 +6,19 @@ html {
 
 body {
   @include rhythm();
+  @include padding(1);
   font-family: $body-font;
-  column-count: 2;
+}
+
+p {
+  & + p {
+    text-indent: $indent-value;
+  }
+
+  // No indent for drop caps
+  + .drop-cap {
+    text-indent: 0;
+  }
 }
 
 a {
@@ -18,14 +29,6 @@ a {
     background-color: $link-background-color;
     transition: background-color .4s, color .4s;
   }
-}
-
-h1, h2, h3, h4, h5, h6 {
-  display: none;
-}
-
-h4, h6 {
-  display: block;
 }
 
 strong, b, .bold {
@@ -53,7 +56,8 @@ blockquote p {
   border-left: .25rem solid $body-color-muted;
   font-style: italic;
   padding-left: 1rem;
-  display: none;
+  @include margin(1 0 0 0);
+  @include font-size(16px);
 }
 
 code, pre {
@@ -61,14 +65,33 @@ code, pre {
 }
 
 pre {
+  @include font-size(16px);
+  @include margin(1 0 0 0);
+  @include padding(1);
   background-color: $code-background-color;
   border-radius: 4px;
-  padding: 0 1rem;
-  display: none;
+}
+
+code {
+  @include font-size(16px, true);
 }
 
 small, .caption {
-  // @include font-size(80%);
+  @extend .epsilon;
+}
+
+.drop-cap {
+  @include dropcap(
+    $dropcap-float-position,
+    $dropcap-font-size,
+    $dropcap-font-family,
+    $dropcap-txt-indent,
+    $dropcap-margin,
+    $dropcap-padding,
+    $dropcap-color,
+    $dropcap-line-height,
+    $dropcap-bg
+  );
 }
 
 .caption {

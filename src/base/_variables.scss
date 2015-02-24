@@ -74,6 +74,24 @@ $body-font:      unquote($serif-font-family) !default;
 $heading-font:   unquote($serif-font-family) !default;
 $monospace-font: unquote($monospace-font-family) !default;
 
+// Indent value for paragraphs
+$indent-value: 1rem !default;
+
+/*------------------------------------------------------------ */
+/* Typography
+-------------------------------------------------------------- */
+
+// Drop caps.
+$dropcap-float-position: left !default;
+$dropcap-font-size:      4em !default;
+$dropcap-font-family:    inherit !default;
+$dropcap-txt-indent:     0 !default;
+$dropcap-margin:         10px 10px 0 0 !default;
+$dropcap-padding:        0 20px !default;
+$dropcap-color:          inherit !default;
+$dropcap-line-height:    1 !default;
+$dropcap-bg:             transparent !default;
+
 /*------------------------------------------------------------ */
 /* Colors
 -------------------------------------------------------------- */

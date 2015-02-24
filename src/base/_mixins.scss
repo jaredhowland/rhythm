@@ -3,14 +3,11 @@
 -------------------------------------------------------------- */
 
 @mixin rhythm() {
+  @include set-sizes(1);
   // Loop through all breakpoints.
-  @for $i from 1 through length($breakpoints) {
-    @if $i == 1 {
+  @for $i from 2 through length($breakpoints) {
+    @include breakpoint(bp-name($i)) {
       @include set-sizes($i);
-    } @else {
-      @include breakpoint(bp-name($i)) {
-        @include set-sizes($i);
-      }
     }
   }
 }
@@ -39,7 +36,6 @@
     $mega: to-rem(nth($scale-values, 7));
     font-size: $mega;
     line-height: line-height($mega, $i);
-    // line-height: line-height($mega, $base-font-size, $base-line-height);
   }
   @at-root h1, .h1, .alpha {
     $alpha: to-rem(nth($scale-values, 6));
@@ -111,26 +107,128 @@
   }
 }
 
-@mixin font-size($font-size) {
-  $multiplier: round(to-px($font-size) / to-px(bp-base-font-size(1))); // keep roughly the same proportions across breakpoints
-  @for $i from 1 through length($breakpoints) {
-    @if $i == 1 {
+@mixin font-size($font-size, $inline: false) {
+  font-size:   to-rem($font-size);
+  @if $inline == false {
+    line-height: line-height($font-size, 1);
+  }
+  // Loop through all breakpoints.
+  @for $i from 2 through length($breakpoints) {
+    @include breakpoint(bp-name($i)) {
       font-size:   to-rem($font-size);
-      line-height: line-height($font-size, bp-base-font-size($i), bp-base-line-height($i));
-    } @else {
-      @include breakpoint(bp-name($i)) {
-        $font-size: to-rem(to-px(bp-base-font-size($i)) * $multiplier);
-        font-size: $font-size;
-        line-height: line-height($font-size, bp-base-font-size($i), bp-base-line-height($i));
+      @if $inline == false {
+        line-height: line-height($font-size, $i);
       }
     }
   }
 }
 
-@mixin padding($padding) {
-
+@mixin padding($scale: 1 0, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    @for $i from 1 through length($scale) {
+      $scale: set-nth($scale, $i, round(nth($scale, $i)));
+    }
+  }
+  // round $scale because only whole integers can be used to maintain the rhythm
+  // Technically, as long the top and bottom values sum to a whole integer, you are fine but we won't worry about that case for now
+  @if length($scale) == 1 {
+    padding: line-height(bp-base-font-size(1), 1) * nth($scale, 1);
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: line-height(bp-base-font-size($i), $i) * nth($scale, 1);
+      }
+    }
+  } @else if length($scale) == 2 {
+    padding: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2));
+      }
+    }
+  } @else if length($scale) == 3 {
+    padding: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3));
+      }
+    }
+  } @else if length($scale) == 4 {
+    padding: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3)) (line-height(bp-base-font-size(1), 1) * nth($scale, 4));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3)) (line-height(bp-base-font-size($i), $i) * nth($scale, 4));
+      }
+    }
+  } @else {
+    @error "Invalid number of padding values. Use 1, 2, 3, or 4 values only.";
+  }
 }
 
-@mixin margin($margin) {
+@mixin margin($scale: 1 0, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    @for $i from 1 through length($scale) {
+      $scale: set-nth($scale, $i, round(nth($scale, $i)));
+    }
+  }
+  @if length($scale) == 1 {
+    margin: line-height(bp-base-font-size(1), 1) * nth($scale, 1);
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: line-height(bp-base-font-size($i), $i) * nth($scale, 1);
+      }
+    }
+  } @else if length($scale) == 2 {
+    margin: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2));
+      }
+    }
+  } @else if length($scale) == 3 {
+    margin: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3));
+      }
+    }
+  } @else if length($scale) == 4 {
+    margin: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3)) (line-height(bp-base-font-size(1), 1) * nth($scale, 4));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3)) (line-height(bp-base-font-size($i), $i) * nth($scale, 4));
+      }
+    }
+  } @else {
+    @error "Invalid number of margin values. Use 1, 2, 3, or 4 values only.";
+  }
+}
 
+/*------------------------------------------------------------ */
+/* Drop caps
+-------------------------------------------------------------- */
+
+@mixin dropcap($float-position, $font-size, $font-family, $txt-indent, $margin, $padding, $color, $line-height, $bg) {
+  &:first-letter {
+    float: $float-position;
+    margin: $margin;
+    padding: $padding;
+    font-size: $font-size;
+    font-family: $font-family;
+    line-height: $line-height;
+    text-indent: $txt-indent;
+    background: $bg;
+    color: $color;
+  }
 }

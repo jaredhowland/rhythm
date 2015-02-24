@@ -20,15 +20,11 @@
   }
 }
 
-@function line-height($font-size, $i) {
-  $font-size:  to-px($font-size);
-  $multiplier: ceil($font-size / bp-base-line-height($i)); // must be whole integer multiple of $base-line-height so line-height is greater than the font-size
-  @if $font-size == bp-base-font-size($i) {
-    @return bp-base-line-height-ratio($i);
-  }
-  @warn bp-base-line-height($i);
-  @warn bp-base-line-height($i) / bp-base-font-size($i);
-  @return (bp-base-line-height($i) / $font-size) * $multiplier;
+@function line-height($font-size, $i: 1) {
+  $font-size:   to-px($font-size);
+  $line-height: round(bp-base-font-size($i) * bp-base-line-height-ratio($i));
+  $multiplier:  ceil(strip-units($font-size) / strip-units($line-height));
+  @return strip-units(($line-height * $multiplier) / $DEFAULT_BROWSER_FONT_SIZE) * 1rem;
 }
 
 // http://www.pearsonified.com/2011/12/golden-ratio-typography.php
@@ -164,7 +160,7 @@
 }
 
 @function bp-base-line-height-ratio($i) { // unitless ratio
-  @return strip-units(bp-base-line-height($i) / $DEFAULT-BROWSER-FONT-SIZE);
+  @return strip-units(bp-base-line-height($i) / bp-base-font-size($i));
 }
 
 @function bp-base-scale-ratio($i) { // unitless ratio
