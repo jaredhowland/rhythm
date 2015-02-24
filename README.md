@@ -30,17 +30,9 @@ Manual Installation
 
 Usage
 =====
-Call Rhythm from your `.scss` file:
+Including Rrhythm with your Sass files automatically generates a vertical rhythm for you using modular scales for multiple breakpoints based on the values defined in `_variables.scss`. To change the defaults, redefine the variables before importing Rhythm.
 
-```scss
-body {
-  @include rhythm();
-}
-```
-
-The `rhythm()` function automatically generates a vertical rhythm for you using modular scales for multiple breakpoints based on the values defined in `_variables.scss`. To change the defaults, redefine the variables before importing `rhythm`.
-
-Any time an element's vertical properties are changed, you must offset this change to maintain a vertical rhythm. Properties that change an element's vertical rhythm include:
+Any time an element's vertical properties are changed, you must offset this change to maintain a vertical rhythm. The major properties that change an element's vertical rhythm include:
 
 * `font-size`
 * `line-height`
@@ -48,6 +40,9 @@ Any time an element's vertical properties are changed, you must offset this chan
 * `padding-top` and `padding-bottom`
 
 Use Rhythm any time you want to adjust those properties and it will perform the mathematical acrobatics required to restore the vertical rhythm to your site.
+
+Examples
+========
 
 Rhythm includes v2.0 of Eric Meyer's [reset stylesheet][12].
 

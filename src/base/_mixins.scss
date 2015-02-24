@@ -123,6 +123,45 @@
   }
 }
 
+@mixin line-height($font-size, $scale: 1) {
+  $scale: round($scale);
+  line-height: $scale * (line-height($font-size, 1));
+  // Loop through all breakpoints.
+  @for $i from 2 through length($breakpoints) {
+    @include breakpoint(bp-name($i)) {
+      line-height: $scale * (line-height($font-size, $i));
+    }
+  }
+}
+
+// @mixin line-height($font-size, $scale: 1, $decimal: false) {
+//   $line-height: line-height($font-size, 1);
+//   $computed-line-height: $scale * (line-height($font-size, 1));
+//   $decimal-scale: ceil($scale);
+//
+//   line-height: $computed-line-height;
+//
+//   @if $decimal-scale > $scale {
+//     margin-bottom: ($scale - $decimal-scale) * $line-height;
+//   }
+//
+//   // Loop through all breakpoints.
+//   @for $i from 2 through length($breakpoints) {
+//     @include breakpoint(bp-name($i)) {
+//       $line-height: line-height($font-size, $i);
+//       $computed-line-height: $scale * (line-height($font-size, $i));
+//       $decimal-scale: ceil($scale);
+//
+//       line-height: $computed-line-height;
+//
+//       @if $decimal-scale > $scale {
+//         @warn $scale - $decimal-scale;
+//         margin-bottom: ($scale - $decimal-scale) * $line-height;
+//       }
+//     }
+//   }
+// }
+
 @mixin padding($scale: 1 0, $decimal: false) {
   @if $decimal {
     $scale: $scale;
@@ -131,8 +170,6 @@
       $scale: set-nth($scale, $i, round(nth($scale, $i)));
     }
   }
-  // round $scale because only whole integers can be used to maintain the rhythm
-  // Technically, as long the top and bottom values sum to a whole integer, you are fine but we won't worry about that case for now
   @if length($scale) == 1 {
     padding: line-height(bp-base-font-size(1), 1) * nth($scale, 1);
     // Loop through all breakpoints.
@@ -167,6 +204,44 @@
     }
   } @else {
     @error "Invalid number of padding values. Use 1, 2, 3, or 4 values only.";
+  }
+}
+
+@mixin padding-top($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    padding-top: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding-top: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "padding-top mixin can only accept a single value.";
+  }
+}
+
+@mixin padding-bottom($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    padding-bottom: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding-bottom: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "padding-bottom mixin can only accept a single value.";
   }
 }
 
@@ -212,6 +287,44 @@
     }
   } @else {
     @error "Invalid number of margin values. Use 1, 2, 3, or 4 values only.";
+  }
+}
+
+@mixin margin-top($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    margin-top: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin-top: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "margin-top mixin can only accept a single value.";
+  }
+}
+
+@mixin margin-bottom($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    margin-bottom: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin-bottom: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "margin-bottom mixin can only accept a single value.";
   }
 }
 
