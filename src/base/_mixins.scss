@@ -10,34 +10,22 @@
 @mixin rhythm() {
   // Loop through all breakpoints.
   @for $i from 1 through length($breakpoints) {
-    $breakpoint-name:  nth(map-keys($breakpoints), $i);
-    $breakpoint-info:  nth(nth($breakpoints, $i), 2); // $breakpoints is a nested map. Bypass the name of the breakpoint and get to its properties.
-
-    $font-sizes:       map-get($breakpoint-info, font-size);
-    $modular-scale:    map-get($breakpoint-info, modular-scale);
-    $breakpoint-value: map-get($breakpoint-info, breakpoint);
-
-    $base-font-size:   nth($font-sizes, 1);
-    $base-line-height: modular-scale-value($modular-scale);
-
-    $scale-values:     create-scale($font-sizes, $modular-scale);
-
     @if $i == 1 {
-      @include set-sizes($base-font-size, $base-line-height, $scale-values);
+      @include set-sizes(bp-base-font-size($i), bp-base-line-height($i), bp-scale-values($i));
     } @else {
-      @include breakpoint($breakpoint-name) {
-        @include set-sizes($base-font-size, $base-line-height, $scale-values);
+      @include breakpoint(bp-name($i)) {
+        @include set-sizes(bp-base-font-size($i), bp-base-line-height($i), bp-scale-values($i));
       }
     }
   }
 }
 
 @mixin set-sizes($base-font-size, $base-line-height, $scale-values) {
+  $base-line-height-ratio: to-unitless($base-line-height / $base-font-size);
   $base-font-size: to-rem($base-font-size);
-  $base-line-height: to-unitless($base-line-height);
 
   font-size:   $base-font-size;
-  line-height: $base-line-height;
+  line-height: $base-line-height-ratio;
 
   @at-root .tera {
     $tera: to-rem(nth($scale-values, 9));
@@ -87,7 +75,7 @@
 
   @at-root section, .section {
     margin: 0 auto;
-    max-width: to-rem(line-width($base-font-size, $base-line-height));
+    max-width: to-rem(line-width($base-font-size, $base-line-height-ratio));
   }
 }
 
@@ -125,16 +113,16 @@
 }
 
 @mixin font-size($font-size) {
-  $multiplier: to-px($font-size) / to-px(breakpoint-base-font-size(1));
+  $multiplier: round(to-px($font-size) / to-px(bp-base-font-size(1))); // keep roughly the same proportions across breakpoints
   @for $i from 1 through length($breakpoints) {
     @if $i == 1 {
       font-size:   to-rem($font-size);
-      line-height: line-height($font-size, breakpoint-base-font-size($i), breakpoint-base-line-height($i));
+      line-height: line-height($font-size, bp-base-font-size($i), bp-base-line-height($i));
     } @else {
-      @include breakpoint(breakpoint-name($i)) {
-        $font-size: to-rem(round(to-px(breakpoint-base-font-size($i)) * $multiplier));
+      @include breakpoint(bp-name($i)) {
+        $font-size: to-rem(to-px(bp-base-font-size($i)) * $multiplier);
         font-size: $font-size;
-        line-height: line-height($font-size, breakpoint-base-font-size($i), breakpoint-base-line-height($i));
+        line-height: line-height($font-size, bp-base-font-size($i), bp-base-line-height($i));
       }
     }
   }

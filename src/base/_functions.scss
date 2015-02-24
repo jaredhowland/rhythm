@@ -77,7 +77,7 @@
   $i: 1;
   @while $i < 7 {
     $ms: pow($modular-scale, $i);
-    $scale-values: append($scale-values, ceil($font-size * $ms));
+    $scale-values: append($scale-values, round($font-size * $ms));
     $i: $i + 1;
   }
 
@@ -85,7 +85,7 @@
   $j: -2;
   @while $j < 0 {
     $ms: pow($modular-scale, abs($j));
-    $scale-values: append($scale-values, ceil($font-size / $ms));
+    $scale-values: append($scale-values, round($font-size / $ms));
     $j: $j + 1;
   }
 
@@ -95,12 +95,12 @@
 @function line-height($font-size, $base-font-size, $base-line-height) {
   $font-size:        to-px($font-size);
   $base-font-size:   to-px($base-font-size);
-  $base-line-height: to-unitless($base-line-height);
-
-  $multiplier: ceil(to-unitless($font-size) / $base-line-height);
-  $base-line-height: $base-line-height * $multiplier;
-
-  @return strip-units($base-font-size * $base-line-height) / strip-units($font-size);
+  $base-line-height: to-px($base-line-height);
+  $multiplier:       ceil($font-size / $base-line-height); // must be whole integer multiple of $base-line-height so line-height is greater than the font-size
+  @if $base-font-size == $font-size {
+    @return to-unitless($base-line-height);
+  }
+  @return ($base-line-height / $font-size) * $multiplier;
 }
 
 @function line-width($font-size, $line-height) {
@@ -118,38 +118,38 @@
   @return modular-scale-value(map-fetch($breakpoints, $breakpoint-name modular-scale));
 }
 
-@function get-breakpoint-names() {
+@function get-bp-names() {
   @return map-keys($breakpoints);
 }
 
-@function breakpoint-name($i) {
-  @return nth(get-breakpoint-names(), $i);
+@function bp-name($i) {
+  @return nth(get-bp-names(), $i);
 }
 
-@function get-breakpoint-data($i) {
+@function get-bp-data($i) {
   @return nth(nth($breakpoints, $i), 2); // $breakpoints is a nested map. Bypass the name of the breakpoint and get to its properties.
 }
 
-@function breakpoint-size($i) {
-  @return map-get(get-breakpoint-data($i), breakpoint);
+@function bp-size($i) {
+  @return map-get(get-bp-data($i), breakpoint);
 }
 
-@function breakpoint-font-sizes($i) {
-  @return map-get(get-breakpoint-data($i), font-size);
+@function bp-font-sizes($i) {
+  @return map-get(get-bp-data($i), font-size);
 }
 
-@function breakpoint-scale($i) {
-  @return map-get(get-breakpoint-data($i), modular-scale);
+@function bp-scale($i) {
+  @return map-get(get-bp-data($i), modular-scale);
 }
 
-@function breakpoint-base-font-size($i) {
-  @return nth(breakpoint-font-sizes($i), 1);
+@function bp-base-font-size($i) {
+  @return nth(bp-font-sizes($i), 1);
 }
 
-@function breakpoint-base-line-height($i) {
-  @return modular-scale-value(breakpoint-scale($i));
+@function bp-base-line-height($i) {
+  @return round(modular-scale-value(bp-scale($i)) * to-px(bp-base-font-size($i)));
 }
 
-@function breakpoint-scale-values($i) {
-  @return create-scale(breakpoint-font-sizes($i), breakpoint-scale($i));
+@function bp-scale-values($i) {
+  @return create-scale(bp-font-sizes($i), bp-scale($i));
 }

@@ -7,6 +7,7 @@ html {
 body {
   @include rhythm();
   font-family: $body-font;
+  column-count: 2;
 }
 
 a {
@@ -17,6 +18,10 @@ a {
     background-color: $link-background-color;
     transition: background-color .4s, color .4s;
   }
+}
+
+h1, h2, h3 {
+  display: none;
 }
 
 strong, b, .bold {
@@ -44,21 +49,22 @@ blockquote p {
   border-left: .25rem solid $body-color-muted;
   font-style: italic;
   padding-left: 1rem;
+  display: none;
 }
 
 code, pre {
   font-family: $monospace-font;
-  @include font-size(70%);
 }
 
 pre {
   background-color: $code-background-color;
   border-radius: 4px;
   padding: 0 1rem;
+  display: none;
 }
 
 small, .caption {
-
+  // @include font-size(80%);
 }
 
 .caption {

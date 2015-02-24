@@ -32,6 +32,14 @@ $breakpoints: (
   )
 ) !default;
 
+$breakpoints: (
+  bp-0: (
+    breakpoint: 0,
+    font-size: 18px,
+    modular-scale: perfect-fifth
+  )
+);
+
 /*------------------------------------------------------------ */
 /* Modular scales
 -------------------------------------------------------------- */
