@@ -1,7 +1,7 @@
 {
   "name": "jaredhowland/rhythm",
-  "description": "Sass files to create a vertical rhythm based on modular scales",
-  "keywords": ["vertical","rhythm","scss","sass","modular-scale"],
+  "description": "Sass files to create mobile-first responsive websites with vertical rhythm based on modular scales",
+  "keywords": ["vertical","rhythm","scss","sass","modular-scale","responsive","mobile-first"],
   "homepage": "http://github.com/jaredhowland/rhythm",
   "license": "MIT",
   "authors": [

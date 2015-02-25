@@ -1,0 +1,90 @@
+/*------------------------------------------------------------ */
+/* Global variables
+-------------------------------------------------------------- */
+$DEFAULT-BROWSER-FONT-SIZE: 16; // in pixels
+
+/*------------------------------------------------------------ */
+/* Functions
+-------------------------------------------------------------- */
+
+/* Convert from rem, px, %, unitless -> rem, px, %, unitless
+-------------------------------------------------------------- */
+
+@function to-rem($value) {
+  @if(unit($value) == "rem") {
+    @return $value;
+  } @else if(unit($value) == "px") {
+    @return px-to-rem($value);
+  } @else if(unit($value) == "%") {
+    @return percent-to-rem($value);
+  } @else if(unitless($value)) {
+    // assume rem if unitless
+    @return $value * 1rem;
+  } @else {
+    @error "#{$value} is an invalid value for function `to-rem`. Use `rem`, `px`, `%`, or an unitless number instead.";
+  }
+}
+
+@function to-px($value) {
+  @if(unit($value) == "rem") {
+    @return rem-to-px($value);
+  } @else if(unit($value) == "px") {
+    @return $value;
+  } @else if(unit($value) == "%") {
+    @return percent-to-px($value);
+  } @else if(unitless($value)) {
+    // assume rem if unitless
+    @return rem-to-px($value);
+  } @else {
+    @error "#{$value} is an invalid value for function `to-px`. Use `rem`, `px`, `%`, or an unitless number instead.";
+  }
+}
+
+@function to-percent($value) {
+  @if(unit($value) == "rem") {
+    @return percent-to-px($value);
+  } @else if(unit($value) == "px") {
+    @return percent-to-px($value);
+  } @else if(unit($value) == "%") {
+    @return $value;
+  } @else if(unitless($value)) {
+    // assume rem if unitless
+    @return rem-to-percent($value);
+  } @else {
+    @error "#{$value} is an invalid value for function `to-percent`. Use `rem`, `px`, `%`, or an unitless number instead.";
+  }
+}
+
+@function to-unitless($value) {
+  @return strip-units(to-rem($value));
+}
+
+/* Base functions for conversions
+-------------------------------------------------------------- */
+@function px-to-rem($value) {
+  @return strip-units($value) / $DEFAULT-BROWSER-FONT-SIZE * 1rem;
+}
+
+@function percent-to-rem($value) {
+  @return (strip-units($value) / 100) * 1rem;
+}
+
+@function rem-to-px($value){
+  @return strip-units($value) * $DEFAULT-BROWSER-FONT-SIZE * 1px;
+}
+
+@function percent-to-px($value) {
+  @return (strip-units($value) / 100) * $DEFAULT-BROWSER-FONT-SIZE * 1px;
+}
+
+@function rem-to-percent($value) {
+  @return strip-units($value) * 100 + 0% ;
+}
+
+@function px-to-percent($value) {
+  @return strip-units($value) / $DEFAULT-BROWSER-FONT-SIZE * 100 + 0%;
+}
+
+@function strip-units($value) {
+  @return ($value) / ($value * 0 + 1);
+}

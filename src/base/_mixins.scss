@@ -1,0 +1,385 @@
+/*------------------------------------------------------------ */
+/* Mixins
+-------------------------------------------------------------- */
+
+@mixin rhythm() {
+  @include set-sizes(1);
+  $font-scales: (bp-name(1): bp-scale-values(1)) !global;
+  // Loop through all breakpoints.
+  @for $i from 2 through length($breakpoints) {
+    @include breakpoint(bp-name($i)) {
+      @include set-sizes($i);
+      $font-scales: map-merge($font-scales, (bp-name($i): bp-scale-values($i))) !global;
+    }
+  }
+}
+
+// $i is breakpoint number (1 through number of breakpoints defined in $breakpoints map)
+@mixin set-sizes($i) {
+  $base-font-size:         bp-base-font-size($i);
+  $base-line-height:       bp-base-line-height($i);
+  $base-line-height-ratio: bp-base-line-height-ratio($i);
+  $scale-values:           bp-scale-values($i);
+
+  font-size:   to-rem($base-font-size);
+  line-height: $base-line-height-ratio;
+
+  @at-root .tera {
+    $tera-rem: to-rem(nth($scale-values, 9));
+    $tera: append($tera, to-px($tera-rem)) !global;
+    font-size: $tera-rem;
+    line-height: line-height($tera-rem, $i);
+  }
+  @at-root .giga {
+    $giga-rem: to-rem(nth($scale-values, 8));
+    $giga: append($giga, to-px($giga-rem)) !global;
+    font-size: $giga-rem;
+    line-height: line-height($giga-rem, $i);
+  }
+  @at-root .mega {
+    $mega-rem: to-rem(nth($scale-values, 7));
+    $mega: append($mega, to-px($mega-rem)) !global;
+    font-size: $mega-rem;
+    line-height: line-height($mega-rem, $i);
+  }
+  @at-root h1, .h1, .alpha {
+    $alpha-rem: to-rem(nth($scale-values, 6));
+    $alpha: append($alpha, to-px($alpha-rem)) !global;
+    $h1: $alpha !global;
+    font-size: $alpha-rem;
+    line-height: line-height($alpha-rem, $i);
+  }
+  @at-root h2, .h2, .beta {
+    $beta-rem: to-rem(nth($scale-values, 5));
+    $beta: append($beta, to-px($beta-rem)) !global;
+    $h2: $beta !global;
+    font-size: $beta-rem;
+    line-height: line-height($beta-rem, $i);
+  }
+  @at-root h3, .h3, .gamma {
+    $gamma-rem: to-rem(nth($scale-values, 4));
+    $gamma: append($gamma, to-px($gamma-rem)) !global;
+    $h3: $gamma !global;
+    font-size: $gamma-rem;
+    line-height: line-height($gamma-rem, $i);
+  }
+  @at-root h4, .h4, .delta {
+    $delta-rem: to-rem(nth($scale-values, 3));
+    $delta: append($delta, to-px($delta-rem)) !global;
+    $h4: $delta !global;
+    font-size: $delta-rem;
+    line-height: line-height($delta-rem, $i);
+  }
+  @at-root h5, .h5, .epsilon {
+    $epsilon-rem: to-rem(nth($scale-values, 2));
+    $epsilon: append($epsilon, to-px($epsilon-rem)) !global;
+    $h5: $epsilon !global;
+    font-size: $epsilon-rem;
+    line-height: line-height($epsilon-rem, $i);
+  }
+  @at-root h6, .h6, .zeta {
+    $zeta-rem: to-rem(nth($scale-values, 1));
+    $zeta: append($zeta, to-px($zeta-rem)) !global;
+    $h6: $zeta !global;
+    font-size: $zeta-rem;
+    line-height: line-height($zeta-rem, $i);
+  }
+
+  @at-root section, .section {
+    margin: 0 auto;
+    max-width: to-rem(max-line-width($base-font-size, $base-line-height-ratio));
+  }
+}
+
+/*------------------------------------------------------------ */
+/* Breakpoints
+-------------------------------------------------------------- */
+
+// Parts based on https://gist.github.com/timknight/03e6335b8816aa534cf7 and
+// https://github.com/designbyjake/sassline/blob/master/assets/sass/base/_mixins.scss
+@mixin breakpoint($breakpoint-name: all) {
+  // Type of break variable
+  $value: type-of($breakpoint-name);
+
+  // If it is a string (i.e. a breakpoint variable).
+  @if $value == string {
+    // If using 'bp-1', 'bp-2' etc output the correct breakpoints from map.
+    @if map-has-key($breakpoints, $breakpoint-name) {
+      $breakpoints: map-get($breakpoints, $breakpoint-name);
+      @if map-has-key($breakpoints, breakpoint) {
+        @media screen and (min-width: #{to-rem(map-get($breakpoints, breakpoint))} ) { @content; }
+      } @else {
+        @warn "#{$breakpoint-name} does not have a defined `breakpoint` value.";
+      }
+    } @else if $breakpoint-name == all {
+      @media all { @content; }
+    } @else {
+      @warn "`#{$breakpoint-name}` is not valid to use as a breakpoint. `all` was used instead.";
+      @media all { @content; }
+    }
+
+  // If it is a number, use this for the breakpoint.
+  } @else if $value == number {
+    @media screen and (min-width: #{to-px($breakpoint-name)}) { @content; }
+  } @else {
+    @warn "`#{$breakpoint-name}` is not valid to use as a breakpoint. `all` was used instead";
+    @media all { @content; }
+  }
+}
+
+/*------------------------------------------------------------ */
+/* font-size
+-------------------------------------------------------------- */
+@mixin font-size($font-sizes, $inline: false) {
+  $font-size: nth($font-sizes, 1);
+  font-size: to-rem($font-size);
+  @if $inline == false {
+    line-height: line-height($font-size, 1);
+  }
+  // If only one font-size, set it for all breakpoints with appropriate line-height
+  @if length($font-sizes) == 1 {
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        font-size: to-rem($font-size);
+        @if $inline == false {
+          line-height: line-height($font-size, $i);
+        }
+      }
+    }
+  // If more than one font-size is passed, make sure there are the same number of font-sizes as there are defined breakpoints
+  } @else if length($font-sizes) == length($breakpoints) {
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $font-size: nth($font-sizes, $i);
+      @include breakpoint(bp-name($i)) {
+        font-size: to-rem($font-size);
+        @if $inline == false {
+          line-height: line-height($font-size, $i);
+        }
+      }
+    }
+  } @else {
+    @error "You have used #{length($font-sizes)} font-sizes. You have defined #{length($breakpoints)} breakpoints. You can only use 1 font-size or the same number of font-sizes as there are breakpoints.";
+  }
+}
+
+/*------------------------------------------------------------ */
+/* line-height
+-------------------------------------------------------------- */
+
+@mixin line-height($font-sizes, $scale: 1) {
+  $scale: round($scale);
+  @if length($font-sizes) == 1 {
+    line-height: $scale * (line-height($font-sizes, 1));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        line-height: $scale * (line-height($font-sizes, $i));
+      }
+    }
+  } @else if length($font-sizes) == length($breakpoints) {
+    line-height: $scale * (line-height(nth($font-sizes, 1), 1));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $font-size: nth($font-sizes, $i);
+      @include breakpoint(bp-name($i)) {
+        line-height: $scale * (line-height($font-size, $i));
+      }
+    }
+  } @else {
+    @error "You have used #{length($font-sizes)} font-sizes. You have defined #{length($breakpoints)} breakpoints. You can only use 1 font-size or the same number of font-sizes as there are breakpoints.";
+  }
+}
+
+/*------------------------------------------------------------ */
+/* Padding
+-------------------------------------------------------------- */
+
+@mixin padding($scale: 1 0, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    @for $i from 1 through length($scale) {
+      $scale: set-nth($scale, $i, round(nth($scale, $i)));
+    }
+  }
+  @if length($scale) == 1 {
+    padding: line-height(bp-base-font-size(1), 1) * nth($scale, 1);
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: line-height(bp-base-font-size($i), $i) * nth($scale, 1);
+      }
+    }
+  } @else if length($scale) == 2 {
+    padding: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2));
+      }
+    }
+  } @else if length($scale) == 3 {
+    padding: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3));
+      }
+    }
+  } @else if length($scale) == 4 {
+    padding: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3)) (line-height(bp-base-font-size(1), 1) * nth($scale, 4));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3)) (line-height(bp-base-font-size($i), $i) * nth($scale, 4));
+      }
+    }
+  } @else {
+    @error "Invalid number of padding values. Use 1, 2, 3, or 4 values only.";
+  }
+}
+
+@mixin padding-top($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    padding-top: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding-top: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "padding-top mixin can only accept a single value.";
+  }
+}
+
+@mixin padding-bottom($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    padding-bottom: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        padding-bottom: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "padding-bottom mixin can only accept a single value.";
+  }
+}
+
+/*------------------------------------------------------------ */
+/* Margin
+-------------------------------------------------------------- */
+
+@mixin margin($scale: 1 0, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    @for $i from 1 through length($scale) {
+      $scale: set-nth($scale, $i, round(nth($scale, $i)));
+    }
+  }
+  @if length($scale) == 1 {
+    margin: line-height(bp-base-font-size(1), 1) * nth($scale, 1);
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: line-height(bp-base-font-size($i), $i) * nth($scale, 1);
+      }
+    }
+  } @else if length($scale) == 2 {
+    margin: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2));
+      }
+    }
+  } @else if length($scale) == 3 {
+    margin: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3));
+      }
+    }
+  } @else if length($scale) == 4 {
+    margin: (line-height(bp-base-font-size(1), 1) * nth($scale, 1)) (line-height(bp-base-font-size(1), 1) * nth($scale, 2)) (line-height(bp-base-font-size(1), 1) * nth($scale, 3)) (line-height(bp-base-font-size(1), 1) * nth($scale, 4));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin: (line-height(bp-base-font-size($i), $i) * nth($scale, 1)) (line-height(bp-base-font-size($i), $i) * nth($scale, 2)) (line-height(bp-base-font-size($i), $i) * nth($scale, 3)) (line-height(bp-base-font-size($i), $i) * nth($scale, 4));
+      }
+    }
+  } @else {
+    @error "Invalid number of margin values. Use 1, 2, 3, or 4 values only.";
+  }
+}
+
+@mixin margin-top($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    margin-top: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin-top: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "margin-top mixin can only accept a single value.";
+  }
+}
+
+@mixin margin-bottom($scale: 1, $decimal: false) {
+  @if $decimal {
+    $scale: $scale;
+  } @else {
+    $scale: round($scale);
+  }
+  @if length($scale) == 1 {
+    margin-bottom: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        margin-bottom: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+  } @else {
+    @error "margin-bottom mixin can only accept a single value.";
+  }
+}
+
+/*------------------------------------------------------------ */
+/* Drop caps
+-------------------------------------------------------------- */
+
+@mixin dropcap($float-position, $font-size, $font-family, $txt-indent, $margin, $padding, $color, $line-height, $bg) {
+  &:first-letter {
+    float: $float-position;
+    margin: $margin;
+    padding: $padding;
+    font-size: $font-size;
+    font-family: $font-family;
+    line-height: $line-height;
+    text-indent: $txt-indent;
+    background: $bg;
+    color: $color;
+  }
+}

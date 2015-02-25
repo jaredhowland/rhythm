@@ -1,0 +1,157 @@
+// https://gist.github.com/jlong/8760275
+// map-fetch($map, $keys)
+//
+// An easy way to fetch a deep value in a multi-level map. Works much like
+// map-get() except that you pass multiple keys as the second parameter to
+// go down multiple levels in the nested map.
+//
+@function map-fetch($map, $keys) {
+  $key: nth($keys, 1);
+  $length: length($keys);
+  $value: map-get($map, $key);
+  @if ($length > 1) {
+    $rest: ();
+    @for $i from 2 through $length {
+      $rest: append($rest, nth($keys, $i))
+    }
+    @return map-fetch($value, $rest)
+  } @else {
+    @return $value;
+  }
+}
+
+@function line-height($font-size, $i: 1) {
+  $font-size:   to-px($font-size);
+  $line-height: round(bp-base-font-size($i) * bp-base-line-height-ratio($i));
+  $multiplier:  ceil(strip-units($font-size) / strip-units($line-height));
+  @return strip-units(($line-height * $multiplier) / $DEFAULT_BROWSER_FONT_SIZE) * 1rem;
+}
+
+// http://www.pearsonified.com/2011/12/golden-ratio-typography.php
+// (line-height (in px))^2
+@function max-line-width($font-size, $line-height) {
+  $line-height: strip-units(to-px($line-height));
+  @return $line-height * $line-height * 1px;
+}
+
+/*------------------------------------------------------------ */
+/* Modular scale functions
+-------------------------------------------------------------- */
+
+// Value of scale name from the $breakpoints map
+@function modular-scale-value($scale-name) {
+  // If $scale-name is a number, return $scale-name as a unitless value.
+  @if(type-of($scale-name) == number) {
+    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `#{to-unitless($scale-name)}` will be used as the modular scale (`#{$scale-name}` converted into unitless rem equivalent). Use the `add-custom-scale` function to add a custom scale.";
+    @return to-unitless($scale-name);
+  // Check to see if $scale-name is a valid value. Return the value of $scale-name if it is valid.
+  } @else if map-has-key($modular-scales, unquote($scale-name)) {
+    @return map-get($modular-scales, $scale-name);
+  // Otherwise, return the golden ratio scale (1.618).
+  } @else {
+    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `golden` was used instead. Use the `add-custom-scale` function to add a custom scale.";
+    @return map-get($modular-scales, golden); // default to golden ratio if invalid
+  }
+}
+
+// Create scale based on all font-sizes in the $breakpoint map
+@function create-scale($font-sizes, $modular-scale: golden) {
+  $modular-scale: modular-scale-value($modular-scale);
+  $scale-values: ();
+
+  // Use all listed font-sizes from $breakpoints map to generate a modular scale
+  @each $font-size in $font-sizes {
+    $font-size: to-px($font-size);
+    $scale: create-scale-values($font-size, $modular-scale); // returns 9 font-sizes on the same modular scale
+    $scale-values: sort-list(append($scale, $scale-values)); // sort from smallest to largest
+  }
+
+  // For scales that include more than one font-size
+  @if length($scale-values) > 9 {
+    $scale-values:       remove-duplicates($scale-values);
+    $base-font-size:     to-px(nth($font-sizes, 1));
+    $base-font-location: index($scale-values, $base-font-size);
+
+    // Use 2 values smaller than base font size and 6 values larger than base font size
+    $first-value: $base-font-location - 2;
+    $last-value: $base-font-location + 6;
+    $scale-values: slice($scale-values, $first-value, $last-value);
+  }
+
+  @return $scale-values;
+}
+
+// Create 9 values based on the scale and base font size for individual breakpoint
+@function create-scale-values($font-size, $modular-scale) {
+  $scale-values: $font-size;
+
+  // larger font than base size (6 values)
+  $i: 1;
+  @while $i < 7 {
+    $ms: pow($modular-scale, $i);
+    $scale-values: append($scale-values, round($font-size * $ms));
+    $i: $i + 1;
+  }
+
+  // smaller font than base size (2 values)
+  $j: -2;
+  @while $j < 0 {
+    $ms: pow($modular-scale, abs($j));
+    $scale-values: append($scale-values, round($font-size / $ms));
+    $j: $j + 1;
+  }
+
+  @return $scale-values; // 9 values
+}
+
+/*------------------------------------------------------------ */
+/* Breakpoint functions
+-------------------------------------------------------------- */
+
+@function get-bp-names() {
+  @return map-keys($breakpoints);
+}
+
+@function bp-name($i) {
+  @return nth(get-bp-names(), $i);
+}
+
+@function get-bp-data($i) {
+  @return nth(nth($breakpoints, $i), 2); // $breakpoints is a nested map. Bypass the name of the breakpoint and get to its properties.
+}
+
+@function bp-size($i) { // in `rem`s
+  @return to-rem(map-get(get-bp-data($i), breakpoint));
+}
+
+@function bp-font-sizes($i) {
+  @return map-get(get-bp-data($i), font-size);
+}
+
+@function bp-scale-name($i) { // name to use for creating modular scales
+  @return map-get(get-bp-data($i), modular-scale);
+}
+
+@function bp-scale($i) { // ratio to use for creating modular scales
+  @return modular-scale-value(bp-scale-name($i));
+}
+
+@function bp-scale-values($i) {
+  @return create-scale(bp-font-sizes($i), bp-scale-name($i));
+}
+
+@function bp-base-font-size($i) { // in `px`s
+  @return to-px(nth(bp-font-sizes($i), 1));
+}
+
+@function bp-base-line-height($i) { // in `px`s
+  @return round(bp-scale($i) * bp-base-font-size($i));
+}
+
+@function bp-base-line-height-ratio($i) { // unitless ratio
+  @return strip-units(bp-base-line-height($i) / bp-base-font-size($i));
+}
+
+@function bp-base-scale-ratio($i) { // unitless ratio
+  @return bp-base-line-height-ratio($i);
+}

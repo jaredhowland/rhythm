@@ -1,0 +1,114 @@
+html {
+  text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
+}
+
+body {
+  @include rhythm();
+  font-family: $body-font;
+}
+
+p {
+  & + p {
+    text-indent: $indent-value;
+  }
+
+  // No indent for drop caps
+  + .drop-cap {
+    text-indent: 0;
+  }
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  &:hover, &:active, &:focus {
+    color: $link-hover-color;
+    background-color: $link-background-color;
+    transition: background-color .4s, color .4s;
+  }
+}
+
+strong, b, .bold {
+  font-weight: 700;
+}
+
+em, i, .italic {
+  font-style: italic;
+}
+
+ol li, ul li {
+  font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
+  margin-left: 0;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+blockquote p {
+  border-left: .25rem solid $body-color-muted;
+  font-style: italic;
+  padding-left: 1rem;
+  @include font-size(16px);
+}
+
+code, pre {
+  font-family: $monospace-font;
+}
+
+pre {
+  @include font-size(16px);
+  @include padding(1);
+  background-color: $code-background-color;
+  border-radius: 4px;
+}
+
+code {
+  @include font-size(16px, true);
+}
+
+small, .caption {
+  @extend .epsilon;
+}
+
+.drop-cap {
+  @include dropcap(
+    $dropcap-float-position,
+    $dropcap-font-size,
+    $dropcap-font-family,
+    $dropcap-txt-indent,
+    $dropcap-margin,
+    $dropcap-padding,
+    $dropcap-color,
+    $dropcap-line-height,
+    $dropcap-bg
+  );
+}
+
+.caption {
+  color: lighten($body-color, 20%);
+}
+
+.upper {
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+}
+
+.small-caps {
+  font-feature-settings: 'smcp' 1, 'kern' 1;
+  letter-spacing: .1rem;
+}
+
+.lining-numerals {
+    font-feature-settings: 'lnum' 1, 'kern' 1;
+}
+
+.oldstyle-numerals {
+    font-feature-settings: 'onum' 1, 'kern' 1;
+}
