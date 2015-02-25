@@ -4,10 +4,12 @@
 
 @mixin rhythm() {
   @include set-sizes(1);
+  $font-scales: (bp-name(1): bp-scale-values(1)) !global;
   // Loop through all breakpoints.
   @for $i from 2 through length($breakpoints) {
     @include breakpoint(bp-name($i)) {
       @include set-sizes($i);
+      $font-scales: map-merge($font-scales, (bp-name($i): bp-scale-values($i))) !global;
     }
   }
 }
@@ -23,49 +25,58 @@
   line-height: $base-line-height-ratio;
 
   @at-root .tera {
-    $tera: to-rem(nth($scale-values, 9));
-    font-size: $tera;
-    line-height: line-height($tera, $i);
+    $tera-rem: to-rem(nth($scale-values, 9));
+    $tera: append($tera, to-px($tera-rem)) !global;
+    font-size: $tera-rem;
+    line-height: line-height($tera-rem, $i);
   }
   @at-root .giga {
-    $giga: to-rem(nth($scale-values, 8));
-    font-size: $giga;
-    line-height: line-height($giga, $i);
+    $giga-rem: to-rem(nth($scale-values, 8));
+    $giga: append($giga, to-px($giga-rem)) !global;
+    font-size: $giga-rem;
+    line-height: line-height($giga-rem, $i);
   }
   @at-root .mega {
-    $mega: to-rem(nth($scale-values, 7));
-    font-size: $mega;
-    line-height: line-height($mega, $i);
+    $mega-rem: to-rem(nth($scale-values, 7));
+    $mega: append($mega, to-px($mega-rem)) !global;
+    font-size: $mega-rem;
+    line-height: line-height($mega-rem, $i);
   }
   @at-root h1, .h1, .alpha {
-    $alpha: to-rem(nth($scale-values, 6));
-    font-size: $alpha;
-    line-height: line-height($alpha, $i);
+    $alpha-rem: to-rem(nth($scale-values, 6));
+    $alpha: append($alpha, to-px($alpha-rem)) !global;
+    font-size: $alpha-rem;
+    line-height: line-height($alpha-rem, $i);
   }
   @at-root h2, .h2, .beta {
-    $beta: to-rem(nth($scale-values, 5));
-    font-size: $beta;
-    line-height: line-height($beta, $i);
+    $beta-rem: to-rem(nth($scale-values, 5));
+    $beta: append($beta, to-px($beta-rem)) !global;
+    font-size: $beta-rem;
+    line-height: line-height($beta-rem, $i);
   }
   @at-root h3, .h3, .gamma {
-    $gamma: to-rem(nth($scale-values, 4));
-    font-size: $gamma;
-    line-height: line-height($gamma, $i);
+    $gamma-rem: to-rem(nth($scale-values, 4));
+    $gamma: append($gamma, to-px($gamma-rem)) !global;
+    font-size: $gamma-rem;
+    line-height: line-height($gamma-rem, $i);
   }
   @at-root h4, .h4, .delta {
-    $delta: to-rem(nth($scale-values, 3));
-    font-size: $delta;
-    line-height: line-height($delta, $i);
+    $delta-rem: to-rem(nth($scale-values, 3));
+    $delta: append($delta, to-px($delta-rem)) !global;
+    font-size: $delta-rem;
+    line-height: line-height($delta-rem, $i);
   }
   @at-root h5, .h5, .epsilon {
-    $epsilon: to-rem(nth($scale-values, 2));
-    font-size: $epsilon;
-    line-height: line-height($epsilon, $i);
+    $epsilon-rem: to-rem(nth($scale-values, 2));
+    $epsilon: append($epsilon, to-px($epsilon-rem)) !global;
+    font-size: $epsilon-rem;
+    line-height: line-height($epsilon-rem, $i);
   }
   @at-root h6, .h6, .zeta {
-    $zeta: to-rem(nth($scale-values, 1));
-    font-size: $zeta;
-    line-height: line-height($zeta, $i);
+    $zeta-rem: to-rem(nth($scale-values, 1));
+    $zeta: append($zeta, to-px($zeta-rem)) !global;
+    font-size: $zeta-rem;
+    line-height: line-height($zeta-rem, $i);
   }
 
   @at-root section, .section {
@@ -108,17 +119,29 @@
 }
 
 @mixin font-size($font-size, $inline: false) {
-  font-size:   to-rem($font-size);
+  font-size: to-rem($font-size);
   @if $inline == false {
     line-height: line-height($font-size, 1);
   }
   // Loop through all breakpoints.
   @for $i from 2 through length($breakpoints) {
     @include breakpoint(bp-name($i)) {
-      font-size:   to-rem($font-size);
+      font-size: to-rem($font-size);
       @if $inline == false {
         line-height: line-height($font-size, $i);
       }
+    }
+  }
+}
+
+@mixin modular-font-size($scale-values) {
+  font-size: to-rem(nth($scale-values, 1));
+  line-height: line-height(nth($scale-values, 1), 1);
+  // Loop through all breakpoints.
+  @for $i from 2 through length($breakpoints) {
+    @include breakpoint(bp-name($i)) {
+      font-size: to-rem(nth($scale-values, $i));
+      line-height: line-height(nth($scale-values, $i), $i);
     }
   }
 }

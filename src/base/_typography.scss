@@ -6,9 +6,7 @@ html {
 
 body {
   @include rhythm();
-  @include padding(1);
   font-family: $body-font;
-  column-count: 2;
 }
 
 p {
@@ -20,6 +18,10 @@ p {
   + .drop-cap {
     text-indent: 0;
   }
+}
+
+h2 {
+  @include modular-font-size($tera);
 }
 
 a {
@@ -66,6 +68,7 @@ code, pre {
 
 pre {
   @include font-size(16px);
+  @include padding(1);
   background-color: $code-background-color;
   border-radius: 4px;
 }

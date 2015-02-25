@@ -34,6 +34,17 @@ $breakpoints: (
 /* Modular scales
 -------------------------------------------------------------- */
 $modular-scales: () !default; // Used to define custom scales if desired
+
+$tera:    (); // DO NOT EDIT
+$giga:    (); // DO NOT EDIT
+$mega:    (); // DO NOT EDIT
+$alpha:   (); // DO NOT EDIT
+$beta:    (); // DO NOT EDIT
+$gamma:   (); // DO NOT EDIT
+$delta:   (); // DO NOT EDIT
+$epsilon: (); // DO NOT EDIT
+$zeta:    (); // DO NOT EDIT
+
 $modular-scale-ratios: (
   golden:           1.618,
   minor-second:     1.067,

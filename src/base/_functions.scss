@@ -28,10 +28,10 @@
 }
 
 // http://www.pearsonified.com/2011/12/golden-ratio-typography.php
-// (font-size (in px) * line-height)^2
+// (line-height (in px))^2
 @function max-line-width($font-size, $line-height) {
-  $font-size: strip-units(to-px($font-size));
-  @return pow(($font-size * $line-height), 2) * 1px;
+  $line-height: strip-units(to-px($line-height));
+  @return $line-height * $line-height * 1px;
 }
 
 /*------------------------------------------------------------ */
@@ -115,6 +115,48 @@
   @return $scale-values; // 9 values
 }
 
+@function tera() {
+  @return null;
+  // @return nth(bp-scale-values(1), 9);
+  // $font-size: to-rem(nth(bp-scale-values(1), 9));
+  // font-size: to-rem(nth(bp-scale-values(1), 9));
+  // line-height: line-height($font-size, 1);
+  // // Loop through all breakpoints.
+  // @for $i from 2 through length($breakpoints) {
+  //   @include breakpoint(bp-name($i)) {
+  //     font-size: to-rem($font-size);
+  //     @if $inline == false {
+  //       line-height: line-height($font-size, $i);
+  //     }
+  //   }
+  // }
+}
+//
+// @function giga() {
+//   @return nth(bp-scale-values(1), 8);
+// }
+// @function mega() {
+//   @return nth(bp-scale-values(1), 7);
+// }
+// @function alpha() {
+//   @return nth(bp-scale-values(1), 6);
+// }
+// @function beta() {
+//   @return nth(bp-scale-values(1), 5);
+// }
+// @function gama() {
+//   @return nth(bp-scale-values(1), 4);
+// }
+// @function delta() {
+//   @return nth(bp-scale-values(1), 3);
+// }
+// @function epsilon() {
+//   @return nth(bp-scale-values(1), 2);
+// }
+// @function zeta() {
+//   @return nth(bp-scale-values(1), 1);
+// }
+
 /*------------------------------------------------------------ */
 /* Breakpoint functions
 -------------------------------------------------------------- */
@@ -139,7 +181,7 @@
   @return map-get(get-bp-data($i), font-size);
 }
 
-@function bp-scale-name($i) { // ratio to use for creating modular scales
+@function bp-scale-name($i) { // name to use for creating modular scales
   @return map-get(get-bp-data($i), modular-scale);
 }
 
