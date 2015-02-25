@@ -643,7 +643,7 @@ $breakpoints: (
     font-size: 16px 18px,
     modular-scale: my-scale
   )
-}
+);
 ```
 
 Rhythm also creates lists for every breakpoint for various font sizes based on the selected modular scale. The Rhythm implementation of this closely resembles the one found in the article "[Pragmatic, Practical Font Sizing in CSS][6]." Specifically, it sets the following variables from largest font size to smallest:
