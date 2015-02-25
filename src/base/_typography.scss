@@ -20,10 +20,6 @@ p {
   }
 }
 
-h2 {
-  @include modular-font-size($tera);
-}
-
 a {
   color: $link-color;
   text-decoration: none;
