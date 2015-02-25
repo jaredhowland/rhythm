@@ -520,7 +520,7 @@ The `padding()`, `padding-top()`, and `padding-bottom()` mixins work exactly lik
 
 Variables
 =========
-The following variables (show with their default values) can be redefined before importing Rhythm:
+The following variables (shown with their default values) can be redefined before importing Rhythm:
 
 ```scss
 /*------------------------------------------------------------ */
