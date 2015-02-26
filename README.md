@@ -1,6 +1,6 @@
 Rhythm
 ======
-Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3]. Translated, Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.
+Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3]. Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.
 
 Installation
 ============
