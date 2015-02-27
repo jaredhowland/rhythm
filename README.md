@@ -196,7 +196,7 @@ h2 {
 
 ```scss
 span {
-  @include font-size($epsilon, true);
+  @include font-size($epsilon, false);
 }
 ```
 
