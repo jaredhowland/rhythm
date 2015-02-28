@@ -1,0 +1,18 @@
+body {
+  @include padding(1);
+}
+
+h1, h2 {
+  @include margin(2 0 1 0);
+}
+//
+// pre {
+//   @include font-size(16px);
+//   @include padding(1);
+//   background-color: $code-background-color;
+//   border-radius: 4px;
+// }
+//
+// code {
+//   @include font-size(16px, true);
+// }

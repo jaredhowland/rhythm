@@ -1,0 +1,128 @@
+/*------------------------------------------------------------ */
+/* Breakpoint defaults
+-------------------------------------------------------------- */
+
+$breakpoints: (
+  bp-0: (
+    breakpoint: 0px, // Mobile first
+    font-size: 16px 18px,
+    line-height: 1.3,
+    modular-scale: golden
+  ),
+  bp-1: (
+    breakpoint: 480px, // ~ Extra small screen up
+    font-size: 18px 20px,
+    line-height: 1.5,
+    modular-scale: golden
+  ),
+  bp-2: (
+    breakpoint: 768px, // ~ Small screen/tablet up
+    font-size: 20px 22px,
+    modular-scale: golden // no line-height specified so scale is used
+  ),
+  bp-3: (
+    breakpoint: 992px, // ~ Medium screen up
+    font-size: 22px 24px,
+    modular-scale: golden // no line-height specified so scale is used
+  ),
+  bp-4: (
+    breakpoint: 1200px, // ~Desktop up
+    font-size: 24px 26px,
+    modular-scale: golden // no line-height specified so scale is used
+  )
+) !default;
+
+/*------------------------------------------------------------ */
+/* Modular scales
+-------------------------------------------------------------- */
+$modular-scales: () !default; // Used to define custom scales if desired
+
+$tera:    (); // DO NOT EDIT
+$giga:    (); // DO NOT EDIT
+$mega:    (); // DO NOT EDIT
+$alpha:   (); // DO NOT EDIT
+$h1:      (); // DO NOT EDIT
+$beta:    (); // DO NOT EDIT
+$h2:      (); // DO NOT EDIT
+$gamma:   (); // DO NOT EDIT
+$h3:      (); // DO NOT EDIT
+$delta:   (); // DO NOT EDIT
+$h4:      (); // DO NOT EDIT
+$epsilon: (); // DO NOT EDIT
+$h5:      (); // DO NOT EDIT
+$zeta:    (); // DO NOT EDIT
+$h6:      (); // DO NOT EDIT
+
+$modular-scale-ratios: (
+  golden:           1.618,
+  minor-second:     1.067,
+  major-second:     1.125,
+  minor-third:      1.2,
+  major-third:      1.25,
+  perfect-fourth:   1.333,
+  augmented-fourth: 1.414,
+  perfect-fifth:    1.5,
+  minor-sixth:      1.6,
+  major-sixth:      1.667,
+  minor-seventh:    1.778,
+  major-seventh:    1.875,
+  octave:           2,
+  major-tenth:      2.5,
+  major-eleventh:   2.667,
+  major-twelfth:    3,
+  double-octave:    4
+);
+
+$modular-scales: map-merge($modular-scale-ratios, $modular-scales);
+
+/*------------------------------------------------------------ */
+/* Fonts
+-------------------------------------------------------------- */
+
+// Serif fonts.
+$serif-font-family: 'Georgia, serif' !default;
+
+// Sans-serif fonts.
+$sans-serif-font-family: 'Helvetica, sans-serif' !default;
+
+// Monospace fonts.
+$monospace-font-family: 'Menlo, monospace' !default;
+
+// Default font types.
+$body-font:      unquote($serif-font-family) !default;
+$heading-font:   unquote($serif-font-family) !default;
+$monospace-font: unquote($monospace-font-family) !default;
+
+/*------------------------------------------------------------ */
+/* Typography
+-------------------------------------------------------------- */
+
+// Indent value for paragraphs
+$indent-value: 1rem !default;
+
+// Drop caps.
+$dropcap-float-position: left !default;
+$dropcap-font-size:      4em !default;
+$dropcap-font-family:    inherit !default;
+$dropcap-txt-indent:     0 !default;
+$dropcap-margin:         10px 10px 0 0 !default;
+$dropcap-padding:        0 20px !default;
+$dropcap-color:          inherit !default;
+$dropcap-line-height:    1 !default;
+$dropcap-bg:             transparent !default;
+
+/*------------------------------------------------------------ */
+/* Colors
+-------------------------------------------------------------- */
+
+// Background colors.
+$background-color:      #F5F5F5 !default;
+$code-background-color: #F5F4F2 !default;
+
+// Text colors.
+$heading-color:         #2E2E2E !default;
+$body-color:            #444444 !default;
+$body-color-muted:      #CCCCCC !default;
+$link-color:            #265C83 !default;
+$link-hover-color:      lighten($link-color, 10%) !default;
+$link-background-color: transparent !default;

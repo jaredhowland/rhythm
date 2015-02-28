@@ -1,0 +1,427 @@
+/*------------------------------------------------------------ */
+/* Initialization
+-------------------------------------------------------------- */
+
+/**
+ * Initializes Rhythm by creating variables and setting
+ * font-size and line-height for all breakpoints
+ *
+ * @param null
+ */
+@mixin rhythm() {
+  @include set-sizes(1);
+  $font-scales: (bp-name(1): bp-scale-values(1)) !global;
+  // Loop through all breakpoints.
+  @for $i from 2 through length($breakpoints) {
+    @include breakpoint(bp-name($i)) {
+      @include set-sizes($i);
+      $font-scales: map-merge($font-scales, (bp-name($i): bp-scale-values($i))) !global;
+    }
+  }
+}
+
+/**
+ * Set sizes for elements, classes, and variables for breakpoint $i
+ *
+ * @param null
+ */
+@mixin set-sizes($i) {
+  $base-font-size:         bp-base-font-size($i);
+  $base-line-height:       bp-base-line-height($i);
+  $base-line-height-ratio: bp-base-line-height-ratio($i);
+  $scale-values:           bp-scale-values($i);
+
+  font-size:   to-rem($base-font-size);
+  line-height: to-rem($base-line-height);
+
+  @at-root .tera {
+    $tera-rem: to-rem(nth($scale-values, 9));
+    $tera: append($tera, to-px($tera-rem)) !global;
+    font-size: $tera-rem;
+    line-height: line-height($tera-rem, $i);
+  }
+  @at-root .giga {
+    $giga-rem: to-rem(nth($scale-values, 8));
+    $giga: append($giga, to-px($giga-rem)) !global;
+    font-size: $giga-rem;
+    line-height: line-height($giga-rem, $i);
+  }
+  @at-root .mega {
+    $mega-rem: to-rem(nth($scale-values, 7));
+    $mega: append($mega, to-px($mega-rem)) !global;
+    font-size: $mega-rem;
+    line-height: line-height($mega-rem, $i);
+  }
+  @at-root h1, .h1, .alpha {
+    $alpha-rem: to-rem(nth($scale-values, 6));
+    $alpha: append($alpha, to-px($alpha-rem)) !global;
+    $h1: $alpha !global;
+    font-size: $alpha-rem;
+    line-height: line-height($alpha-rem, $i);
+  }
+  @at-root h2, .h2, .beta {
+    $beta-rem: to-rem(nth($scale-values, 5));
+    $beta: append($beta, to-px($beta-rem)) !global;
+    $h2: $beta !global;
+    font-size: $beta-rem;
+    line-height: line-height($beta-rem, $i);
+  }
+  @at-root h3, .h3, .gamma {
+    $gamma-rem: to-rem(nth($scale-values, 4));
+    $gamma: append($gamma, to-px($gamma-rem)) !global;
+    $h3: $gamma !global;
+    font-size: $gamma-rem;
+    line-height: line-height($gamma-rem, $i);
+  }
+  @at-root h4, .h4, .delta {
+    $delta-rem: to-rem(nth($scale-values, 3));
+    $delta: append($delta, to-px($delta-rem)) !global;
+    $h4: $delta !global;
+    font-size: $delta-rem;
+    line-height: line-height($delta-rem, $i);
+  }
+  @at-root h5, .h5, .epsilon {
+    $epsilon-rem: to-rem(nth($scale-values, 2));
+    $epsilon: append($epsilon, to-px($epsilon-rem)) !global;
+    $h5: $epsilon !global;
+    font-size: $epsilon-rem;
+    line-height: line-height($epsilon-rem, $i);
+  }
+  @at-root h6, .h6, .zeta {
+    $zeta-rem: to-rem(nth($scale-values, 1));
+    $zeta: append($zeta, to-px($zeta-rem)) !global;
+    $h6: $zeta !global;
+    font-size: $zeta-rem;
+    line-height: line-height($zeta-rem, $i);
+  }
+
+  @at-root section, .section {
+    margin: 0 auto;
+    max-width: to-rem(max-line-width($base-font-size, $base-line-height-ratio));
+  }
+}
+
+/*------------------------------------------------------------ */
+/* Breakpoints
+-------------------------------------------------------------- */
+
+/**
+ * Allows you to set a value for a particular breakpoint
+ * Can accept a breakpoint name as defined in $breakpoints map
+ * or it can accept a custom value outside of the defined breakpoints
+ * or it can accept string `all` to define something for all breakpoints
+ *
+ * Parts based on https://gist.github.com/timknight/03e6335b8816aa534cf7 and
+ * https://github.com/designbyjake/sassline/blob/master/assets/sass/base/_mixins.scss
+ *
+ * @param int or str Name (or value) of breakpoint or breakpoint `all`
+ */
+@mixin breakpoint($breakpoint-name: all) {
+  $value: type-of($breakpoint-name);
+
+  // If it is a string (i.e. a breakpoint variable).
+  @if $value == string {
+    // If using 'bp-1', 'bp-2' etc output the correct breakpoint values from map.
+    @if map-has-key($breakpoints, $breakpoint-name) {
+      $breakpoints: map-get($breakpoints, $breakpoint-name);
+      @if map-has-key($breakpoints, breakpoint) {
+        @media screen and (min-width: #{to-rem(map-get($breakpoints, breakpoint))} ) { @content; }
+      } @else {
+        @warn "#{$breakpoint-name} does not have a defined `breakpoint` value.";
+      }
+    // If it is a string and not defined in $breakpoints map but is `all`
+    } @else if $breakpoint-name == all {
+      @media all { @content; }
+    // If it is an undefined string or not `all` throw a warning and use `all`
+    } @else {
+      @warn "`#{$breakpoint-name}` is not valid to use as a breakpoint. `all` was used instead.";
+      @media all { @content; }
+    }
+
+  // If it is a number, use this value for the breakpoint
+  } @else if $value == number {
+    @media screen and (min-width: #{to-rem($breakpoint-name)}) { @content; }
+  } @else {
+    @warn "`#{$breakpoint-name}` is not valid to use as a breakpoint. `all` was used instead";
+    @media all { @content; }
+  }
+}
+
+/*------------------------------------------------------------ */
+/* font-size
+-------------------------------------------------------------- */
+
+/**
+ * Sets font-size and line-height for each font-size in $font-sizes list
+ *
+ * @param list List of int for each font-size in px
+ * @param bool Whether or not to set the line-height
+ *
+ * @return font-size and line-height for each value in $font-sizes
+ */
+@mixin font-size($font-sizes, $line-height: true) {
+  $font-size: nth($font-sizes, 1);
+  font-size: to-rem($font-size);
+  @if $line-height == true {
+    line-height: line-height($font-size, 1);
+  }
+
+  // If only one font-size, set it for all breakpoints with appropriate line-height
+  @if length($font-sizes) == 1 {
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        font-size: to-rem($font-size);
+        @if $line-height == true {
+          line-height: line-height($font-size, $i);
+        }
+      }
+    }
+
+  // If more than one font-size is passed, make sure there are the same number of font-sizes as there are defined breakpoints
+  } @else if length($font-sizes) == length($breakpoints) {
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $font-size: nth($font-sizes, $i);
+      @include breakpoint(bp-name($i)) {
+        font-size: to-rem($font-size);
+        @if $line-height == true {
+          line-height: line-height($font-size, $i);
+        }
+      }
+    }
+
+  } @else {
+    @error "You have used #{length($font-sizes)} font-sizes. You have defined #{length($breakpoints)} breakpoints. You can only use 1 font-size or the same number of font-sizes as there are breakpoints (#{length($breakpoints)}).";
+  }
+}
+
+/*------------------------------------------------------------ */
+/* line-height
+-------------------------------------------------------------- */
+
+/**
+ * Sets line-height separate from font-size
+ * If you need to scale the line-height up, use this mixin
+ *
+ * @param list List of int for each font-size
+ * @param int Value by which to scale the line-height
+ *
+ * @return line-height for each value in $font-sizes
+ */
+@mixin line-height($font-sizes, $scale: 1) {
+  $scale: round($scale);
+
+  // Set same font-size for all breakpoints
+  @if length($font-sizes) == 1 {
+    line-height: $scale * (line-height($font-sizes, 1));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        line-height: $scale * (line-height($font-sizes, $i));
+      }
+    }
+
+  // Set different font-sizes for each breakpoint
+  } @else if length($font-sizes) == length($breakpoints) {
+    line-height: $scale * (line-height(nth($font-sizes, 1), 1));
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $font-size: nth($font-sizes, $i);
+      @include breakpoint(bp-name($i)) {
+        line-height: $scale * (line-height($font-size, $i));
+      }
+    }
+
+  } @else {
+    @error "You have used #{length($font-sizes)} font-sizes. You have defined #{length($breakpoints)} breakpoints. You can only use 1 font-size or the same number of font-sizes as there are breakpoints.";
+  }
+}
+
+/*------------------------------------------------------------ */
+/* Paddings and margins
+-------------------------------------------------------------- */
+
+@mixin padding($scale: 1 0, $decimal: false) {
+  @include padding-margin(padding, $scale, $decimal);
+}
+
+@mixin padding-top($scale: 1, $decimal: false) {
+  @include padding-margin-individual(padding-top, $scale, $decimal);
+}
+
+@mixin padding-right($scale: 1, $decimal: false) {
+  @include padding-margin-individual(padding-right, $scale, $decimal);
+}
+
+@mixin padding-bottom($scale: 1, $decimal: false) {
+  @include padding-margin-individual(padding-bottom, $scale, $decimal);
+}
+
+@mixin padding-left($scale: 1, $decimal: false) {
+  @include padding-margin-individual(padding-left, $scale, $decimal);
+}
+
+@mixin margin($scale: 1 0, $decimal: false) {
+  @include padding-margin(margin, $scale, $decimal);
+}
+
+@mixin margin-top($scale: 1, $decimal: false) {
+  @include padding-margin-individual(margin-top, $scale, $decimal);
+}
+
+@mixin margin-right($scale: 1, $decimal: false) {
+  @include padding-margin-individual(margin-right, $scale, $decimal);
+}
+
+@mixin margin-bottom($scale: 1, $decimal: false) {
+  @include padding-margin-individual(margin-bottom, $scale, $decimal);
+}
+
+@mixin margin-left($scale: 1, $decimal: false) {
+  @include padding-margin-individual(margin-left, $scale, $decimal);
+}
+
+/**
+ * Set padding and margin using CSS shorthand method
+ *
+ * @param str $value Setting you wish to use
+ *            `padding` or `margin` are
+ *            the only acceptable values
+ * @param list List of values by which to scale the padding or margin
+ * @param bool Whether or not to allow decimal values. Whole integers
+ *             maintain the vertical rhythm while portions of whole
+ *             integers can throw off the rhythm unless the top and bottom
+ *             padding or margin sum to a whole integer
+ *
+ * @return Sets the padding or margin based on the scale values passed to mixin
+ */
+@mixin padding-margin($value, $scale: 1 0, $decimal: false) {
+  // Round each value in the $scale list if $decimal == false
+  @if $decimal == false {
+    @for $i from 1 through length($scale) {
+      $scale: set-nth($scale, $i, round(nth($scale, $i)));
+    }
+  }
+
+  $base-line-height: line-height(bp-base-font-size(1), 1);
+
+  // Example usage: @include padding(1);
+  // Padding all around element is 1 line-height
+  @if length($scale) == 1 {
+    $scale-1: nth($scale, 1);
+    #{$value}: $base-line-height * $scale-1;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $bp-base-line-height: line-height(bp-base-font-size($i), $i);
+      @include breakpoint(bp-name($i)) {
+        #{$value}: $bp-base-line-height * $scale-1;
+      }
+    }
+
+  // Example usage: @include margin(1 0);
+  // Top and bottom margin is 1 line-height
+  // Right and left margin is 0
+  } @else if length($scale) == 2 {
+    $scale-1: nth($scale, 1);
+    $scale-2: nth($scale, 2);
+    #{$value}: ($base-line-height * $scale-1) ($base-line-height * $scale-2);
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $bp-base-line-height: line-height(bp-base-font-size($i), $i);
+      @include breakpoint(bp-name($i)) {
+        #{$value}: ($bp-base-line-height * $scale-1) ($bp-base-line-height * $scale-2);
+      }
+    }
+
+  // Example usage: @include margin(2 0 1);
+  //            Top margin is twice the line-height
+  // Right and left margin is 0
+  //         Bottom margin is 1 line-height
+  } @else if length($scale) == 3 {
+    $scale-1: nth($scale, 1);
+    $scale-2: nth($scale, 2);
+    $scale-3: nth($scale, 3);
+    #{$value}: ($base-line-height * $scale-1) ($base-line-height * $scale-2) ($base-line-height * $scale-3);
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $bp-base-line-height: line-height(bp-base-font-size($i), $i);
+      @include breakpoint(bp-name($i)) {
+        #{$value}: ($bp-base-line-height * $scale-1) ($bp-base-line-height * $scale-2) ($bp-base-line-height * $scale-3);
+      }
+    }
+
+  // Example usage: @include padding(2 1 1 0);
+  //    Top padding is twice the line-height
+  //  Right padding is 1 line-height
+  // Bottom padding is 1 line-height
+  //   Left padding is 0
+  } @else if length($scale) == 4 {
+    $scale-1: nth($scale, 1);
+    $scale-2: nth($scale, 2);
+    $scale-3: nth($scale, 3);
+    $scale-4: nth($scale, 4);
+    #{$value}: ($base-line-height * $scale-1) ($base-line-height * $scale-2) ($base-line-height * $scale-3) ($base-line-height * $scale-4);
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      $bp-base-line-height: line-height(bp-base-font-size($i), $i);
+      @include breakpoint(bp-name($i)) {
+        #{$value}: ($bp-base-line-height * $scale-1) ($bp-base-line-height * $scale-2) ($bp-base-line-height * $scale-3) ($bp-base-line-height * $scale-4);
+      }
+    }
+
+  } @else {
+    @error "Invalid number of #{$value} values. Use 1, 2, 3, or 4 values only.";
+  }
+}
+
+/**
+ * Set padding or margin individually (padding-right, margin-bottom, etc)
+ *
+ * @param str $value Setting you wish to use
+ *            `padding-top` or `margin-bottom` for example
+ * @param list List of values by which to scale the padding or margin
+ * @param bool Whether or not to allow decimal values. Whole integers
+ *             maintain the vertical rhythm while portions of whole
+ *             integers can throw off the rhythm unless the top and bottom
+ *             padding or margin sum to a whole integer
+ *
+ * @return Sets the padding or margin based on the scale values passed to mixin
+ */
+@mixin padding-margin-individual($value, $scale: 1, $decimal: false) {
+  // Round $scale value if $decimal == false
+  @if $decimal == false {
+    $scale: round($scale);
+  }
+
+  @if length($scale) == 1 {
+    #{$value}: line-height(bp-base-font-size(1), 1) * $scale;
+    // Loop through all breakpoints.
+    @for $i from 2 through length($breakpoints) {
+      @include breakpoint(bp-name($i)) {
+        #{$value}: line-height(bp-base-font-size($i), $i) * $scale;
+      }
+    }
+
+  } @else {
+    @error "#{$value} mixin can only accept a single value.";
+  }
+}
+
+/*------------------------------------------------------------ */
+/* Drop caps
+-------------------------------------------------------------- */
+
+@mixin dropcap($float-position, $font-size, $font-family, $txt-indent, $margin, $padding, $color, $line-height, $bg) {
+  &:first-letter {
+    float: $float-position;
+    margin: $margin;
+    padding: $padding;
+    font-size: $font-size;
+    font-family: $font-family;
+    line-height: $line-height;
+    text-indent: $txt-indent;
+    background: $bg;
+    color: $color;
+  }
+}

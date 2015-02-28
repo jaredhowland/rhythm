@@ -1,5 +1,5 @@
 ---
-title: Test page
+title: Rhythm
 layout: index
 ---
 

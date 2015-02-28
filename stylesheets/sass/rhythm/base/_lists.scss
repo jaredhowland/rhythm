@@ -1,0 +1,167 @@
+// http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+@function first($list) {
+  @return nth($list, 1);
+}
+
+@function last($list) {
+  @return nth($list, length($list));
+}
+
+@function prepend($list, $value) {
+  @return join($value, $list);
+}
+
+@function slice($list, $start: 1, $end: length($list)) {
+  $result: null;
+  @if type-of($start) != number or type-of($end) != number {
+    @warn "Either $start or $end are not a number for `slice`.";
+  }
+  @else if $start > $end {
+    @warn "The start index has to be lesser than or equals to the end index for `slice`.";
+  }
+
+  @else if $start < 1 or $end < 1 {
+    @warn "List indexes must be non-zero integers for `slice`.";
+  }
+
+  @else if $start > length($list) {
+    @warn "List index is #{$start} but list is only #{length($list)} item long for `slice`.";
+  }
+
+  @else if $end > length($list) {
+    @warn "List index is #{$end} but list is only #{length($list)} item long for `slice`.";
+  }
+
+  @else {
+    $result: ();
+    @for $i from $start through $end {
+      $result: append($result, nth($list, $i));
+    }
+  }
+  @return $result;
+}
+
+@function remove-nth($list, $index) {
+  $result: null;
+
+  @if type-of($index) != number {
+    @warn "$index: #{quote($index)} is not a number for `remove-nth`.";
+  }
+
+  @else if $index == 0 {
+    @warn "List index 0 must be a non-zero integer for `remove-nth`.";
+  }
+
+  @else if abs($index) > length($list) {
+    @warn "List index is #{$index} but list is only #{length($list)} item long for `remove-nth`.";
+  }
+
+  @else {
+    $result: ();
+    $index: if($index < 0, length($list) + $index + 1, $index);
+
+    @for $i from 1 through length($list) {
+      @if $i != $index {
+        $result: append($result, nth($list, $i));
+      }
+    }
+  }
+
+  @return $result;
+}
+
+// http://hugogiraudel.com/2013/10/09/advanced-sass-list-functions-again/
+@function remove-duplicates($list, $recursive: false) {
+  $result: ();
+
+  @each $item in $list {
+    @if not index($result, $item) {
+      @if length($item) > 1 and $recursive {
+        $result: append($result, remove-duplicates($item, $recursive));
+      }
+      @else {
+        $result: append($result, $item);
+      }
+    }
+  }
+
+  @return $result;
+}
+
+// https://github.com/at-import/modular-scale/blob/2.x/stylesheets/modular-scale/_sort-list.scss
+// List sorting via a modified merge-sort algorithmn
+// http://en.wikipedia.org/wiki/Merge_sort
+@function merge($A, $B) {
+  $Return: ();
+  // Some empty lists get passed through
+  // so just pass the other list throguh
+  @if length($A) == 0 {
+    @return $B;
+  }
+  // If lists fit next to each other, just merge them
+  // This helps performance skipping the need to check each value
+  @if nth($A, length($A)) < nth($B, 1) {
+    @return join($A, $B);
+  }
+  @if nth($B, length($B)) < nth($A, 1) {
+    @return join($B, $A);
+  }
+  // Counters start at 1
+  $A-counter: 1;
+  $B-counter: 1;
+  // Start looping through all numbers in array
+  @while $A-counter <= length($A) and $B-counter <= length($B) {
+    // Check if the A value is smaller
+    // Uses or equal to avoid duplicate numbers
+    @if nth($A, $A-counter) <= nth($B, $B-counter) {
+      $Return: join($Return, nth($A, $A-counter));
+      $A-counter: $A-counter + 1;
+    }
+    // Check if the B value is smaller
+    @elseif nth($A, $A-counter) > nth($B, $B-counter) {
+      $Return: join($Return, nth($B, $B-counter));
+      $B-counter: $B-counter + 1;
+    }
+  }
+  // Run through remainder values in the list
+  @while $A-counter <= length($A) {
+    $Current: nth($A, $A-counter);
+    @if $Current != nth($Return, length($Return)) {
+      $Return: join($Return, $Current);
+    }
+    $A-counter: $A-counter + 1;
+  }
+  @while $B-counter <= length($B) {
+    $Current: nth($B, $B-counter);
+    @if $Current != nth($Return, length($Return)) {
+      $Return: join($Return, $Current);
+    }
+    $B-counter: $B-counter + 1;
+  }
+  // Done! return is now sorted and complete
+  @return $Return;
+}
+
+// Pull it all together
+@function sort-list($Lists) {
+  $Return: ();
+  @each $List in $Lists {
+    @if $Return == () {
+      $Return: $List;
+    }
+    @else {
+      $Return: merge($List, $Return);
+    }
+  }
+  // final cleanup of repeated items
+  $Last: null;
+  $New-list: ();
+  @each $Item in $Return {
+    @if $Item != $Last {
+      $New-list: join($New-list, $Item);
+    }
+    $Last: $Item;
+  }
+  $Return: $New-list;
+  @return $Return;
+}
