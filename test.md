@@ -1,6 +1,6 @@
 ---
 title: Test page
-layout: default
+layout: index
 ---
 
 Rhythm
