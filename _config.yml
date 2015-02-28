@@ -3,7 +3,7 @@
 # MARKDOWN OPTIONS
 markdown: redcarpet
 redcarpet:
-  extensions: ["smart"]
+  extensions: [smart]
 
 # PYGMENTS
 pygments: true

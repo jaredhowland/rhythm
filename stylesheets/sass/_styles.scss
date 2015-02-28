@@ -30,7 +30,7 @@ header {
   width: 100%;
   @include margin-top(-1);
   @include margin-left(-1);
-  @include padding(1);
+  @include padding(0 1 1 1);
 
   h1, p {
     padding: 0;
@@ -38,16 +38,17 @@ header {
   }
 
   h1 {
-    @include font-size($tera);
+    @include font-size($giga);
   }
 
   p {
     color: darken($body-color-muted, 20%);
+    @include padding-right(1);
   }
 }
 
 section {
-  @include margin-top(7);
+  @include margin-top(4);
 }
 
 p {
@@ -63,6 +64,10 @@ pre, code {
 }
 
 footer {
+  @include margin-top(3);
+  border-top: 1px solid $body-color-muted;
+  text-align: center;
+
   ul {
     list-style: none;
     padding: 0;
@@ -70,7 +75,8 @@ footer {
 
   li {
     @include padding(1);
-    display: inline;
+    @include margin-bottom(1);
+    display: inline-block;
     white-space: nowrap;
     list-style-type: none;
 
