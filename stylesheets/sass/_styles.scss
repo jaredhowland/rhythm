@@ -99,8 +99,7 @@ header {
 }
 
 section {
-  clear: both;
-  @include margin-top(5);
+  @include margin-top(6);
 }
 
 p {
