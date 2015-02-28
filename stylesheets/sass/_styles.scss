@@ -1,18 +1,106 @@
 body {
   @include padding(1);
+  background: $background-color;
+  color: $body-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: unquote($sans-serif-font-family);
 }
 
 h1, h2 {
-  @include margin(2 0 1 0);
+  @include margin(2 0 1);
+  font-weight: bold;
 }
-//
-// pre {
-//   @include font-size(16px);
-//   @include padding(1);
-//   background-color: $code-background-color;
-//   border-radius: 4px;
-// }
-//
-// code {
-//   @include font-size(16px, true);
-// }
+
+h3, h4, h5, h6 {
+  @include margin(2 0 1);
+  font-style: italic;
+}
+
+a {
+  &:hover {
+    background-color: darken($background-color, 15%);
+  }
+}
+
+header {
+  position: fixed;
+  background-color: $background-color;
+  width: 100%;
+  @include margin-top(-1);
+  @include margin-left(-1);
+  @include padding(1);
+
+  h1, p {
+    padding: 0;
+    margin: 0;
+  }
+
+  h1 {
+    @include font-size($tera);
+  }
+
+  p {
+    color: darken($body-color-muted, 20%);
+  }
+}
+
+section {
+  @include margin-top(7);
+}
+
+p {
+  @include margin(1 0);
+}
+
+// http://alexmansfield.com/css/font-size-line-height-pre-code-monospace
+pre, code {
+  background-color: darken($background-color, 10%);
+  border-radius: 4px;
+  vertical-align: top;
+  @include font-size($epsilon);
+}
+
+footer {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    @include padding(1);
+    display: inline;
+    white-space: nowrap;
+    list-style-type: none;
+
+    background: #AF0011;
+    background: linear-gradient(top, #AF0011 0%,#820011 100%);
+
+    border-radius:4px;
+
+    &:hover {
+      background: #C3001D;
+      background: linear-gradient(top, #C3001D 0%,#950119 100%);
+      cursor: hand;
+    }
+
+    a {
+      color: #FFFFFF;
+      &:hover {
+        color: #FFFFFF;
+        background: transparent;
+      }
+      &.buttons {
+        -webkit-font-smoothing: antialiased;
+        background: url(../images/arrow-down.png) no-repeat 1px;
+        font-weight: normal;
+        text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
+        padding-left: 22px;
+      }
+      &.github {
+        background: url(../images/octocat-small.png) no-repeat 1px;
+      }
+    }
+  }
+}

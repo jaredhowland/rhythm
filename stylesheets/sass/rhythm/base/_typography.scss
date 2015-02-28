@@ -55,7 +55,7 @@ blockquote p {
   border-left: .25rem solid $body-color-muted;
   font-style: italic;
   padding-left: 1rem;
-  @include font-size(16px);
+  @include font-size($gamma);
 }
 
 code, pre {
@@ -63,7 +63,6 @@ code, pre {
 }
 
 pre {
-  @include font-size(16px);
   @include padding(1);
   background-color: $code-background-color;
   border-radius: 4px;

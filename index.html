@@ -1,0 +1,636 @@
+<hr />
+
+<p>title: Rhythm</p>
+
+<h2>layout: index</h2>
+
+<h1>Rhythm</h1>
+
+<p>Rhythm is a small set of <a href="http://sass-lang.com/">Sass files</a> built to assist in creating <a href="http://bradfrost.com/blog/web/mobile-first-responsive-web-design/">mobile-first</a>, <a href="http://bradfrost.com/blog/web/mobile-first-responsive-web-design/">responsive websites</a> with <a href="http://24ways.org/2006/compose-to-a-vertical-rhythm">vertical rhythm</a> using <a href="http://alistapart.com/article/more-meaningful-typography">modular scales</a>. Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.</p>
+
+<h1>Installation</h1>
+
+<p>Rhythm is available as a <a href="https://getcomposer.org">Composer</a> <a href="http://packagist.org/">package</a>, but you can also manually download it and include it in your project.</p>
+
+<h2>Composer</h2>
+
+<ol>
+<li><p>If you have not done so already, install <a href="https://getcomposer.org">Composer</a></p></li>
+<li><p>Update your project&rsquo;s <code>composer.json</code> file to require Rhythm:</p>
+
+<p> <code>json
+ {
+   "require": {
+     "jaredhowland/rhythm": "~1.0"
+   }
+ }
+</code></p></li>
+<li><p>SCSS: <code>@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";</code></p></li>
+</ol>
+
+
+<h2>Manual Installation</h2>
+
+<ol>
+<li><a href="https://github.com/jaredhowland/rhythm/releases/latest">Download the latest <code>.zip</code> file</a>.</li>
+<li>Extract into your project.</li>
+<li>SCSS: <code>@import "rhythm";</code></li>
+</ol>
+
+
+<h1>Usage</h1>
+
+<p>Including Rhythm with your Sass files automatically generates a vertical rhythm using modular scales for multiple breakpoints based on the values defined in <code>_variables.scss</code>. To change the defaults, redefine the variables before importing Rhythm.</p>
+
+<p>Any time an element&rsquo;s vertical properties are changed, you must offset this change to maintain a vertical rhythm. The major properties that change an element&rsquo;s vertical rhythm include:</p>
+
+<ul>
+<li><code>font-size</code></li>
+<li><code>line-height</code></li>
+<li><code>margin-top</code> and <code>margin-bottom</code></li>
+<li><code>padding-top</code> and <code>padding-bottom</code></li>
+</ul>
+
+
+<p>Use Rhythm any time you want to adjust those properties and it will perform the mathematical acrobatics required to restore the vertical rhythm to your site.</p>
+
+<h1>Adjusting Vertical Properties</h1>
+
+<p><strong>All of the examples assume you have not changed any of the default variables.</strong></p>
+
+<h2>Font Sizes</h2>
+
+<p>To adjust the font-size of an element across all breakpoints, use the <code>font-size</code> mixin:</p>
+
+<p><code>scss
+p {
+  @include font-size(14px);
+}
+</code></p>
+
+<p>CSS output:</p>
+
+<p>```css
+p {
+  font-size: 0.875rem;
+  line-height: 1.3125rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  p {
+    font-size: 0.875rem;
+    line-height: 1.6875rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  p {
+    font-size: 0.875rem;
+    line-height: 2rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  p {
+    font-size: 0.875rem;
+    line-height: 2.25rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  p {
+    font-size: 0.875rem;
+    line-height: 2.4375rem
+  }
+}
+```</p>
+
+<p>All Rhythm mixins and variables can accept any combination of the following units: <code>px</code>, <code>%</code>, or <code>rem</code>.</p>
+
+<p>To set a different <code>font-size</code> for each breakpoint, use a list of all <code>font-size</code>s that is the same length as the number of defined breakpoints.</p>
+
+<p><code>scss
+p {
+  @include font-size(10px 12px 13px 14px 16px);
+}
+</code></p>
+
+<p>CSS output:</p>
+
+<p>```css
+p {
+  font-size: 0.625rem;
+  line-height: 1.3125rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  p {
+    font-size: 0.75rem;
+    line-height: 1.6875rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  p {
+    font-size: 0.8125rem;
+    line-height: 2rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  p {
+    font-size: 0.875rem;
+    line-height: 2.25rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  p {
+    font-size: 1rem;
+    line-height: 2.4375rem
+  }
+}
+```</p>
+
+<p>Alternatively, you can use the <code>font-size</code>s defined in your modular scale.</p>
+
+<p><code>scss
+h2 {
+  @include font-size($h3);
+}
+</code></p>
+
+<p>Or</p>
+
+<p><code>scss
+h2 {
+  @include font-size($gamma);
+}
+</code></p>
+
+<p>CSS output:</p>
+
+<p>```css
+h2 {
+  font-size: 1.125rem;
+  line-height: 1.3125rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  h2 {
+    font-size: 1.25rem;
+    line-height: 1.6875rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  h2 {
+    font-size: 1.375rem;
+    line-height: 2rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2.25rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  h2 {
+    font-size: 1.625rem;
+    line-height: 2.4375rem
+  }
+}
+```</p>
+
+<p><strong>Not Recommended</strong>: If you have an element that you would like to set the <code>font-size</code> for but not the <code>line-height</code>, you can do the following:</p>
+
+<p><code>scss
+span {
+  @include font-size($epsilon, false);
+}
+</code></p>
+
+<p>CSS output:</p>
+
+<p>```css
+span {
+  font-size: 0.875rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  span {
+    font-size: 0.8125rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  span {
+    font-size: 0.875rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  span {
+    font-size: 0.9375rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  span {
+    font-size: 1rem
+  }
+}
+```</p>
+
+<p>Changing the <code>font-size</code> without also changing the <code>line-height</code> runs the very real risk of throwing off your vertical scale.</p>
+
+<h2>Line Heights</h2>
+
+<p>Normally, if you adjust the <code>line-height</code> you will also want to adjust the <code>font-size</code> and line length. However, if the modular scale is crowding an element and you want to increase the <code>line-height</code>, you must do it using a multiple of the generated <code>line-height</code>. Use the <code>line-height</code> mixin to do this.</p>
+
+<p>To maintain a vertical rhythm, <code>line-height</code> is calculated based on a given <code>font-size</code>. The mixin requires the <code>font-size</code>(s) and the scale value you would like to increase the line-height by:</p>
+
+<p><code>scss
+h2 {
+  @include line-height($h2, 2);
+}
+</code></p>
+
+<p>CSS output:</p>
+
+<p>```css
+h2 {
+  line-height: 2.625rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  h2 {
+      line-height: 3.375rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  h2 {
+    line-height: 4rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  h2 {
+    line-height: 4.5rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  h2 {
+    line-height: 4.875rem
+  }
+}
+```</p>
+
+<p>You can pass a single <code>font-size</code> or the same number of <code>font-size</code>s as there are defined breakpoints.</p>
+
+<h2>Margins</h2>
+
+<p>Because Rhythm includes v2.0 of Eric Meyer&rsquo;s <a href="http://meyerweb.com/eric/tools/css/reset/">reset stylesheet</a>, all margins are defaulted to <code>0</code>. Use the <code>margin</code>, <code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, and <code>margin-left</code> mixins to adjust the margins. The mixins require you to define the scale value by which you would like the margin to be increased.</p>
+
+<h3>margin()</h3>
+
+<p>The <code>margin()</code> mixin behaves just like the CSS <code>margin</code>. You can pass one, two, three, or four scale values:</p>
+
+<p>```scss
+h1 {
+  @include margin(1);
+}</p>
+
+<p>h2 {
+  @include margin(1 0);
+}</p>
+
+<p>h3 {
+  @include margin(1 3 2);
+}</p>
+
+<p>h4 {
+  @include margin(1 1 0 0);
+}
+```</p>
+
+<p>CSS output:</p>
+
+<p>```css
+h1 {
+  margin: 1.3125rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  h1 {
+    margin: 1.6875rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  h1 {
+    margin: 2rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  h1 {
+    margin: 2.25rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  h1 {
+    margin: 2.4375rem
+  }
+}</p>
+
+<p>h2 {
+  margin: 1.3125rem 0rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  h2 {
+    margin: 1.6875rem 0rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  h2 {
+    margin: 2rem 0rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  h2 {
+    margin: 2.25rem 0rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  h2 {
+    margin: 2.4375rem 0rem
+  }
+}</p>
+
+<p>h3 {
+  margin: 1.3125rem 3.9375rem 2.625rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  h3 {
+    margin: 1.6875rem 5.0625rem 3.375rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  h3 {
+    margin: 2rem 6rem 4rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  h3 {
+    margin: 2.25rem 6.75rem 4.5rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  h3 {
+    margin: 2.4375rem 7.3125rem 4.875rem
+  }
+}</p>
+
+<p>h4 {
+  margin: 1.3125rem 1.3125rem 0rem 0rem
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  h4 {
+    margin: 1.6875rem 1.6875rem 0rem 0rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  h4 {
+    margin: 2rem 2rem 0rem 0rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  h4 {
+    margin: 2.25rem 2.25rem 0rem 0rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  h4 {
+    margin: 2.4375rem 2.4375rem 0rem 0rem
+  }
+}
+```</p>
+
+<h3>margin-top(), margin-right(), margin-bottom(), margin-left()</h3>
+
+<p>The <code>margin-top()</code>, <code>margin-right()</code>, <code>margin-bottom()</code>, and <code>margin-left</code> mixins work just as you would expect:</p>
+
+<p><code>scss
+p {
+  @include margin-top(2);
+}
+</code></p>
+
+<p>CSS output:</p>
+
+<p>```css
+p {
+  margin-top: 2.625rem;
+}</p>
+
+<p>@media screen and (min-width: 30rem) {
+  p {
+    margin-top: 3.375rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 48rem) {
+  p {
+    margin-top: 4rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 62rem) {
+  p {
+    margin-top: 4.5rem
+  }
+}</p>
+
+<p>@media screen and (min-width: 75rem) {
+  p {
+    margin-top: 4.875rem
+  }
+}
+```</p>
+
+<h2>Padding</h2>
+
+<p>The <code>padding()</code>, <code>padding-top()</code>, <code>padding-right()</code>, <code>padding-bottom()</code>, and <code>padding-left()</code> mixins work exactly like the corresponding <code>margin</code> mixins.</p>
+
+<h1>Variables</h1>
+
+<p>The following variables (shown with their default values) can be redefined before importing Rhythm:</p>
+
+<p>```scss
+/<em>&mdash;&mdash;&mdash;&mdash;&mdash;- </em>/
+/<em> Breakpoints
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; </em>/</p>
+
+<p>$breakpoints: (
+  bp-0: (
+    breakpoint: 0px, // Mobile first
+    font-size: 16px 18px,
+    modular-scale: perfect-fourth
+  ),
+  bp-1: (
+    breakpoint: 480px, // ~ Extra small screen up
+    font-size: 18px 20px,
+    modular-scale: perfect-fifth
+  ),
+  bp-2: (
+    breakpoint: 768px, // ~ Small screen/tablet up
+    font-size: 20px 22px,
+    modular-scale: golden
+  ),
+  bp-3: (
+    breakpoint: 992px, // ~ Medium screen up
+    font-size: 22px 24px,
+    modular-scale: golden
+  ),
+  bp-4: (
+    breakpoint: 1200px, // ~Desktop up
+    font-size: 24px 26px,
+    modular-scale: golden
+  )
+);</p>
+
+<p>/<em>&mdash;&mdash;&mdash;&mdash;&mdash;- </em>/
+/<em> Fonts
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; </em>/</p>
+
+<p>// Serif fonts.
+$serif-font-family: &lsquo;Georgia, serif&rsquo;;</p>
+
+<p>// Sans-serif fonts.
+$sans-serif-font-family: &lsquo;Helvetica, sans-serif&rsquo;;</p>
+
+<p>// Monospace fonts.
+$monospace-font-family: &lsquo;Menlo, monospace&rsquo;;</p>
+
+<p>// Default font types.
+$body-font:      unquote($serif-font-family);
+$heading-font:   unquote($serif-font-family);
+$monospace-font: unquote($monospace-font-family);</p>
+
+<p>/<em>&mdash;&mdash;&mdash;&mdash;&mdash;- </em>/
+/<em> Typography
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; </em>/</p>
+
+<p>// Indent value for paragraphs
+$indent-value: 1rem;</p>
+
+<p>// Drop caps.
+$dropcap-float-position: left;
+$dropcap-font-size:      4em;
+$dropcap-font-family:    inherit;
+$dropcap-txt-indent:     0;
+$dropcap-margin:         10px 10px 0 0;
+$dropcap-padding:        0 20px;
+$dropcap-color:          inherit;
+$dropcap-line-height:    1;
+$dropcap-bg:             transparent;</p>
+
+<p>/<em>&mdash;&mdash;&mdash;&mdash;&mdash;- </em>/
+/<em> Colors
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; </em>/</p>
+
+<p>// Background colors.
+$background-color:      #F5F5F5;
+$code-background-color: #F5F4F2;</p>
+
+<p>// Text colors.
+$heading-color:         #2E2E2E;
+$body-color:            #444444;
+$body-color-muted:      #CCCCCC;
+$link-color:            #265C83;
+$link-hover-color:      lighten($link-color, 10%);
+$link-background-color: transparent;
+```</p>
+
+<p><em>Modular Scales</em>. When you first call Rhythm, a modular scale is generated for you based on the <code>$breakpoint</code> values you have defined. You can use multiple base <code>font-size</code>s to create a more robust <a href="http://modularscale.com/scale/?px1=18&amp;px2=27&amp;ra1=1.5&amp;ra2=0">scale</a>. It is recommended that you use no more than two <code>font-size</code>s to generate the scale but Rhythm will accept as many as you give it. Scale options include:</p>
+
+<ul>
+<li><code>golden</code></li>
+<li><code>minor-second</code></li>
+<li><code>major-second</code></li>
+<li><code>minor-third</code></li>
+<li><code>major-third</code></li>
+<li><code>perfect-fourth</code></li>
+<li><code>augmented-fourth</code></li>
+<li><code>perfect-fifth</code></li>
+<li><code>minor-sixth</code></li>
+<li><code>major-sixth</code></li>
+<li><code>minor-seventh</code></li>
+<li><code>major-seventh</code></li>
+<li><code>octave</code></li>
+<li><code>major-tenth</code></li>
+<li><code>major-eleventh</code></li>
+<li><code>major-twelfth</code></li>
+<li><code>double-octave</code></li>
+</ul>
+
+
+<p>To create a custom scale, create a <code>$modular-scales</code> map before importing Rhythm:</p>
+
+<p><code>scss
+$modular-scales: (my-scale: 2.3, my-scale-2: 2.4);
+</code></p>
+
+<p>Then, redefine your <code>$breakpoints</code> variable to use your new scale:</p>
+
+<p><code>scss
+$breakpoints: (
+  bp-0: (
+    breakpoint: 0px, // Mobile first
+    font-size: 16px 18px,
+    modular-scale: my-scale
+  )
+);
+</code></p>
+
+<p>Rhythm also creates lists for every breakpoint for various font sizes based on the selected modular scale. The Rhythm implementation of this closely resembles the one found in the article &ldquo;<a href="http://csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/">Pragmatic, Practical Font Sizing in CSS</a>.&rdquo; Specifically, it sets the following variables from largest font size to smallest:</p>
+
+<ul>
+<li><code>$tera</code></li>
+<li><code>$giga</code></li>
+<li><code>$mega</code></li>
+<li><code>$alpha</code>, <code>$h1</code></li>
+<li><code>$beta</code>, <code>$h2</code></li>
+<li><code>$gamma</code>, <code>$h3</code></li>
+<li><code>$delta</code>, <code>$h4</code></li>
+<li><code>$epsilon</code>, <code>$h5</code></li>
+<li><code>$zeta</code>, <code>$h6</code></li>
+</ul>
+
+
+<p>For example, if you want to set your <code>h1</code>&rsquo;s <code>font-size</code> to be one scale down from the default, you can do the following:</p>
+
+<p><code>scss
+h1 {
+  @include font-size($h2);
+}
+</code></p>

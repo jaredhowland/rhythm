@@ -476,9 +476,9 @@ Variables
 The following variables (shown with their default values) can be redefined before importing Rhythm:
 
 ```scss
-/*------------------------------------------------------------ */
+/*---------------- */
 /* Breakpoints
--------------------------------------------------------------- */
+------------------ */
 
 $breakpoints: (
   bp-0: (
@@ -508,9 +508,9 @@ $breakpoints: (
   )
 );
 
-/*------------------------------------------------------------ */
+/*---------------- */
 /* Fonts
--------------------------------------------------------------- */
+------------------ */
 
 // Serif fonts.
 $serif-font-family: 'Georgia, serif';
@@ -526,9 +526,9 @@ $body-font:      unquote($serif-font-family);
 $heading-font:   unquote($serif-font-family);
 $monospace-font: unquote($monospace-font-family);
 
-/*------------------------------------------------------------ */
+/*---------------- */
 /* Typography
--------------------------------------------------------------- */
+------------------ */
 
 // Indent value for paragraphs
 $indent-value: 1rem;
@@ -544,9 +544,9 @@ $dropcap-color:          inherit;
 $dropcap-line-height:    1;
 $dropcap-bg:             transparent;
 
-/*------------------------------------------------------------ */
+/*---------------- */
 /* Colors
--------------------------------------------------------------- */
+------------------ */
 
 // Background colors.
 $background-color:      #F5F5F5;
