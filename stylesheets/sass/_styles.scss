@@ -31,10 +31,31 @@ header {
   @include margin-top(-1);
   @include margin-left(-1);
   @include padding(0 1 1 1);
+  transition: height 0.5s, background 0.5s;
+
+  svg {
+    max-width: 60px;
+    max-height: 60px;
+    margin: 1rem;
+    float: right;
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    transition: height 0.5s, background 0.5s;
+
+    path {
+      fill: $body-color;
+    }
+    
+    &:hover path {
+      fill: darken($body-color, 20%);
+    }
+  }
 
   h1, p {
     padding: 0;
     margin: 0;
+    transition: all 0.5s;
   }
 
   h1 {
@@ -43,12 +64,42 @@ header {
 
   p {
     color: darken($body-color-muted, 20%);
-    @include padding-right(1);
+    @include padding-right(4);
+  }
+
+  &.tiny {
+    // http://jsfiddle.net/sinky/S8Fnq/
+    @include padding-bottom(0);
+
+    svg {
+      max-width: 40px;
+      max-height: 40px;
+      margin-top: .2rem;
+
+      path {
+        fill: $background-color;
+      }
+
+      &:hover path {
+        fill: darken($background-color, 20%);
+      }
+    }
+
+    h1 {
+      @include font-size($delta);
+    }
+
+    p {
+      @include font-size($epsilon);
+    }
+
+    background: $body-color;
+    color: $background-color;
   }
 }
 
 section {
-  @include margin-top(4);
+  @include margin-top(5);
 }
 
 p {
