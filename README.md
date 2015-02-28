@@ -282,7 +282,7 @@ You can pass a single `font-size` or the same number of `font-size`s as there ar
 
 Margins
 -------
-Because Rhythm includes v2.0 of Eric Meyer's [reset stylesheet][12], all margins are defaulted to `0`. Use the `margin`, `margin-top`, and `margin-bottom` mixins to adjust the margins. The mixins require you to define the scale value by which you would like the margin to be increased.
+Because Rhythm includes v2.0 of Eric Meyer's [reset stylesheet][12], all margins are defaulted to `0`. Use the `margin`, `margin-top`, `margin-right`, `margin-bottom`, and `margin-left` mixins to adjust the margins. The mixins require you to define the scale value by which you would like the margin to be increased.
 
 ###margin()
 The `margin()` mixin behaves just like the CSS `margin`. You can pass one, two, three, or four scale values:
