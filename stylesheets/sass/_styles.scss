@@ -46,7 +46,7 @@ header {
     path {
       fill: $body-color;
     }
-    
+
     &:hover path {
       fill: darken($body-color, 20%);
     }
@@ -99,6 +99,7 @@ header {
 }
 
 section {
+  clear: both;
   @include margin-top(5);
 }
 
