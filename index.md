@@ -1,5 +1,4 @@
 ---
-title: Rhythm
 layout: index
 ---
 
