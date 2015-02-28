@@ -55,7 +55,7 @@ p {
 }
 ```
 
-This will generate the following:
+CSS output:
 
 ```css
 p {
@@ -102,7 +102,7 @@ p {
 }
 ```
 
-This will generate the following:
+CSS output:
 
 ```css
 p {
@@ -155,7 +155,7 @@ h2 {
 }
 ```
 
-This will generate the following:
+CSS output:
 
 ```css
 h2 {
@@ -200,7 +200,7 @@ span {
 }
 ```
 
-This will generate the following:
+CSS output:
 
 ```css
 span {
@@ -246,7 +246,7 @@ h2 {
 }
 ```
 
-This will generate the following:
+CSS output:
 
 ```css
 h2 {
@@ -288,179 +288,153 @@ Because Rhythm includes v2.0 of Eric Meyer's [reset stylesheet][12], all margins
 The `margin()` mixin behaves just like the CSS `margin`. You can pass one, two, three, or four scale values:
 
 ```scss
-p {
+h1 {
   @include margin(1);
 }
-```
 
-Or
-
-```scss
-p {
+h2 {
   @include margin(1 0);
 }
-```
 
-Or
-
-```scss
-p {
+h3 {
   @include margin(1 3 2);
 }
-```
 
-Or
-
-```scss
-p {
+h4 {
   @include margin(1 1 0 0);
 }
 ```
 
-This will generate the following:
+CSS output:
 
 ```css
-p {
+h1 {
   margin: 1.3125rem
 }
 
 @media screen and (min-width: 30rem) {
-  p {
+  h1 {
     margin: 1.6875rem
   }
 }
 
 @media screen and (min-width: 48rem) {
-  p {
+  h1 {
     margin: 2rem
   }
 }
 
 @media screen and (min-width: 62rem) {
-  p {
+  h1 {
     margin: 2.25rem
   }
 }
 
 @media screen and (min-width: 75rem) {
-  p {
+  h1 {
     margin: 2.4375rem
   }
 }
-```
 
-Or
-
-```css
-p {
+h2 {
   margin: 1.3125rem 0rem
 }
 
 @media screen and (min-width: 30rem) {
-  p {
+  h2 {
     margin: 1.6875rem 0rem
   }
 }
 
 @media screen and (min-width: 48rem) {
-  p {
+  h2 {
     margin: 2rem 0rem
   }
 }
 
 @media screen and (min-width: 62rem) {
-  p {
+  h2 {
     margin: 2.25rem 0rem
   }
 }
 
 @media screen and (min-width: 75rem) {
-  p {
+  h2 {
     margin: 2.4375rem 0rem
   }
 }
-```
 
-Or
-
-```css
-p {
+h3 {
   margin: 1.3125rem 3.9375rem 2.625rem
 }
 
 @media screen and (min-width: 30rem) {
-  p {
+  h3 {
     margin: 1.6875rem 5.0625rem 3.375rem
   }
 }
 
 @media screen and (min-width: 48rem) {
-  p {
+  h3 {
     margin: 2rem 6rem 4rem
   }
 }
 
 @media screen and (min-width: 62rem) {
-  p {
+  h3 {
     margin: 2.25rem 6.75rem 4.5rem
   }
 }
 
 @media screen and (min-width: 75rem) {
-  p {
+  h3 {
     margin: 2.4375rem 7.3125rem 4.875rem
   }
 }
-```
 
-Or
-
-```css
-p {
+h4 {
   margin: 1.3125rem 1.3125rem 0rem 0rem
 }
 
 @media screen and (min-width: 30rem) {
-  p {
+  h4 {
     margin: 1.6875rem 1.6875rem 0rem 0rem
   }
 }
 
 @media screen and (min-width: 48rem) {
-  p {
+  h4 {
     margin: 2rem 2rem 0rem 0rem
   }
 }
 
 @media screen and (min-width: 62rem) {
-  p {
+  h4 {
     margin: 2.25rem 2.25rem 0rem 0rem
   }
 }
 
 @media screen and (min-width: 75rem) {
-  p {
+  h4 {
     margin: 2.4375rem 2.4375rem 0rem 0rem
   }
 }
 ```
 
-### margin-top() and margin-bottom()
-The `margin-top()` and `margin-bottom()` mixins work just as you would expect:
+### margin-top(), margin-right(), margin-bottom(), margin-left()
+The `margin-top()`, `margin-right()`, `margin-bottom()`, and `margin-left` mixins work just as you would expect:
 
 ```scss
 p {
   @include margin-top(2);
-  @include margin-bottom(1);
 }
 ```
 
-This would generate the following:
+CSS output:
 
 ```css
 p {
   margin-top: 2.625rem;
-  margin-bottom: 1.3125rem
 }
 
 @media screen and (min-width: 30rem) {
@@ -486,37 +460,11 @@ p {
     margin-top: 4.875rem
   }
 }
-
-@media screen and (min-width: 30rem) {
-  p {
-    margin-bottom: 1.6875rem
-  }
-}
-
-@media screen and (min-width: 48rem) {
-  p {
-    margin-bottom: 2rem
-  }
-}
-
-@media screen and (min-width: 62rem) {
-  p {
-    margin-bottom: 2.25rem
-  }
-}
-
-@media screen and (min-width: 75rem) {
-  p {
-    margin-bottom: 2.4375rem
-  }
-}
 ```
-
-To set the `margin-right` and `margin-left` individually, just use CSS.
 
 Padding
 -------
-The `padding()`, `padding-top()`, and `padding-bottom()` mixins work exactly like the corresponding `margin` mixins.
+The `padding()`, `padding-top()`, `padding-right()`, `padding-bottom()`, and `padding-left()` mixins work exactly like the corresponding `margin` mixins.
 
 Variables
 =========

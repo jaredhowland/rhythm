@@ -239,7 +239,7 @@
 }
 
 /*------------------------------------------------------------ */
-/* Padding and margin
+/* Paddings and margins
 -------------------------------------------------------------- */
 
 @mixin padding($scale: 1 0, $decimal: false) {
@@ -334,10 +334,10 @@
       }
     }
 
-  // Example usage: @include padding(2 0 1);
-  //            Top padding is twice the line-height
-  // Right and left padding is 0
-  //         Bottom padding is 1 line-height
+  // Example usage: @include margin(2 0 1);
+  //            Top margin is twice the line-height
+  // Right and left margin is 0
+  //         Bottom margin is 1 line-height
   } @else if length($scale) == 3 {
     $scale-1: nth($scale, 1);
     $scale-2: nth($scale, 2);
