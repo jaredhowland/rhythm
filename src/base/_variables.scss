@@ -117,7 +117,7 @@ $dropcap-bg:             transparent !default;
 
 // Background colors.
 $background-color:      #F5F5F5 !default;
-$code-background-color: #F5F4F2 !default;
+$code-background-color: darken($background-color, 7%) !default;
 
 // Text colors.
 $heading-color:         #2E2E2E !default;
