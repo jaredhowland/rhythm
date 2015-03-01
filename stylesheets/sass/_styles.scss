@@ -33,6 +33,10 @@ header {
   @include padding(0 1 1 1);
   transition: height 0.5s, background 0.5s;
 
+  #grid {
+    @include font-size($epsilon, true);
+  }
+
   svg {
     max-width: 60px;
     max-height: 60px;
@@ -67,9 +71,17 @@ header {
     @include padding-right(4);
   }
 
-  &.tiny {
+  &.small {
     // http://jsfiddle.net/sinky/S8Fnq/
     @include padding-bottom(0);
+
+    a#grid {
+      color: $background-color;
+      &:hover {
+        background-color: $background-color;
+        color: $body-color;
+      }
+    }
 
     svg {
       max-width: 40px;
