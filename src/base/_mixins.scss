@@ -197,6 +197,9 @@
 }
 
 /*------------------------------------------------------------ */
+/* Heights
+-------------------------------------------------------------- */
+
 /* line-height
 -------------------------------------------------------------- */
 
@@ -209,27 +212,46 @@
  *
  * @return line-height for each value in $font-sizes
  */
-@mixin line-height($font-sizes, $scale: 1) {
+@mixin line-height($font-sizes, $scale) {
+  @include height("line-height", $font-sizes, $scale);
+}
+
+/* max-height
+-------------------------------------------------------------- */
+
+/**
+ * Sets max-height for an element
+ *
+ * @param list List of int for each font-size
+ * @param int Value by which to scale the max-height
+ *
+ * @return max-height for each value in $font-sizes
+ */
+@mixin max-height($font-sizes, $scale) {
+  @include height("max-height", $font-sizes, $scale);
+}
+
+@mixin height($value, $font-sizes, $scale: 1) {
   $scale: round($scale);
 
   // Set same font-size for all breakpoints
   @if length($font-sizes) == 1 {
-    line-height: $scale * (line-height($font-sizes, 1));
+    #{$value}: $scale * (line-height($font-sizes, 1));
     // Loop through all breakpoints.
     @for $i from 2 through length($breakpoints) {
       @include breakpoint(bp-name($i)) {
-        line-height: $scale * (line-height($font-sizes, $i));
+        #{$value}: $scale * (line-height($font-sizes, $i));
       }
     }
 
   // Set different font-sizes for each breakpoint
   } @else if length($font-sizes) == length($breakpoints) {
-    line-height: $scale * (line-height(nth($font-sizes, 1), 1));
+    #{$value}: $scale * (line-height(nth($font-sizes, 1), 1));
     // Loop through all breakpoints.
     @for $i from 2 through length($breakpoints) {
       $font-size: nth($font-sizes, $i);
       @include breakpoint(bp-name($i)) {
-        line-height: $scale * (line-height($font-size, $i));
+        #{$value}: $scale * (line-height($font-size, $i));
       }
     }
 

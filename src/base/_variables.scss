@@ -6,7 +6,7 @@ $breakpoints: (
   bp-0: (
     breakpoint: 0px, // Mobile first
     font-size: 16px 18px,
-    line-height: 1.3,
+    line-height: 1.5,
     modular-scale: golden
   ),
   bp-1: (
@@ -23,12 +23,12 @@ $breakpoints: (
   bp-3: (
     breakpoint: 992px, // ~ Medium screen up
     font-size: 22px 24px,
-    modular-scale: golden // no line-height specified so scale is used
+    modular-scale: golden // no line-height specified so modular-scale is used
   ),
   bp-4: (
     breakpoint: 1200px, // ~Desktop up
     font-size: 24px 26px,
-    modular-scale: golden // no line-height specified so scale is used
+    modular-scale: golden // no line-height specified so modular-scale is used
   )
 ) !default;
 
@@ -36,22 +36,6 @@ $breakpoints: (
 /* Modular scales
 -------------------------------------------------------------- */
 $modular-scales: () !default; // Used to define custom scales if desired
-
-$tera:    (); // DO NOT EDIT
-$giga:    (); // DO NOT EDIT
-$mega:    (); // DO NOT EDIT
-$alpha:   (); // DO NOT EDIT
-$h1:      (); // DO NOT EDIT
-$beta:    (); // DO NOT EDIT
-$h2:      (); // DO NOT EDIT
-$gamma:   (); // DO NOT EDIT
-$h3:      (); // DO NOT EDIT
-$delta:   (); // DO NOT EDIT
-$h4:      (); // DO NOT EDIT
-$epsilon: (); // DO NOT EDIT
-$h5:      (); // DO NOT EDIT
-$zeta:    (); // DO NOT EDIT
-$h6:      (); // DO NOT EDIT
 
 $modular-scale-ratios: (
   golden:           1.618,

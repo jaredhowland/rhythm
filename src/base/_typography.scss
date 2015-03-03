@@ -71,6 +71,18 @@ pre, code {
 
 pre {
   @include padding(1);
+
+  overflow: auto;
+  @include max-height($epsilon, 10);
+
+  code[class]:before {
+    content: attr(data-lang);
+    float: right;
+    padding: 0 .3em;
+    text-transform: uppercase;
+    background: lighten($code-background-color, 10%);
+    border-radius: 4px;
+  }
 }
 
 small, .caption {
