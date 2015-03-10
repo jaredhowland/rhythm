@@ -1,16 +1,14 @@
 Rhythm
 ======
-Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3]. Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.
+Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][4], [responsive websites][4] with [vertical rhythm][2] using [modular scales][3]. Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.
 
 Installation
 ============
-Rhythm is available as a [Composer][9] [package][10], but you can also manually download it and include it in your project.
+Rhythm is available as a [Composer][5] [package][6], but you can also manually download it and include it in your project.
 
 Composer
 --------
-1. If you have not done so already, install [Composer][9]
-
-2. Update your project's `composer.json` file to require Rhythm:
+1. Update your project's `composer.json` file to require Rhythm:
 
     ```json
     {
@@ -20,11 +18,11 @@ Composer
     }
     ```
 
-3. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
+2. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
 
 Manual Installation
 -------------------
-1. [Download the latest `.zip` file][11].
+1. [Download the latest `.zip` file][7].
 2. Extract into your project.
 3. SCSS: `@import "rhythm";`
 
@@ -50,18 +48,13 @@ ul {
 }
 ```
 
-Full details can be found on the [documentation site][13].
+Full details can be found on the [documentation site][8].
 
 [1]:  http://sass-lang.com/
 [2]:  http://24ways.org/2006/compose-to-a-vertical-rhythm
 [3]:  http://alistapart.com/article/more-meaningful-typography
-[4]:  http://necolas.github.io/normalize.css/
-[5]:  http://modularscale.com/scale/?px1=18&px2=27&ra1=1.5&ra2=0
-[6]:  http://csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/
-[7]:  http://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
-[8]:  http://bradfrost.com/blog/web/mobile-first-responsive-web-design/
-[9]:  https://getcomposer.org
-[10]: http://packagist.org/
-[11]: https://github.com/jaredhowland/rhythm/releases/latest
-[12]: http://meyerweb.com/eric/tools/css/reset/
-[13]: http://jaredhowland.github.io/rhythm
+[4]:  http://bradfrost.com/blog/web/mobile-first-responsive-web-design/
+[5]:  https://getcomposer.org
+[6]: http://packagist.org/
+[7]: https://github.com/jaredhowland/rhythm/releases/latest
+[8]: http://jaredhowland.github.io/rhythm
