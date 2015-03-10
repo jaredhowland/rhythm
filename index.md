@@ -14,9 +14,7 @@ Rhythm is available as a [Composer][9] [package][10], but you can also manually 
 
 Composer
 --------
-1. If you have not done so already, install [Composer][9]
-
-2. Update your project's `composer.json` file to require Rhythm:
+1. Update your project's `composer.json` file to require Rhythm:
 
     ```json
     {
@@ -26,7 +24,7 @@ Composer
     }
     ```
 
-3. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
+2. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
 
 Manual Installation
 -------------------
@@ -242,6 +240,8 @@ Changing the `font-size` without also changing the `line-height` runs the very r
 
 Line Heights
 ------------
+Line heights are set for each breakpoint based on the `$breakpoints` map from your `variables` Sass file. If no `line-height` is defined for a breakpoint, the modular scale is used as the line-height.
+
 Normally, if you adjust the `line-height` you will also want to adjust the `font-size` and line length. However, if the modular scale is crowding an element and you want to increase the `line-height`, you must do it using a multiple of the generated `line-height`. Use the `line-height` mixin to do this.
 
 To maintain a vertical rhythm, `line-height` is calculated based on a given `font-size`. The mixin requires the `font-size`(s) and the scale value you would like to increase the line-height by:
@@ -477,89 +477,118 @@ Variables
 The following variables (shown with their default values) can be redefined before importing Rhythm:
 
 ```scss
-/*---------------- */
-/* Breakpoints
------------------- */
+/*------------------------------------------------------------ */
+/* Breakpoint defaults
+-------------------------------------------------------------- */
 
 $breakpoints: (
   bp-0: (
     breakpoint: 0px, // Mobile first
     font-size: 16px 18px,
-    modular-scale: perfect-fourth
+    line-height: 1.5,
+    modular-scale: golden
   ),
   bp-1: (
     breakpoint: 480px, // ~ Extra small screen up
     font-size: 18px 20px,
-    modular-scale: perfect-fifth
+    line-height: 1.5,
+    modular-scale: golden
   ),
   bp-2: (
     breakpoint: 768px, // ~ Small screen/tablet up
     font-size: 20px 22px,
-    modular-scale: golden
+    modular-scale: golden // no line-height specified so scale is used
   ),
   bp-3: (
     breakpoint: 992px, // ~ Medium screen up
     font-size: 22px 24px,
-    modular-scale: golden
+    modular-scale: golden // no line-height specified so modular-scale is used
   ),
   bp-4: (
     breakpoint: 1200px, // ~Desktop up
     font-size: 24px 26px,
-    modular-scale: golden
+    modular-scale: golden // no line-height specified so modular-scale is used
   )
+) !default;
+
+/*------------------------------------------------------------ */
+/* Modular scales
+-------------------------------------------------------------- */
+$modular-scales: () !default; // Used to define custom scales if desired
+
+$modular-scale-ratios: (
+  golden:           1.618,
+  minor-second:     1.067,
+  major-second:     1.125,
+  minor-third:      1.2,
+  major-third:      1.25,
+  perfect-fourth:   1.333,
+  augmented-fourth: 1.414,
+  perfect-fifth:    1.5,
+  minor-sixth:      1.6,
+  major-sixth:      1.667,
+  minor-seventh:    1.778,
+  major-seventh:    1.875,
+  octave:           2,
+  major-tenth:      2.5,
+  major-eleventh:   2.667,
+  major-twelfth:    3,
+  double-octave:    4
 );
 
-/*---------------- */
+$modular-scales: map-merge($modular-scale-ratios, $modular-scales);
+
+/*------------------------------------------------------------ */
 /* Fonts
------------------- */
+-------------------------------------------------------------- */
 
 // Serif fonts.
-$serif-font-family: 'Georgia, serif';
+$serif-font-family: 'Georgia, serif' !default;
 
 // Sans-serif fonts.
-$sans-serif-font-family: 'Helvetica, sans-serif';
+$sans-serif-font-family: 'Helvetica, sans-serif' !default;
 
 // Monospace fonts.
-$monospace-font-family: 'Menlo, monospace';
+$monospace-font-family: 'Menlo, monospace' !default;
 
 // Default font types.
-$body-font:      unquote($serif-font-family);
-$heading-font:   unquote($serif-font-family);
-$monospace-font: unquote($monospace-font-family);
+$body-font:      unquote($serif-font-family) !default;
+$heading-font:   unquote($serif-font-family) !default;
+$monospace-font: unquote($monospace-font-family) !default;
 
-/*---------------- */
+/*------------------------------------------------------------ */
 /* Typography
------------------- */
+-------------------------------------------------------------- */
 
 // Indent value for paragraphs
-$indent-value: 1rem;
+$indent-value: 1rem !default;
 
 // Drop caps.
-$dropcap-float-position: left;
-$dropcap-font-size:      4em;
-$dropcap-font-family:    inherit;
-$dropcap-txt-indent:     0;
-$dropcap-margin:         10px 10px 0 0;
-$dropcap-padding:        0 20px;
-$dropcap-color:          inherit;
-$dropcap-line-height:    1;
-$dropcap-bg:             transparent;
+$dropcap-float-position: left !default;
+$dropcap-font-size:      4em !default;
+$dropcap-font-family:    inherit !default;
+$dropcap-txt-indent:     0 !default;
+$dropcap-margin:         10px 10px 0 0 !default;
+$dropcap-padding:        0 20px !default;
+$dropcap-color:          inherit !default;
+$dropcap-line-height:    1 !default;
+$dropcap-bg:             transparent !default;
 
-/*---------------- */
+/*------------------------------------------------------------ */
 /* Colors
------------------- */
+-------------------------------------------------------------- */
 
 // Background colors.
-$background-color:      #F5F5F5;
-$code-background-color: #F5F4F2;
+$background-color:      #F5F5F5 !default;
+$code-background-color: darken($background-color, 7%) !default;
 
 // Text colors.
-$heading-color:         #2E2E2E;
-$body-color:            #444444;
-$body-color-muted:      #CCCCCC;
-$link-color:            #265C83;
-$link-hover-color:      lighten($link-color, 10%);
-$link-background-color: transparent;
+$heading-color:         #2E2E2E !default;
+$body-color:            #444444 !default;
+$body-color-muted:      #CCCCCC !default;
+$link-color:            #265C83 !default;
+$link-hover-color:      lighten($link-color, 10%) !default;
+$link-background-color: transparent !default;
 ```
 
 *Modular Scales*. When you first call Rhythm, a modular scale is generated for you based on the `$breakpoint` values you have defined. You can use multiple base `font-size`s to create a more robust [scale][5]. It is recommended that you use no more than two `font-size`s to generate the scale but Rhythm will accept as many as you give it. Scale options include:
@@ -595,6 +624,7 @@ $breakpoints: (
   bp-0: (
     breakpoint: 0px, // Mobile first
     font-size: 16px 18px,
+    line-height: 1.5,
     modular-scale: my-scale
   )
 );

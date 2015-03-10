@@ -7,6 +7,8 @@ html {
 body {
   @include rhythm();
   font-family: $body-font;
+  color: $body-color;
+  background-color: $background-color;
 }
 
 p {
@@ -55,17 +57,32 @@ blockquote p {
   border-left: .25rem solid $body-color-muted;
   font-style: italic;
   padding-left: 1rem;
-  @include font-size($gamma);
+  @include font-size(16px);
 }
 
-code, pre {
+// http://alexmansfield.com/css/font-size-line-height-pre-code-monospace
+pre, code {
   font-family: $monospace-font;
+  background-color: $code-background-color;
+  border-radius: 4px;
+  vertical-align: top;
+  @include font-size($epsilon);
 }
 
 pre {
   @include padding(1);
-  background-color: $code-background-color;
-  border-radius: 4px;
+
+  overflow: auto;
+  @include max-height($epsilon, 10);
+
+  code[class]:before {
+    content: attr(data-lang);
+    float: right;
+    padding: 0 .3em;
+    text-transform: uppercase;
+    background: lighten($code-background-color, 10%);
+    border-radius: 4px;
+  }
 }
 
 small, .caption {
