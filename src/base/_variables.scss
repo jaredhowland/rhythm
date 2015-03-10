@@ -74,7 +74,7 @@ $monospace-font-family: 'Menlo, monospace' !default;
 
 // Default font types.
 $body-font:      unquote($serif-font-family) !default;
-$heading-font:   unquote($serif-font-family) !default;
+$heading-font:   unquote($sans-serif-font-family) !default;
 $monospace-font: unquote($monospace-font-family) !default;
 
 /*------------------------------------------------------------ */
