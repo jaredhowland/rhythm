@@ -1,8 +1,5 @@
 title: "Rhythm: Sass files for vertical rhythm using modular scales"
 
-gems:
-  - jekyll-gist
-
 compress_html:
   clippings: all
   endings: all

@@ -127,28 +127,6 @@ p {
   @include margin(1 0);
 }
 
-// http://alexmansfield.com/css/font-size-line-height-pre-code-monospace
-pre, code {
-  background-color: darken($background-color, 10%);
-  border-radius: 4px;
-  vertical-align: top;
-  @include font-size($epsilon);
-}
-
-pre {
-  overflow: auto;
-  @include max-height($epsilon, 10);
-
-  code[class]:before {
-    content: attr(data-lang);
-    float: right;
-    padding: 0 .3em;
-    text-transform: uppercase;
-    background: lighten($code-background-color, 10%);
-    border-radius: 4px;
-  }
-}
-
 footer {
   @include margin-top(3);
   border-top: 1px solid $body-color-muted;
