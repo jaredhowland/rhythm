@@ -2,3 +2,4 @@
 *.codekit
 *.codekit-cache
 .gitignore
+_site/

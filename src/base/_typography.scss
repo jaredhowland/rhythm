@@ -75,10 +75,7 @@ pre, code {
 
 pre {
   @include padding(1);
-
   overflow: auto;
-  @include max-height($epsilon, 10);
-
   code[class]:before {
     content: attr(data-lang);
     float: right;
