@@ -1,0 +1,27 @@
+{
+  "name": "rhythm-sass",
+  "homepage": "https://github.com/jaredhowland/rhythm",
+  "authors": [
+    "Jared Howland <rhythm@jaredhowland.com>"
+  ],
+  "description": "Rhythm is a small set of Sass files built to assist in creating mobile-first, responsive websites with vertical rhythm using modular scales.",
+  "main": "src/rhythm.scss",
+  "keywords": [
+    "vertical",
+    "rhythm",
+    "modular",
+    "scale",
+    "responsive",
+    "sass",
+    "scss"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "1.1.2"
+}
