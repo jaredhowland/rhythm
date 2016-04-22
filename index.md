@@ -18,15 +18,16 @@ Rhythm is available as a [Composer][9] [package][10], but you can also manually 
 
 Composer
 --------
-<ol>
-  <li>If you have not done so already, install <a href="https://getcomposer.org">Composer</a></li>
-  <li>Update your project’s <code class="highlighter-rouge">composer.json</code> file to require Rhythm:</ol><figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"jaredhowland/rhythm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~1.0"</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span></code></pre></figure></li>
-  <li>SCSS: <code class="highlighter-rouge">@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";</code></li>
-</ol>
+1. If you have not done so already, install [Composer][9]
+2. Update your project's `composer.json` file to require Rhythm:
+      <figure class="highlight">
+      <pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">  "require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">  "jaredhowland/rhythm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~1.0"</span><span class="w">
+        </span><span class="p">  }</span><span class="w">
+      </span><span class="p"> }</span></code></pre>
+      </figure>
+3. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
 
 Manual Installation
 -------------------
