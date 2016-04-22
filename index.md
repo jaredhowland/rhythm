@@ -1,6 +1,10 @@
 ---
-layout: index
 ---
+
+Table of Contents
+=================
+1. auto-gen TOC:
+{:toc}
 
 Rhythm
 ======
@@ -16,13 +20,13 @@ Composer
 --------
 1. Update your project's `composer.json` file to require Rhythm:
 
-    ```json
+{% highlight json %}
     {
       "require": {
         "jaredhowland/rhythm": "~1.0"
       }
     }
-    ```
+{% endhighlight %}
 
 2. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
 
@@ -53,15 +57,15 @@ Font Sizes
 ----------
 To adjust the font-size of an element across all breakpoints, use the `font-size` mixin:
 
-```scss
+{% highlight scss %}
 p {
   @include font-size(14px);
 }
-```
+{% endhighlight %}
 
 CSS output:
 
-```css
+{% highlight css %}
 p {
   font-size: 0.875rem;
   line-height: 1.3125rem
@@ -94,21 +98,21 @@ p {
     line-height: 2.4375rem
   }
 }
-```
+{% endhighlight %}
 
 All Rhythm mixins and variables can accept any combination of the following units: `px`, `%`, or `rem`.
 
 To set a different `font-size` for each breakpoint, use a list of all `font-size`s that is the same length as the number of defined breakpoints.
 
-```scss
+{% highlight scss %}
 p {
   @include font-size(10px 12px 13px 14px 16px);
 }
-```
+{% endhighlight %}
 
 CSS output:
 
-```css
+{% highlight css %}
 p {
   font-size: 0.625rem;
   line-height: 1.3125rem
@@ -141,27 +145,26 @@ p {
     line-height: 2.4375rem
   }
 }
-```
+{% endhighlight %}
 
 Alternatively, you can use the `font-size`s defined in your modular scale.
 
-```scss
+{% highlight scss %}
 h2 {
   @include font-size($h3);
 }
-```
+{% endhighlight %}
 
 Or
 
-```scss
+{% highlight scss %}
 h2 {
   @include font-size($gamma);
 }
-```
-
+{% endhighlight %}
 CSS output:
 
-```css
+{% highlight css %}
 h2 {
   font-size: 1.125rem;
   line-height: 1.3125rem
@@ -194,19 +197,17 @@ h2 {
     line-height: 2.4375rem
   }
 }
-```
-
+{% endhighlight %}
 **Not Recommended**: If you have an element that you would like to set the `font-size` for but not the `line-height`, you can do the following:
 
-```scss
+{% highlight scss %}
 span {
   @include font-size($epsilon, false);
 }
-```
-
+{% endhighlight %}
 CSS output:
 
-```css
+{% highlight css %}
 span {
   font-size: 0.875rem
 }
@@ -234,8 +235,7 @@ span {
     font-size: 1rem
   }
 }
-```
-
+{% endhighlight %}
 Changing the `font-size` without also changing the `line-height` runs the very real risk of throwing off your vertical scale.
 
 Line Heights
@@ -246,15 +246,14 @@ Normally, if you adjust the `line-height` you will also want to adjust the `font
 
 To maintain a vertical rhythm, `line-height` is calculated based on a given `font-size`. The mixin requires the `font-size`(s) and the scale value you would like to increase the line-height by:
 
-```scss
+{% highlight scss %}
 h2 {
   @include line-height($h2, 2);
 }
-```
-
+{% endhighlight %}
 CSS output:
 
-```css
+{% highlight css %}
 h2 {
   line-height: 2.625rem
 }
@@ -282,8 +281,7 @@ h2 {
     line-height: 4.875rem
   }
 }
-```
-
+{% endhighlight %}
 You can pass a single `font-size` or the same number of `font-size`s as there are defined breakpoints.
 
 Margins
@@ -293,7 +291,7 @@ Because Rhythm includes v2.0 of Eric Meyer's [reset stylesheet][12], all margins
 ###margin()
 The `margin()` mixin behaves just like the CSS `margin`. You can pass one, two, three, or four scale values:
 
-```scss
+{% highlight scss %}
 h1 {
   @include margin(1);
 }
@@ -309,11 +307,10 @@ h3 {
 h4 {
   @include margin(1 1 0 0);
 }
-```
-
+{% endhighlight %}
 CSS output:
 
-```css
+{% highlight css %}
 h1 {
   margin: 1.3125rem
 }
@@ -425,20 +422,18 @@ h4 {
     margin: 2.4375rem 2.4375rem 0rem 0rem
   }
 }
-```
-
+{% endhighlight %}
 ### margin-top(), margin-right(), margin-bottom(), margin-left()
 The `margin-top()`, `margin-right()`, `margin-bottom()`, and `margin-left` mixins work just as you would expect:
 
-```scss
+{% highlight scss %}
 p {
   @include margin-top(2);
 }
-```
-
+{% endhighlight %}
 CSS output:
 
-```css
+{% highlight css %}
 p {
   margin-top: 2.625rem;
 }
@@ -466,8 +461,7 @@ p {
     margin-top: 4.875rem
   }
 }
-```
-
+{% endhighlight %}
 Padding
 -------
 The `padding()`, `padding-top()`, `padding-right()`, `padding-bottom()`, and `padding-left()` mixins work exactly like the corresponding `margin` mixins.
@@ -476,7 +470,7 @@ Variables
 =========
 The following variables (shown with their default values) can be redefined before importing Rhythm:
 
-```scss
+{% highlight scss %}
 /*------------------------------------------------------------ */
 /* Breakpoint defaults
 -------------------------------------------------------------- */
@@ -589,8 +583,7 @@ $body-color-muted:      #CCCCCC !default;
 $link-color:            #265C83 !default;
 $link-hover-color:      lighten($link-color, 10%) !default;
 $link-background-color: transparent !default;
-```
-
+{% endhighlight %}
 *Modular Scales*. When you first call Rhythm, a modular scale is generated for you based on the `$breakpoint` values you have defined. You can use multiple base `font-size`s to create a more robust [scale][5]. It is recommended that you use no more than two `font-size`s to generate the scale but Rhythm will accept as many as you give it. Scale options include:
 
   * `golden`
@@ -613,13 +606,12 @@ $link-background-color: transparent !default;
 
 To create a custom scale, create a `$modular-scales` map before importing Rhythm:
 
-```scss
+{% highlight scss %}
 $modular-scales: (my-scale: 2.3, my-scale-2: 2.4);
-```
-
+{% endhighlight %}
 Then, redefine your `$breakpoints` variable to use your new scale:
 
-```scss
+{% highlight scss %}
 $breakpoints: (
   bp-0: (
     breakpoint: 0px, // Mobile first
@@ -628,8 +620,7 @@ $breakpoints: (
     modular-scale: my-scale
   )
 );
-```
-
+{% endhighlight %}
 Rhythm also creates lists for every breakpoint for various font sizes based on the selected modular scale. The Rhythm implementation of this closely resembles the one found in the article "[Pragmatic, Practical Font Sizing in CSS][6]." Specifically, it sets the following variables from largest font size to smallest:
 
   * `$tera`
@@ -644,11 +635,15 @@ Rhythm also creates lists for every breakpoint for various font sizes based on t
 
 For example, if you want to set your `h1`'s `font-size` to be one scale down from the default, you can do the following:
 
-```scss
+{% highlight scss %}
 h1 {
   @include font-size($h2);
 }
-```
+{% endhighlight %}
+
+License
+=======
+[The MIT License (MIT)][13]
 
 [1]:  http://sass-lang.com/
 [2]:  http://24ways.org/2006/compose-to-a-vertical-rhythm
@@ -662,3 +657,4 @@ h1 {
 [10]: http://packagist.org/
 [11]: https://github.com/jaredhowland/rhythm/releases/latest
 [12]: http://meyerweb.com/eric/tools/css/reset/
+[13]: https://github.com/jaredhowland/rhythm/blob/master/LICENSE.md

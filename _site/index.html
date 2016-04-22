@@ -1,0 +1,434 @@
+<html dir="ltr" lang="en-US"><meta charset="utf-8"><title>Rhythm</title><meta name="keywords" content="vertical rhythm, modular scale, responsive, sass, scss"><meta name="description" content="Rhythm is a small set of Sass files built to assist in creating mobile-first, responsive websites with vertical rhythm using modular scales."><meta name="author" content="Jared Howland"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/styles/main.css"><link href='http://fonts.googleapis.com/css?family=Merriweather:400,400italic,700|Merriweather+Sans:700' rel='stylesheet' type='text/css'><header><h1>Rhythm</h1><p> Sass files to create a vertical rhythm based on modular scales <a href="#" title="Overlay grid on page" id="grid" class="grid-hidden">[Toggle grid]</a> <a href="https://github.com/jaredhowland/rhythm"> <svg width="1024" height="999" viewBox="0 0 1024 999" xmlns="http://www.w3.org/2000/svg"><title>github-icon</title><g fill="none" fill-rule="evenodd"><g fill="#000"><path d="M512 0C229.25 0 0 229.25 0 512c0 226.25 146.688 418.125 350.156 485.812 25.594 4.688 34.938-11.125 34.938-24.625 0-12.188-.47-52.562-.72-95.312C242 908.812 211.907 817.5 211.907 817.5c-23.312-59.125-56.844-74.875-56.844-74.875-46.53-31.75 3.53-31.125 3.53-31.125 51.406 3.562 78.47 52.75 78.47 52.75 45.688 78.25 119.875 55.625 149 42.5 4.654-33 17.904-55.625 32.5-68.375-113.656-12.937-233.218-56.875-233.218-253.063 0-55.938 19.97-101.562 52.656-137.406-5.22-13-22.844-65.094 5.062-135.562 0 0 42.938-13.75 140.812 52.5 40.812-11.406 84.594-17.03 128.125-17.22 43.5.19 87.31 5.876 128.187 17.282 97.688-66.312 140.688-52.5 140.688-52.5 28 70.53 10.375 122.562 5.125 135.5 32.812 35.844 52.625 81.47 52.625 137.406 0 196.688-119.75 240-233.812 252.688 18.438 15.875 34.75 47 34.75 94.75 0 68.438-.688 123.625-.688 140.5 0 13.625 9.312 29.562 35.25 24.562C877.438 930 1024 738.125 1024 512 1024 229.25 794.75 0 512 0z"/></g></g></svg> </a></header><section><h1 id="table-of-contents">Table of Contents</h1><ol id="markdown-toc"><li><a href="#table-of-contents" id="markdown-toc-table-of-contents">Table of Contents</a><li><a href="#rhythm" id="markdown-toc-rhythm">Rhythm</a><li><a href="#installation" id="markdown-toc-installation">Installation</a><ol><li><a href="#composer" id="markdown-toc-composer">Composer</a><li><a href="#manual-installation" id="markdown-toc-manual-installation">Manual Installation</a></ol><li><a href="#usage" id="markdown-toc-usage">Usage</a><li><a href="#adjusting-vertical-properties" id="markdown-toc-adjusting-vertical-properties">Adjusting Vertical Properties</a><ol><li><a href="#font-sizes" id="markdown-toc-font-sizes">Font Sizes</a><li><a href="#line-heights" id="markdown-toc-line-heights">Line Heights</a><li><a href="#margins" id="markdown-toc-margins">Margins</a><ol><li><a href="#margin-top-margin-right-margin-bottom-margin-left" id="markdown-toc-margin-top-margin-right-margin-bottom-margin-left">margin-top(), margin-right(), margin-bottom(), margin-left()</a></ol><li><a href="#padding" id="markdown-toc-padding">Padding</a></ol><li><a href="#variables" id="markdown-toc-variables">Variables</a><li><a href="#license" id="markdown-toc-license">License</a></ol><h1 id="rhythm">Rhythm</h1><p>Rhythm is a small set of <a href="http://sass-lang.com/">Sass files</a> built to assist in creating <a href="http://bradfrost.com/blog/web/mobile-first-responsive-web-design/">mobile-first</a>, <a href="http://bradfrost.com/blog/web/mobile-first-responsive-web-design/">responsive websites</a> with <a href="http://24ways.org/2006/compose-to-a-vertical-rhythm">vertical rhythm</a> using <a href="http://alistapart.com/article/more-meaningful-typography">modular scales</a>. Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.<p>To see the rhythm in action, click on the “[Toggle grid]” link in the header of this page. If you change the size of the browser, you may need to toggle the grid off and back on again to see the rhythm.<h1 id="installation">Installation</h1><p>Rhythm is available as a <a href="https://getcomposer.org">Composer</a> <a href="http://packagist.org/">package</a>, but you can also manually download it and include it in your project.<h2 id="composer">Composer</h2><ol><li>Update your project’s <code class="highlighter-rouge">composer.json</code> file to require Rhythm:</ol><figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"jaredhowland/rhythm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~1.0"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span></code></pre></figure><ol><li>SCSS: <code class="highlighter-rouge">@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";</code></ol><h2 id="manual-installation">Manual Installation</h2><ol><li><a href="https://github.com/jaredhowland/rhythm/releases/latest">Download the latest <code class="highlighter-rouge">.zip</code> file</a>.<li>Extract into your project.<li>SCSS: <code class="highlighter-rouge">@import "rhythm";</code></ol><h1 id="usage">Usage</h1><p>Including Rhythm with your Sass files automatically generates a vertical rhythm using modular scales for multiple breakpoints based on the values defined in <code class="highlighter-rouge">_variables.scss</code>. To change the defaults, redefine the variables before importing Rhythm.<p>Any time an element’s vertical properties are changed, you must offset this change to maintain a vertical rhythm. The major properties that change an element’s vertical rhythm include:<ul><li><code class="highlighter-rouge">font-size</code><li><code class="highlighter-rouge">line-height</code><li><code class="highlighter-rouge">margin-top</code> and <code class="highlighter-rouge">margin-bottom</code><li><code class="highlighter-rouge">padding-top</code> and <code class="highlighter-rouge">padding-bottom</code></ul><p>Use Rhythm any time you want to adjust those properties and it will perform the mathematical acrobatics required to restore the vertical rhythm to your site.<h1 id="adjusting-vertical-properties">Adjusting Vertical Properties</h1><p><strong>All of the examples assume you have not changed any of the default variables.</strong><h2 id="font-sizes">Font Sizes</h2><p>To adjust the font-size of an element across all breakpoints, use the <code class="highlighter-rouge">font-size</code> mixin:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">p</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">font-size</span><span class="p">(</span><span class="m">14px</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>CSS output:<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span><span class="p">;</span>
+  <span class="nl">line-height</span><span class="p">:</span> <span class="m">1.3125rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">1.6875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2.25rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2.4375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure><p>All Rhythm mixins and variables can accept any combination of the following units: <code class="highlighter-rouge">px</code>, <code class="highlighter-rouge">%</code>, or <code class="highlighter-rouge">rem</code>.<p>To set a different <code class="highlighter-rouge">font-size</code> for each breakpoint, use a list of all <code class="highlighter-rouge">font-size</code>s that is the same length as the number of defined breakpoints.<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">p</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">font-size</span><span class="p">(</span><span class="m">10px</span> <span class="m">12px</span> <span class="m">13px</span> <span class="m">14px</span> <span class="m">16px</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>CSS output:<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.625rem</span><span class="p">;</span>
+  <span class="nl">line-height</span><span class="p">:</span> <span class="m">1.3125rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.75rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">1.6875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.8125rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2.25rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2.4375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure><p>Alternatively, you can use the <code class="highlighter-rouge">font-size</code>s defined in your modular scale.<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">h2</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">font-size</span><span class="p">(</span><span class="nv">$h3</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>Or<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">h2</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">font-size</span><span class="p">(</span><span class="nv">$gamma</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>CSS output:<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h2</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.125rem</span><span class="p">;</span>
+  <span class="nl">line-height</span><span class="p">:</span> <span class="m">1.3125rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.25rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">1.6875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.375rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.5rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2.25rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.625rem</span><span class="p">;</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">2.4375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure><p><strong>Not Recommended</strong>: If you have an element that you would like to set the <code class="highlighter-rouge">font-size</code> for but not the <code class="highlighter-rouge">line-height</code>, you can do the following:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">span</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">font-size</span><span class="p">(</span><span class="nv">$epsilon</span><span class="o">,</span> <span class="bp">false</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>CSS output:<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">span</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">span</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.8125rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">span</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">span</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.9375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">span</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">1rem</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure><p>Changing the <code class="highlighter-rouge">font-size</code> without also changing the <code class="highlighter-rouge">line-height</code> runs the very real risk of throwing off your vertical scale.<h2 id="line-heights">Line Heights</h2><p>Line heights are set for each breakpoint based on the <code class="highlighter-rouge">$breakpoints</code> map from your <code class="highlighter-rouge">variables</code> Sass file. If no <code class="highlighter-rouge">line-height</code> is defined for a breakpoint, the modular scale is used as the line-height.<p>Normally, if you adjust the <code class="highlighter-rouge">line-height</code> you will also want to adjust the <code class="highlighter-rouge">font-size</code> and line length. However, if the modular scale is crowding an element and you want to increase the <code class="highlighter-rouge">line-height</code>, you must do it using a multiple of the generated <code class="highlighter-rouge">line-height</code>. Use the <code class="highlighter-rouge">line-height</code> mixin to do this.<p>To maintain a vertical rhythm, <code class="highlighter-rouge">line-height</code> is calculated based on a given <code class="highlighter-rouge">font-size</code>. The mixin requires the <code class="highlighter-rouge">font-size</code>(s) and the scale value you would like to increase the line-height by:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">h2</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">line-height</span><span class="p">(</span><span class="nv">$h2</span><span class="o">,</span> <span class="m">2</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>CSS output:<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h2</span> <span class="p">{</span>
+  <span class="nl">line-height</span><span class="p">:</span> <span class="m">2.625rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+      <span class="nl">line-height</span><span class="p">:</span> <span class="m">3.375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">4rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">4.5rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">line-height</span><span class="p">:</span> <span class="m">4.875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure><p>You can pass a single <code class="highlighter-rouge">font-size</code> or the same number of <code class="highlighter-rouge">font-size</code>s as there are defined breakpoints.<h2 id="margins">Margins</h2><p>Because Rhythm includes v2.0 of Eric Meyer’s <a href="http://meyerweb.com/eric/tools/css/reset/">reset stylesheet</a>, all margins are defaulted to <code class="highlighter-rouge">0</code>. Use the <code class="highlighter-rouge">margin</code>, <code class="highlighter-rouge">margin-top</code>, <code class="highlighter-rouge">margin-right</code>, <code class="highlighter-rouge">margin-bottom</code>, and <code class="highlighter-rouge">margin-left</code> mixins to adjust the margins. The mixins require you to define the scale value by which you would like the margin to be increased.<p>###margin() The <code class="highlighter-rouge">margin()</code> mixin behaves just like the CSS <code class="highlighter-rouge">margin</code>. You can pass one, two, three, or four scale values:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">h1</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">margin</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nt">h2</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">margin</span><span class="p">(</span><span class="m">1</span> <span class="m">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nt">h3</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">margin</span><span class="p">(</span><span class="m">1</span> <span class="m">3</span> <span class="m">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nt">h4</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">margin</span><span class="p">(</span><span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>CSS output:<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">1.3125rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h1</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">1.6875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h1</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h1</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.25rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h1</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.4375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nt">h2</span> <span class="p">{</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">1.3125rem</span> <span class="m">0rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">1.6875rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.25rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.4375rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nt">h3</span> <span class="p">{</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">1.3125rem</span> <span class="m">3.9375rem</span> <span class="m">2.625rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h3</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">1.6875rem</span> <span class="m">5.0625rem</span> <span class="m">3.375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h3</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2rem</span> <span class="m">6rem</span> <span class="m">4rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h3</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.25rem</span> <span class="m">6.75rem</span> <span class="m">4.5rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h3</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.4375rem</span> <span class="m">7.3125rem</span> <span class="m">4.875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nt">h4</span> <span class="p">{</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">1.3125rem</span> <span class="m">1.3125rem</span> <span class="m">0rem</span> <span class="m">0rem</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h4</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">1.6875rem</span> <span class="m">1.6875rem</span> <span class="m">0rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h4</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2rem</span> <span class="m">2rem</span> <span class="m">0rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h4</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.25rem</span> <span class="m">2.25rem</span> <span class="m">0rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">h4</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">2.4375rem</span> <span class="m">2.4375rem</span> <span class="m">0rem</span> <span class="m">0rem</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure><h3 id="margin-top-margin-right-margin-bottom-margin-left">margin-top(), margin-right(), margin-bottom(), margin-left()</h3><p>The <code class="highlighter-rouge">margin-top()</code>, <code class="highlighter-rouge">margin-right()</code>, <code class="highlighter-rouge">margin-bottom()</code>, and <code class="highlighter-rouge">margin-left</code> mixins work just as you would expect:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">p</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">margin-top</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><p>CSS output:<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span>
+  <span class="nl">margin-top</span><span class="p">:</span> <span class="m">2.625rem</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">30rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">3.375rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">48rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">4rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">62rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">4.5rem</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">75rem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">4.875rem</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure><h2 id="padding">Padding</h2><p>The <code class="highlighter-rouge">padding()</code>, <code class="highlighter-rouge">padding-top()</code>, <code class="highlighter-rouge">padding-right()</code>, <code class="highlighter-rouge">padding-bottom()</code>, and <code class="highlighter-rouge">padding-left()</code> mixins work exactly like the corresponding <code class="highlighter-rouge">margin</code> mixins.<h1 id="variables">Variables</h1><p>The following variables (shown with their default values) can be redefined before importing Rhythm:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="cm">/*------------------------------------------------------------ */</span>
+<span class="cm">/* Breakpoint defaults
+-------------------------------------------------------------- */</span>
+
+<span class="nv">$breakpoints</span><span class="p">:</span> <span class="p">(</span>
+  <span class="n">bp-0</span><span class="o">:</span> <span class="p">(</span>
+    <span class="n">breakpoint</span><span class="o">:</span> <span class="m">0px</span><span class="o">,</span> <span class="o">//</span> <span class="n">Mobile</span> <span class="n">first</span>
+    <span class="n">font-size</span><span class="o">:</span> <span class="m">16px</span> <span class="m">18px</span><span class="o">,</span>
+    <span class="n">line-height</span><span class="o">:</span> <span class="m">1</span><span class="mi">.5</span><span class="o">,</span>
+    <span class="n">modular-scale</span><span class="o">:</span> <span class="n">golden</span>
+  <span class="p">)</span><span class="o">,</span>
+  <span class="n">bp-1</span><span class="o">:</span> <span class="p">(</span>
+    <span class="n">breakpoint</span><span class="o">:</span> <span class="m">480px</span><span class="o">,</span> <span class="o">//</span> <span class="o">~</span> <span class="n">Extra</span> <span class="n">small</span> <span class="n">screen</span> <span class="n">up</span>
+    <span class="n">font-size</span><span class="o">:</span> <span class="m">18px</span> <span class="m">20px</span><span class="o">,</span>
+    <span class="n">line-height</span><span class="o">:</span> <span class="m">1</span><span class="mi">.5</span><span class="o">,</span>
+    <span class="n">modular-scale</span><span class="o">:</span> <span class="n">golden</span>
+  <span class="p">)</span><span class="o">,</span>
+  <span class="n">bp-2</span><span class="o">:</span> <span class="p">(</span>
+    <span class="n">breakpoint</span><span class="o">:</span> <span class="m">768px</span><span class="o">,</span> <span class="o">//</span> <span class="o">~</span> <span class="n">Small</span> <span class="n">screen</span><span class="o">/</span><span class="n">tablet</span> <span class="n">up</span>
+    <span class="n">font-size</span><span class="o">:</span> <span class="m">20px</span> <span class="m">22px</span><span class="o">,</span>
+    <span class="n">modular-scale</span><span class="o">:</span> <span class="n">golden</span> <span class="o">//</span> <span class="n">no</span> <span class="n">line-height</span> <span class="n">specified</span> <span class="n">so</span> <span class="n">scale</span> <span class="n">is</span> <span class="n">used</span>
+  <span class="p">)</span><span class="o">,</span>
+  <span class="n">bp-3</span><span class="o">:</span> <span class="p">(</span>
+    <span class="n">breakpoint</span><span class="o">:</span> <span class="m">992px</span><span class="o">,</span> <span class="o">//</span> <span class="o">~</span> <span class="n">Medium</span> <span class="n">screen</span> <span class="n">up</span>
+    <span class="n">font-size</span><span class="o">:</span> <span class="m">22px</span> <span class="m">24px</span><span class="o">,</span>
+    <span class="n">modular-scale</span><span class="o">:</span> <span class="n">golden</span> <span class="o">//</span> <span class="n">no</span> <span class="n">line-height</span> <span class="n">specified</span> <span class="n">so</span> <span class="n">modular-scale</span> <span class="n">is</span> <span class="n">used</span>
+  <span class="p">)</span><span class="o">,</span>
+  <span class="n">bp-4</span><span class="o">:</span> <span class="p">(</span>
+    <span class="n">breakpoint</span><span class="o">:</span> <span class="m">1200px</span><span class="o">,</span> <span class="o">//</span> <span class="o">~</span><span class="n">Desktop</span> <span class="n">up</span>
+    <span class="n">font-size</span><span class="o">:</span> <span class="m">24px</span> <span class="m">26px</span><span class="o">,</span>
+    <span class="n">modular-scale</span><span class="o">:</span> <span class="n">golden</span> <span class="o">//</span> <span class="n">no</span> <span class="n">line-height</span> <span class="n">specified</span> <span class="n">so</span> <span class="n">modular-scale</span> <span class="n">is</span> <span class="n">used</span>
+  <span class="p">)</span>
+<span class="p">)</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="cm">/*------------------------------------------------------------ */</span>
+<span class="cm">/* Modular scales
+-------------------------------------------------------------- */</span>
+<span class="nv">$modular-scales</span><span class="p">:</span> <span class="p">()</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span> <span class="c1">// Used to define custom scales if desired
+</span>
+<span class="nv">$modular-scale-ratios</span><span class="p">:</span> <span class="p">(</span>
+  <span class="n">golden</span><span class="o">:</span>           <span class="m">1</span><span class="mi">.618</span><span class="o">,</span>
+  <span class="n">minor-second</span><span class="o">:</span>     <span class="m">1</span><span class="mi">.067</span><span class="o">,</span>
+  <span class="n">major-second</span><span class="o">:</span>     <span class="m">1</span><span class="mi">.125</span><span class="o">,</span>
+  <span class="n">minor-third</span><span class="o">:</span>      <span class="m">1</span><span class="mi">.2</span><span class="o">,</span>
+  <span class="n">major-third</span><span class="o">:</span>      <span class="m">1</span><span class="mi">.25</span><span class="o">,</span>
+  <span class="n">perfect-fourth</span><span class="o">:</span>   <span class="m">1</span><span class="mi">.333</span><span class="o">,</span>
+  <span class="n">augmented-fourth</span><span class="o">:</span> <span class="m">1</span><span class="mi">.414</span><span class="o">,</span>
+  <span class="n">perfect-fifth</span><span class="o">:</span>    <span class="m">1</span><span class="mi">.5</span><span class="o">,</span>
+  <span class="n">minor-sixth</span><span class="o">:</span>      <span class="m">1</span><span class="mi">.6</span><span class="o">,</span>
+  <span class="n">major-sixth</span><span class="o">:</span>      <span class="m">1</span><span class="mi">.667</span><span class="o">,</span>
+  <span class="n">minor-seventh</span><span class="o">:</span>    <span class="m">1</span><span class="mi">.778</span><span class="o">,</span>
+  <span class="n">major-seventh</span><span class="o">:</span>    <span class="m">1</span><span class="mi">.875</span><span class="o">,</span>
+  <span class="n">octave</span><span class="o">:</span>           <span class="m">2</span><span class="o">,</span>
+  <span class="n">major-tenth</span><span class="o">:</span>      <span class="m">2</span><span class="mi">.5</span><span class="o">,</span>
+  <span class="n">major-eleventh</span><span class="o">:</span>   <span class="m">2</span><span class="mi">.667</span><span class="o">,</span>
+  <span class="n">major-twelfth</span><span class="o">:</span>    <span class="m">3</span><span class="o">,</span>
+  <span class="n">double-octave</span><span class="o">:</span>    <span class="m">4</span>
+<span class="p">);</span>
+
+<span class="nv">$modular-scales</span><span class="p">:</span> <span class="nf">map-merge</span><span class="p">(</span><span class="nv">$modular-scale-ratios</span><span class="o">,</span> <span class="nv">$modular-scales</span><span class="p">);</span>
+
+<span class="cm">/*------------------------------------------------------------ */</span>
+<span class="cm">/* Fonts
+-------------------------------------------------------------- */</span>
+
+<span class="c1">// Serif fonts.
+</span><span class="nv">$serif-font-family</span><span class="p">:</span> <span class="s1">'Georgia, serif'</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="c1">// Sans-serif fonts.
+</span><span class="nv">$sans-serif-font-family</span><span class="p">:</span> <span class="s1">'Helvetica, sans-serif'</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="c1">// Monospace fonts.
+</span><span class="nv">$monospace-font-family</span><span class="p">:</span> <span class="s1">'Menlo, monospace'</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="c1">// Default font types.
+</span><span class="nv">$body-font</span><span class="p">:</span>      <span class="nf">unquote</span><span class="p">(</span><span class="nv">$serif-font-family</span><span class="p">)</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$heading-font</span><span class="p">:</span>   <span class="nf">unquote</span><span class="p">(</span><span class="nv">$serif-font-family</span><span class="p">)</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$monospace-font</span><span class="p">:</span> <span class="nf">unquote</span><span class="p">(</span><span class="nv">$monospace-font-family</span><span class="p">)</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="cm">/*------------------------------------------------------------ */</span>
+<span class="cm">/* Typography
+-------------------------------------------------------------- */</span>
+
+<span class="c1">// Indent value for paragraphs
+</span><span class="nv">$indent-value</span><span class="p">:</span> <span class="m">1rem</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="c1">// Drop caps.
+</span><span class="nv">$dropcap-float-position</span><span class="p">:</span> <span class="nb">left</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-font-size</span><span class="p">:</span>      <span class="m">4em</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-font-family</span><span class="p">:</span>    <span class="nb">inherit</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-txt-indent</span><span class="p">:</span>     <span class="m">0</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-margin</span><span class="p">:</span>         <span class="m">10px</span> <span class="m">10px</span> <span class="m">0</span> <span class="m">0</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-padding</span><span class="p">:</span>        <span class="m">0</span> <span class="m">20px</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-color</span><span class="p">:</span>          <span class="nb">inherit</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-line-height</span><span class="p">:</span>    <span class="m">1</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$dropcap-bg</span><span class="p">:</span>             <span class="nb">transparent</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="cm">/*------------------------------------------------------------ */</span>
+<span class="cm">/* Colors
+-------------------------------------------------------------- */</span>
+
+<span class="c1">// Background colors.
+</span><span class="nv">$background-color</span><span class="p">:</span>      <span class="mh">#F5F5F5</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$code-background-color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="nv">$background-color</span><span class="o">,</span> <span class="m">7%</span><span class="p">)</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+
+<span class="c1">// Text colors.
+</span><span class="nv">$heading-color</span><span class="p">:</span>         <span class="mh">#2E2E2E</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$body-color</span><span class="p">:</span>            <span class="mh">#444444</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$body-color-muted</span><span class="p">:</span>      <span class="mh">#CCCCCC</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$link-color</span><span class="p">:</span>            <span class="mh">#265C83</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$link-hover-color</span><span class="p">:</span>      <span class="nf">lighten</span><span class="p">(</span><span class="nv">$link-color</span><span class="o">,</span> <span class="m">10%</span><span class="p">)</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span>
+<span class="nv">$link-background-color</span><span class="p">:</span> <span class="nb">transparent</span> <span class="o">!</span><span class="nb">default</span><span class="p">;</span></code></pre></figure><p><em>Modular Scales</em>. When you first call Rhythm, a modular scale is generated for you based on the <code class="highlighter-rouge">$breakpoint</code> values you have defined. You can use multiple base <code class="highlighter-rouge">font-size</code>s to create a more robust <a href="http://modularscale.com/scale/?px1=18&amp;px2=27&amp;ra1=1.5&amp;ra2=0">scale</a>. It is recommended that you use no more than two <code class="highlighter-rouge">font-size</code>s to generate the scale but Rhythm will accept as many as you give it. Scale options include:<ul><li><code class="highlighter-rouge">golden</code><li><code class="highlighter-rouge">minor-second</code><li><code class="highlighter-rouge">major-second</code><li><code class="highlighter-rouge">minor-third</code><li><code class="highlighter-rouge">major-third</code><li><code class="highlighter-rouge">perfect-fourth</code><li><code class="highlighter-rouge">augmented-fourth</code><li><code class="highlighter-rouge">perfect-fifth</code><li><code class="highlighter-rouge">minor-sixth</code><li><code class="highlighter-rouge">major-sixth</code><li><code class="highlighter-rouge">minor-seventh</code><li><code class="highlighter-rouge">major-seventh</code><li><code class="highlighter-rouge">octave</code><li><code class="highlighter-rouge">major-tenth</code><li><code class="highlighter-rouge">major-eleventh</code><li><code class="highlighter-rouge">major-twelfth</code><li><code class="highlighter-rouge">double-octave</code></ul><p>To create a custom scale, create a <code class="highlighter-rouge">$modular-scales</code> map before importing Rhythm:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nv">$modular-scales</span><span class="p">:</span> <span class="p">(</span><span class="n">my-scale</span><span class="o">:</span> <span class="m">2</span><span class="mi">.3</span><span class="o">,</span> <span class="n">my-scale-2</span><span class="o">:</span> <span class="m">2</span><span class="mi">.4</span><span class="p">);</span></code></pre></figure><p>Then, redefine your <code class="highlighter-rouge">$breakpoints</code> variable to use your new scale:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nv">$breakpoints</span><span class="p">:</span> <span class="p">(</span>
+  <span class="n">bp-0</span><span class="o">:</span> <span class="p">(</span>
+    <span class="n">breakpoint</span><span class="o">:</span> <span class="m">0px</span><span class="o">,</span> <span class="o">//</span> <span class="n">Mobile</span> <span class="n">first</span>
+    <span class="n">font-size</span><span class="o">:</span> <span class="m">16px</span> <span class="m">18px</span><span class="o">,</span>
+    <span class="n">line-height</span><span class="o">:</span> <span class="m">1</span><span class="mi">.5</span><span class="o">,</span>
+    <span class="n">modular-scale</span><span class="o">:</span> <span class="n">my-scale</span>
+  <span class="p">)</span>
+<span class="p">);</span></code></pre></figure><p>Rhythm also creates lists for every breakpoint for various font sizes based on the selected modular scale. The Rhythm implementation of this closely resembles the one found in the article “<a href="http://csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/">Pragmatic, Practical Font Sizing in CSS</a>.” Specifically, it sets the following variables from largest font size to smallest:<ul><li><code class="highlighter-rouge">$tera</code><li><code class="highlighter-rouge">$giga</code><li><code class="highlighter-rouge">$mega</code><li><code class="highlighter-rouge">$alpha</code>, <code class="highlighter-rouge">$h1</code><li><code class="highlighter-rouge">$beta</code>, <code class="highlighter-rouge">$h2</code><li><code class="highlighter-rouge">$gamma</code>, <code class="highlighter-rouge">$h3</code><li><code class="highlighter-rouge">$delta</code>, <code class="highlighter-rouge">$h4</code><li><code class="highlighter-rouge">$epsilon</code>, <code class="highlighter-rouge">$h5</code><li><code class="highlighter-rouge">$zeta</code>, <code class="highlighter-rouge">$h6</code></ul><p>For example, if you want to set your <code class="highlighter-rouge">h1</code>’s <code class="highlighter-rouge">font-size</code> to be one scale down from the default, you can do the following:<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">h1</span> <span class="p">{</span>
+  <span class="k">@include</span> <span class="nd">font-size</span><span class="p">(</span><span class="nv">$h2</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure><h1 id="license">License</h1><p><a href="https://github.com/jaredhowland/rhythm/blob/master/LICENSE.md">The MIT License (MIT)</a></section><footer><p><small>This project is maintained by <a href="https://github.com/jaredhowland">Jared Howland</a></small><ul><li class="download"><a class="buttons" href="https://github.com/jaredhowland/rhythm/zipball/master">Download ZIP</a><li class="download"><a class="buttons" href="https://github.com/jaredhowland/rhythm/tarball/master">Download TAR</a><li><a class="buttons github" href="https://github.com/jaredhowland/rhythm">View On GitHub</a></ul></footer><!--[if lt IE 9]> <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]--> <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script> <script src="/assets/js/main.min.js"></script>

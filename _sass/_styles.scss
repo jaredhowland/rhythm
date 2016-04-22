@@ -24,6 +24,15 @@ a {
   }
 }
 
+ol {
+  li {
+    @include margin-left(1);
+    li {
+      @include margin-left(1);
+    }
+  }
+}
+
 header {
   position: fixed;
   background-color: $background-color;
@@ -151,8 +160,8 @@ footer {
   }
 
   li {
-    @include padding(1);
-    @include margin-bottom(1);
+    @include padding(.5 1);
+    @include margin(.5 1);
     display: inline-block;
     white-space: nowrap;
     list-style-type: none;
