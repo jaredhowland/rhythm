@@ -6,6 +6,15 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: unquote($sans-serif-font-family);
+  position: relative;
+  &:after {
+    border-bottom: 10px solid $body-color;
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: -1rem;
+    width: 100%;
+  }
 }
 
 h1, h2 {
@@ -13,9 +22,75 @@ h1, h2 {
   font-weight: bold;
 }
 
+h2 { width:  75%; }
+
+h2, h3, h4, h5, h6 {
+  &:after {
+    border-bottom: 5px solid $body-color;
+  }
+}
+
 h3, h4, h5, h6 {
   @include margin(2 0 1);
   font-style: italic;
+  width: 50%;
+}
+
+body {
+  counter-reset: h1;
+  h1, h2, h3, h4, h5, h6 {
+    &.nocount {
+      &:before {
+        content: "";
+        counter-increment: none
+      }
+    }
+  }
+  h1 {
+    counter-reset: h2;
+    &:before {
+      counter-increment: h1;
+      content: counter(h1) " ";
+    }
+  }
+  h2 {
+    counter-reset: h3;
+    &:before {
+      counter-increment: h2;
+      content: counter(h1) "." counter(h2) " ";
+    }
+  }
+  h3 {
+    counter-reset: h4;
+    &:before {
+      counter-increment: h3;
+      content: counter(h1) "." counter(h2) "." counter(h3) " ";
+    }
+  }
+  h4 {
+    counter-reset: h5;
+    &:before {
+      counter-increment: h4;
+      content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) " ";
+    }
+  }
+  h5 {
+    counter-reset: h6;
+    &:before {
+      counter-increment: h5;
+      content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) " ";
+    }
+  }
+  h6 {
+    &:before {
+      counter-increment: h6;
+      content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) " ";
+    }
+  }
+}
+
+h1.nocount, h2.nocount, h3.nocount, h4.nocount, h5.nocount, h6.nocount {
+
 }
 
 a {
@@ -34,6 +109,7 @@ ol {
 }
 
 header {
+  z-index: 100;
   position: fixed;
   background-color: $background-color;
   width: 100%;
@@ -69,6 +145,9 @@ header {
     padding: 0;
     margin: 0;
     transition: all 0.5s;
+    &:after {
+      border: none;
+    }
   }
 
   h1 {
@@ -125,6 +204,13 @@ section {
 
 p {
   @include margin(1 0);
+  +p {
+    text-indent: 0;
+  }
+}
+
+pre, code {
+  @include font-size($delta);
 }
 
 footer {

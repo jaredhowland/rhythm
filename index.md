@@ -6,47 +6,53 @@ Table of Contents
 1. auto-gen TOC:
 {:toc}
 
-Rhythm
-======
-Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3]. Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.
+About Rhythm
+============
+Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3].
 
-To see the rhythm in action, click on the "[Toggle grid]" link in the header of this page. If you change the size of the browser, you may need to toggle the grid off and back on again to see the rhythm.
+Click on "[Toggle grid]" at the top of this page to see Rhythm in action. The grid must be toggled off and on again after resizing the page to a different breakpoint.
 
 Installation
 ============
-Rhythm is available as a [Composer][9] [package][10], but you can also manually download it and include it in your project.
+Rhythm is available as a [Bower package][14], a [Composer][9] [package][10], and as a manual download.
+
+Bower
+-----
+1. If needed, install [Bower][14]
+2. Run the following command: `bower install jaredhowland/rhythm`
 
 Composer
 --------
-1. If you have not done so already, install [Composer][9]
-2. Update your project's `composer.json` file to require Rhythm:
-      <figure class="highlight">
-      <pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="p">{</span><span class="w">
-        </span><span class="nt">  "require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">  "jaredhowland/rhythm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~1.0"</span><span class="w">
-        </span><span class="p">  }</span><span class="w">
-      </span><span class="p"> }</span></code></pre>
-      </figure>
-3. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
+1. If needed, install [Composer][9]
+2. Add the following to your `composer.json` file:
+{% highlight json %}
+"require": {
+  "jaredhowland/rhythm": "~1.0"
+}
+{% endhighlight %}
 
 Manual Installation
 -------------------
 1. [Download the latest `.zip` file][11].
 2. Extract into your project.
-3. SCSS: `@import "rhythm";`
 
 Usage
 =====
-Including Rhythm with your Sass files automatically generates a vertical rhythm using modular scales for multiple breakpoints based on the values defined in `_variables.scss`. To change the defaults, redefine the variables before importing Rhythm.
 
-Any time an element's vertical properties are changed, you must offset this change to maintain a vertical rhythm. The major properties that change an element's vertical rhythm include:
+Import Rhythm
+-------------
+`@ import "path/to/rhythm";`
 
-* `font-size`
-* `line-height`
-* `margin-top` and `margin-bottom`
-* `padding-top` and `padding-bottom`
+Basics
+------
+Rhythm generates a vertical rhythm using modular scales for multiple breakpoints based on the values defined in `_variables.scss`. To change the defaults, import a file that redefines the variables before importing Rhythm.
 
-Use Rhythm any time you want to adjust those properties and it will perform the mathematical acrobatics required to restore the vertical rhythm to your site.
+Any time you need to change an element's vertical properties, use Rhythm's mixins instead:
+
+* `font-size` &mdash; `@include font-size(1.2em);`
+* `line-height` &mdash; `@include line-height(1.2em, 2);`
+* `margin-top` and `margin-bottom` &mdash; `@include margin-top(1);`
+* `padding-top` and `padding-bottom` &mdash; `@include padding-bottom(2);`
 
 Adjusting Vertical Properties
 =============================
@@ -422,7 +428,9 @@ h4 {
   }
 }
 {% endhighlight %}
+
 ### margin-top(), margin-right(), margin-bottom(), margin-left()
+
 The `margin-top()`, `margin-right()`, `margin-bottom()`, and `margin-left` mixins work just as you would expect:
 
 {% highlight scss %}
@@ -470,9 +478,9 @@ Variables
 The following variables (shown with their default values) can be redefined before importing Rhythm:
 
 {% highlight scss %}
-/*------------------------------------------------------------ */
-/* Breakpoint defaults
--------------------------------------------------------------- */
+/*-----------------------*/
+/* Breakpoint defaults   */
+/*-----------------------*/
 
 $breakpoints: (
   bp-0: (
@@ -657,3 +665,4 @@ License
 [11]: https://github.com/jaredhowland/rhythm/releases/latest
 [12]: http://meyerweb.com/eric/tools/css/reset/
 [13]: https://github.com/jaredhowland/rhythm/blob/master/LICENSE.md
+[14]: http://bower.io/
