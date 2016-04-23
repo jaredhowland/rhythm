@@ -1,33 +1,45 @@
-Rhythm
-======
-Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][4], [responsive websites][4] with [vertical rhythm][2] using [modular scales][3]. Rhythm aims to assist you in creating well-designed websites that work as well on mobile devices as they do on large desktops.
+Table of Contents
+=================
+1. auto-gen TOC:
+{:toc}
+
+About Rhythm
+============
+Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3].
 
 Installation
 ============
-Rhythm is available as a [Composer][5] [package][6], but you can also manually download it and include it in your project.
+Rhythm is available as a [Bower package][14], a [Composer][9] [package][10], and as a manual download.
+
+Bower
+-----
+1. If needed, install [Bower][14]
+2. Run the following command: `bower install jaredhowland/rhythm`
 
 Composer
 --------
-1. Update your project's `composer.json` file to require Rhythm:
-
-    ```json
-    {
-      "require": {
-        "jaredhowland/rhythm": "~1.0"
-      }
-    }
-    ```
-
-2. SCSS: `@import "path/to/vendor/jaredhowland/rhythm/src/rhythm";`
+1. If needed, install [Composer][9]
+2. Add the following to your `composer.json` file:
+{% highlight json %}
+"require": {
+  "jaredhowland/rhythm": "~1.0"
+}
+{% endhighlight %}
 
 Manual Installation
 -------------------
-1. [Download the latest `.zip` file][7].
+1. [Download the latest `.zip` file][11].
 2. Extract into your project.
-3. SCSS: `@import "rhythm";`
 
 Usage
 =====
+
+Import Rhythm
+-------------
+`@ import "path/to/rhythm";`
+
+Basics
+------
 Any time you want to change a `font-size`, `line-height`, `padding`, or `margin`, use Rhythm instead:
 
 ```scss
