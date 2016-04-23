@@ -1,8 +1,3 @@
-Table of Contents
-=================
-1. auto-gen TOC:
-{:toc}
-
 About Rhythm
 ============
 Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-first][8], [responsive websites][8] with [vertical rhythm][2] using [modular scales][3].
@@ -20,11 +15,11 @@ Composer
 --------
 1. If needed, install [Composer][9]
 2. Add the following to your `composer.json` file:
-{% highlight json %}
+```json
 "require": {
   "jaredhowland/rhythm": "~1.0"
 }
-{% endhighlight %}
+```
 
 Manual Installation
 -------------------
@@ -70,3 +65,9 @@ Full details can be found on the [documentation site][8].
 [6]: http://packagist.org/
 [7]: https://github.com/jaredhowland/rhythm/releases/latest
 [8]: http://jaredhowland.github.io/rhythm
+[9]:  https://getcomposer.org
+[10]: http://packagist.org/
+[11]: https://github.com/jaredhowland/rhythm/releases/latest
+[12]: http://meyerweb.com/eric/tools/css/reset/
+[13]: https://github.com/jaredhowland/rhythm/blob/master/LICENSE.md
+[14]: http://bower.io/
