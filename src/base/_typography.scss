@@ -1,24 +1,27 @@
 html {
-  text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
   font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
 }
 
 body {
   @include rhythm();
-  font-family: $body-font;
-  color: $body-color;
   background-color: $background-color;
+  color: $body-color;
+  font-family: $body-font;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: $heading-font;
 }
 
-p {
-  & + p {
-    text-indent: $indent-value;
-  }
+p + p {
+  text-indent: $indent-value;
 
   // No indent for drop caps
   + .drop-cap {
@@ -29,22 +32,31 @@ p {
 a {
   color: $link-color;
   text-decoration: none;
-  &:hover, &:active, &:focus {
-    color: $link-hover-color;
+
+  &:hover,
+  &:active,
+  &:focus {
     background-color: $link-background-color;
+    color: $link-hover-color;
     transition: background-color .4s, color .4s;
   }
+
 }
 
-strong, b, .bold {
+strong,
+b,
+.bold {
   font-weight: 700;
 }
 
-em, i, .italic {
+em,
+i,
+.italic {
   font-style: italic;
 }
 
-ol li, ul li {
+ol li,
+ul li {
   font-feature-settings: 'kern' 1, 'onum' 1, 'liga' 1;
   margin-left: 0;
 }
@@ -58,50 +70,61 @@ ol {
 }
 
 blockquote p {
+
+  @include font-size(16px);
+
   border-left: .25rem solid $body-color-muted;
   font-style: italic;
   padding-left: 1rem;
-  @include font-size(16px);
 }
 
 // http://alexmansfield.com/css/font-size-line-height-pre-code-monospace
-pre, code {
-  font-family: $monospace-font;
+pre,
+code {
+
+  @include font-size($epsilon);
+
   background-color: $code-background-color;
   border-radius: 4px;
+  font-family: $code-font;
   vertical-align: top;
-  @include font-size($epsilon);
 }
 
 pre {
   @include padding(1);
   overflow: auto;
-  code[class]:before {
+
+  code[class]::before {
+    background: lighten($code-background-color, 10%);
+    border-radius: 4px;
     content: attr(data-lang);
     float: right;
     padding: 0 .3em;
     text-transform: uppercase;
-    background: lighten($code-background-color, 10%);
-    border-radius: 4px;
   }
+
 }
 
-small, .caption {
+small,
+.caption {
+
   @extend .epsilon;
+
 }
 
 .drop-cap {
-  @include dropcap(
-    $dropcap-float-position,
-    $dropcap-font-size,
-    $dropcap-font-family,
-    $dropcap-txt-indent,
-    $dropcap-margin,
-    $dropcap-padding,
-    $dropcap-color,
-    $dropcap-line-height,
-    $dropcap-bg
-  );
+  // @include dropcap(
+//     $dropcap-float-position,
+//     $dropcap-font-size,
+//     $dropcap-font-family,
+//     $dropcap-txt-indent,
+//     $dropcap-margin,
+//     $dropcap-padding,
+//     $dropcap-color,
+//     $dropcap-line-height,
+//     $dropcap-bg
+//   );
+  @include dropcap();
 }
 
 .caption {
@@ -119,9 +142,9 @@ small, .caption {
 }
 
 .lining-numerals {
-    font-feature-settings: 'lnum' 1, 'kern' 1;
+  font-feature-settings: 'lnum' 1, 'kern' 1;
 }
 
 .oldstyle-numerals {
-    font-feature-settings: 'onum' 1, 'kern' 1;
+  font-feature-settings: 'onum' 1, 'kern' 1;
 }

@@ -3,12 +3,14 @@
 //    http://www.pearsonified.com/2011/12/golden-ratio-typography.php
 //    https://github.com/hiulit/Sassy-Gridlover
 
-@import "base/reset";
-@import "base/initialize";
-@import "base/math";
-@import "base/lists";
-@import "base/conversions";
-@import "base/variables";
-@import "base/functions";
-@import "base/mixins";
-@import "base/typography";
+@charset 'utf-8';
+
+@import 'base/reset';
+@import 'base/initialize';
+@import 'base/math';
+@import 'base/lists';
+@import 'base/conversions';
+@import 'base/variables';
+@import 'base/functions';
+@import 'base/mixins';
+@import 'base/typography';

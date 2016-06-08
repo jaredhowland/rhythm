@@ -1,90 +1,222 @@
-/*------------------------------------------------------------ */
-/* Global variables
--------------------------------------------------------------- */
-$DEFAULT-BROWSER-FONT-SIZE: 16; // in px
+////
+/// Conversion helper functions
+/// @author Jared Howland
+/// @group helpers
+////
 
-/*------------------------------------------------------------ */
-/* Functions
--------------------------------------------------------------- */
+//============================================================
+// Variables
+//============================================================
 
-/* Convert from rem, px, %, unitless -> rem, px, %, unitless
--------------------------------------------------------------- */
+/// Default browser font size in pixels
+///
+/// Used to calculate conversions between different units
+/// @type Number
+/// @group configuration
+$default-browser-font-size: 16 !default; // in px
 
-@function to-rem($value) {
-  @if(unit($value) == "rem") {
+//============================================================
+// Functions
+//============================================================
+
+/// Convert value to `rem`s
+/// @param {Number} $value - Value to convert to `rem`. Acceptable units are unitless, `px`, and `%`.
+/// @return {Number} Value converted into `rem`s
+/// @example scss - unitless to `rem`
+///   _to-rem(1)
+///   // -> 1rem
+/// @example scss - `px` to `rem`
+///   _to-rem(16px)
+///   // -> 1rem
+/// @example scss - `%` to `rem`
+///   _to-rem(100%)
+///   // -> 1rem
+@function _to-rem($value) {
+  @if(unit($value) == 'rem') {
     @return $value;
-  } @else if(unit($value) == "px") {
-    @return px-to-rem($value);
-  } @else if(unit($value) == "%") {
-    @return percent-to-rem($value);
+  } @else if(unit($value) == 'px') {
+    @return _px-to-rem($value);
+  } @else if(unit($value) == '%') {
+    @return _percent-to-rem($value);
   } @else if(unitless($value)) {
-    // assume rem if unitless
-    @return $value * 1rem;
+    @warn 'Assuming #{$value} to be in `rem`s';
+    @return $value * 1rem; // assume rem if unitless
   } @else {
-    @error "#{$value} is an invalid value for function `to-rem`. Use `rem`, `px`, `%`, or an unitless number instead.";
+    @error '#{$value} is an invalid value for function `to-rem`. Use `rem`, `px`, `%`, or an unitless number instead.';
   }
 }
 
-@function to-px($value) {
-  @if(unit($value) == "rem") {
-    @return rem-to-px($value);
-  } @else if(unit($value) == "px") {
+/// Convert value to `px`s
+/// @param {Number} $value - Value to convert to `px`. Acceptable units are unitless, `rem`, and `%`.
+/// @return {Number} Value converted into `px`s
+/// @example scss - unitless to `px`
+///   _to-px(1)
+///   // -> 16px
+/// @example scss - `rem` to `px`
+///   _to-px(1rem)
+///   // -> 16px
+/// @example scss - `%` to `px`
+///   _to-px(100%)
+///   // -> 16px
+@function _to-px($value) {
+  @if(unit($value) == 'rem') {
+    @return _rem-to-px($value);
+  } @else if(unit($value) == 'px') {
     @return $value;
-  } @else if(unit($value) == "%") {
-    @return percent-to-px($value);
+  } @else if(unit($value) == '%') {
+    @return _percent-to-px($value);
   } @else if(unitless($value)) {
-    // assume rem if unitless
-    @return rem-to-px($value);
+    @warn 'Assuming #{$value} to be in `rem`s';
+    @return _rem-to-px($value); // assume rem if unitless
   } @else {
-    @error "#{$value} is an invalid value for function `to-px`. Use `rem`, `px`, `%`, or an unitless number instead.";
+    @error '#{$value} is an invalid value for function `to-px`. Use `rem`, `px`, `%`, or an unitless number instead.';
   }
 }
 
-@function to-percent($value) {
-  @if(unit($value) == "rem") {
-    @return percent-to-px($value);
-  } @else if(unit($value) == "px") {
-    @return percent-to-px($value);
-  } @else if(unit($value) == "%") {
+/// Convert value to `%`s
+/// @param {Number} $value - Value to convert to `%`. Acceptable units are unitless, `rem`, and `px`.
+/// @return {Number} Value converted into `%`s
+/// @example scss - unitless to `%`
+///   _to-percent(1)
+///   // -> 100%
+/// @example scss - `rem` to `%`
+///   _to-percent(1rem)
+///   // -> 100%
+/// @example scss - `px` to `%`
+///   _to-percent(16px)
+///   // -> 100%
+@function _to-percent($value) {
+  @if(unit($value) == 'rem') {
+    @return _percent-to-px($value);
+  } @else if(unit($value) == 'px') {
+    @return _percent-to-px($value);
+  } @else if(unit($value) == '%') {
     @return $value;
   } @else if(unitless($value)) {
-    // assume rem if unitless
-    @return rem-to-percent($value);
+    @warn 'Assuming #{$value} to be in `rem`s';
+    @return _rem-to-percent($value); // assume rem if unitless
   } @else {
-    @error "#{$value} is an invalid value for function `to-percent`. Use `rem`, `px`, `%`, or an unitless number instead.";
+    @error '#{$value} is an invalid value for function `to-percent`. Use `rem`, `px`, `%`, or an unitless number instead.';
   }
 }
 
-@function to-unitless($value) {
-  @return strip-units(to-rem($value));
+/// Convert value to be unitless
+/// @param {Number} $value - Value to convert to be unitless. Acceptable units are `rem`, `px`, and `%`.
+/// @return {Number} Value converted into unitless
+/// @example scss - `%` to unitless
+///   _to-unitless(100%)
+///   // -> 1
+/// @example scss - `rem` to unitless
+///   _to-unitless(1rem)
+///   // -> 1
+/// @example scss - `px` to unitless
+///   _to-unitless(16px)
+///   // -> 1
+@function _to-unitless($value) {
+  @return _strip-units(_to-rem($value));
 }
 
-/* Base functions for conversions
--------------------------------------------------------------- */
-@function px-to-rem($value) {
-  @return strip-units($value) / $DEFAULT-BROWSER-FONT-SIZE * 1rem;
+// Base functions for conversions
+//============================================================
+/// Convert `px` to `rem`
+/// @param {Number} $value - Value to be converted to `rem`. The only acceptable unit is `px`.
+/// @return {Number} Value converted into `rem`
+/// @example scss - `px` to `rem`
+///   _px-to-rem(16px)
+///   // -> 1rem
+@function _px-to-rem($value) {
+  $converted-value: _strip-units($value) / $default-browser-font-size;
+  @if($converted-value == 0) {
+    @return 0;
+  } @else {
+    @return $converted-value * 1rem;
+  }
 }
 
-@function percent-to-rem($value) {
-  @return (strip-units($value) / 100) * 1rem;
+/// Convert `%` to `rem`
+/// @param {Number} $value - Value to be converted to `rem`. The only acceptable unit is `%`.
+/// @return {Number} Value converted into `rem`
+/// @example scss - `%` to `rem`
+///   _percent-to-rem(100%)
+///   // -> 1rem
+@function _percent-to-rem($value) {
+  $converted-value: _strip-units($value) / 100;
+  @if($converted-value == 0) {
+    @return 0;
+  } @else {
+    @return $converted-value * 1rem;
+  }
 }
 
-@function rem-to-px($value){
-  @return strip-units($value) * $DEFAULT-BROWSER-FONT-SIZE * 1px;
+/// Convert `rem` to `px`
+/// @param {Number} $value - Value to be converted to `px`. The only acceptable unit is `rem`.
+/// @return {Number} Value converted into `px`
+/// @example scss - `rem` to `px`
+///   _rem-to-px(1rem)
+///   // -> 16px
+@function _rem-to-px($value) {
+  $converted-value: _strip-units($value) * $default-browser-font-size;
+  @if($converted-value == 0) {
+    @return 0;
+  } @else {
+    @return $converted-value * 1px;
+  }
 }
 
-@function percent-to-px($value) {
-  @return (strip-units($value) / 100) * $DEFAULT-BROWSER-FONT-SIZE * 1px;
+/// Convert `%` to `px`
+/// @param {Number} $value - Value to be converted to `px`. The only acceptable unit is `%`.
+/// @return {Number} Value converted into `px`
+/// @example scss - `%` to `px`
+///   _percent-to-px(100%)
+///   // -> 16px
+@function _percent-to-px($value) {
+  $converted-value: (_strip-units($value) / 100) * $default-browser-font-size;
+  @if($converted-value == 0) {
+    @return 0;
+  } @else {
+    @return $converted-value * 1px;
+  }
 }
 
-@function rem-to-percent($value) {
-  @return strip-units($value) * 100 + 0% ;
+/// Convert `rem` to `%`
+/// @param {Number} $value - Value to be converted to `%`. The only acceptable unit is `rem`.
+/// @return {Number} Value converted into `%`
+/// @example scss - `rem` to `%`
+///   _rem-to-percent(1rem)
+///   // -> 100%
+@function _rem-to-percent($value) {
+  $converted-value: _strip-units($value) * 100;
+  @if($converted-value == 0) {
+    @return 0;
+  } @else {
+    @return $converted-value + 0%;
+  }
 }
 
-@function px-to-percent($value) {
-  @return strip-units($value) / $DEFAULT-BROWSER-FONT-SIZE * 100 + 0%;
+/// Convert `px` to `%`
+/// @param {Number} $value - Value to be converted to `%`. The only acceptable unit is `px`.
+/// @return {Number} Value converted into `%`
+/// @example scss - `px` to `%`
+///   _px-to-percent(16px)
+///   // -> 100%
+@function _px-to-percent($value) {
+  $converted-value: _strip-units($value) / $default-browser-font-size * 100;
+  @if($converted-value == 0) {
+    @return 0;
+  } @else {
+    @return $converted-value + 0%;
+  }
 }
 
-@function strip-units($value) {
+/// Strip units from a number
+/// @param {Number} $value - Value to strip unit from
+/// @return {Number} Value without units
+/// @example scss - Strip `rem`
+///   _strip-units(1rem)
+///   // -> 1
+/// @example scss - Strip `px`
+///   _strip-units(16px)
+///   // -> 16
+@function _strip-units($value) {
   @return ($value) / ($value * 0 + 1);
 }

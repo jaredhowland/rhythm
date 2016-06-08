@@ -1,10 +1,24 @@
-/*------------------------------------------------------------ */
-/* Breakpoint defaults
--------------------------------------------------------------- */
+////
+/// Configuration variables
+/// @author Jared Howland
+/// @group configuration
+////
 
+//============================================================
+// Breakpoint defaults
+//============================================================
+
+/// Map of various breakpoints
+/// @type Map
+/// @prop <Breakpoint-Name> - **Required**. Name of first breakpoint.
+/// @prop {Number} <Breakpoint-Name>.breakpoint - **Required**. Minimum width at which to apply these values
+/// @prop {List} <Breakpoint-Name>.font-size - **Required**. Space-separated list of all `font-size`s to use in a multi-stranded modular scale. 1 or more values required.
+/// @prop {Number} <Breakpoint-Name>.line-height - **Required**. Unitless `line-height`
+/// @prop {String} <Breakpoint-Name>.modular-scale - **Optional**. Name of modular scale to use (must be defined in `$modular-scales`). If not defined, will default to the `line-height` as the scale.
+/// @prop <Other-Breakpoints> - Other breakpoints defined just like `Breakpoint-Name` above
 $breakpoints: (
   bp-0: (
-    breakpoint: 0px, // Mobile first
+    breakpoint: 0, // Mobile first
     font-size: 16px 18px,
     line-height: 1.5,
     modular-scale: golden
@@ -26,17 +40,45 @@ $breakpoints: (
     modular-scale: golden // no line-height specified so modular-scale is used
   ),
   bp-4: (
-    breakpoint: 1200px, // ~Desktop up
+    breakpoint: 1200px, // ~ Desktop up
     font-size: 24px 26px,
     modular-scale: golden // no line-height specified so modular-scale is used
   )
 ) !default;
 
-/*------------------------------------------------------------ */
-/* Modular scales
--------------------------------------------------------------- */
-$modular-scales: () !default; // Used to define custom scales if desired
+//============================================================
+// Modular scales
+//============================================================
 
+/// Map of various custom scales
+///
+/// Creating a custom map of scales will add scales to the map structure described below rather than simply overriding them so that both the custom and built-in scales are always available for use
+/// @type Map
+/// @prop {Number} golden [1.618]
+/// @prop {Number} minor-second [1.067]
+/// @prop {Number} major-second [1.125]
+/// @prop {Number} minor-third [1.2]
+/// @prop {Number} major-third [1.25]
+/// @prop {Number} perfect-fourth [1.333]
+/// @prop {Number} augmented-fourth [1.414]
+/// @prop {Number} perfect-fifth: [1.5]
+/// @prop {Number} minor-sixth [1.6]
+/// @prop {Number} major-sixth [1.667]
+/// @prop {Number} minor-seventh [1.778]
+/// @prop {Number} major-seventh [1.875]
+/// @prop {Number} octave [2]
+/// @prop {Number} major-tenth [2.5]
+/// @prop {Number} major-eleventh [2.667]
+/// @prop {Number} major-twelfth [3]
+/// @prop {Number} double-octave [4]
+/// @example scss - Defining custom scale(s)
+///   $modular-scales: (
+///     my-scale-1: 1.1,
+///     my-scale-2: 1.3
+///   );
+$modular-scales: () !default;
+
+// @ignore These scales are built into Rhythm and cannot be removed
 $modular-scale-ratios: (
   golden:           1.618,
   minor-second:     1.067,
@@ -57,56 +99,137 @@ $modular-scale-ratios: (
   double-octave:    4
 );
 
+// @ignore Merges any custom $modular-scales with the built-in scales (`$modular-scale-ratios`) so all defined scales are available for use at all times
 $modular-scales: map-merge($modular-scale-ratios, $modular-scales);
 
-/*------------------------------------------------------------ */
-/* Fonts
--------------------------------------------------------------- */
+//============================================================
+// Fonts
+//============================================================
 
-// Serif fonts.
-$serif-font-family: 'Georgia, serif' !default;
+/// Default serif font family
+/// @type List
+/// @group configuration-fonts
+$serif-font-family: Georgia, serif !default;
 
-// Sans-serif fonts.
-$sans-serif-font-family: 'Helvetica, sans-serif' !default;
+/// Default sans-serif font family
+/// @type List
+/// @group configuration-fonts
+$sans-serif-font-family: Helvetica, sans-serif !default;
 
-// Monospace fonts.
-$monospace-font-family: 'Menlo, monospace' !default;
+/// Default monospace font family
+/// @type List
+/// @group configuration-fonts
+$monospace-font-family: Menlo, monospace !default;
 
-// Default font types.
-$body-font:      unquote($serif-font-family) !default;
-$heading-font:   unquote($sans-serif-font-family) !default;
-$monospace-font: unquote($monospace-font-family) !default;
+/// Default font family for body
+/// @type List
+/// @group configuration-fonts
+$body-font: $serif-font-family !default;
 
-/*------------------------------------------------------------ */
-/* Typography
--------------------------------------------------------------- */
+/// Default font family for headings
+/// @type List
+/// @group configuration-fonts
+$heading-font: $sans-serif-font-family !default;
 
-// Indent value for paragraphs
+/// Default font family for code
+/// @type List
+/// @group configuration-fonts
+$code-font: $monospace-font-family !default;
+
+//============================================================
+// Typography
+//============================================================
+
+/// Indent value for paragraphs
+/// @type Number
+/// @group configuration-typography
 $indent-value: 1rem !default;
 
-// Drop caps.
+/// Float position for drop caps. Valid values: `none`, `left`, `right`, `initial`, or `inherit`.
+/// @type String
+/// @group configuration-typography
 $dropcap-float-position: left !default;
-$dropcap-font-size:      4em !default;
-$dropcap-font-family:    inherit !default;
-$dropcap-txt-indent:     0 !default;
-$dropcap-margin:         10px 10px 0 0 !default;
-$dropcap-padding:        0 20px !default;
-$dropcap-color:          inherit !default;
-$dropcap-line-height:    1 !default;
-$dropcap-bg:             transparent !default;
 
-/*------------------------------------------------------------ */
-/* Colors
--------------------------------------------------------------- */
+/// Font size for drop caps.
+/// @type Number
+/// @group configuration-typography
+$dropcap-font-size: 4em !default;
 
-// Background colors.
-$background-color:      #F5F5F5 !default;
+/// Font family for drop caps.
+/// @type List
+/// @group configuration-typography
+$dropcap-font-family: inherit !default;
+
+/// Indent size for drop caps.
+/// @type Number
+/// @group configuration-typography
+$dropcap-txt-indent: 0 !default;
+
+/// Margin for drop caps.
+/// @type Number|List
+/// @group configuration-typography
+$dropcap-margin: 10px 10px 0 0 !default;
+
+/// Padding for drop caps.
+/// @type Number|List
+/// @group configuration-typography
+$dropcap-padding: 0 20px !default;
+
+/// Color for drop caps.
+/// @type Color
+/// @group configuration-typography
+$dropcap-color: inherit !default;
+
+/// Line height for drop caps.
+/// @type Number
+/// @group configuration-typography
+$dropcap-line-height: 1 !default;
+
+/// Background for drop caps.
+/// @type String
+/// @group configuration-typography
+$dropcap-bg: transparent !default;
+
+//============================================================
+// Colors
+//============================================================
+
+/// Color of background for page
+/// @type Color
+/// @group configuration-colors
+$background-color: #f5f5f5 !default;
+
+/// Color of background for code snippets
+/// @type Color
+/// @group configuration-colors
 $code-background-color: darken($background-color, 7%) !default;
 
-// Text colors.
-$heading-color:         #2E2E2E !default;
-$body-color:            #444444 !default;
-$body-color-muted:      #CCCCCC !default;
-$link-color:            #265C83 !default;
-$link-hover-color:      lighten($link-color, 10%) !default;
+/// Color for text of headings
+/// @type Color
+/// @group configuration-colors
+$heading-color: #2e2e2e !default;
+
+/// Color for text of body
+/// @type Color
+/// @group configuration-colors
+$body-color: #444 !default;
+
+/// Muted color for text
+/// @type Color
+/// @group configuration-colors
+$body-color-muted: #ccc !default;
+
+/// Color for links
+/// @type Color
+/// @group configuration-colors
+$link-color: #265c83 !default;
+
+/// Color for links when hovered
+/// @type Color
+/// @group configuration-colors
+$link-hover-color: lighten($link-color, 10%) !default;
+
+/// Color for background of links
+/// @type Color
+/// @group configuration-colors
 $link-background-color: transparent !default;

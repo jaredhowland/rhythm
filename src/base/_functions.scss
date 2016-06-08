@@ -1,322 +1,275 @@
-/*------------------------------------------------------------ */
-/* Line heights and widths
--------------------------------------------------------------- */
+////
+/// Helper functions
+/// @author Jared Howland
+/// @group helpers
+////
 
-/**
- * Line height for a given font-size and breakpoint
- *
- * Mixins will pass a number to this function to represent a breakpoint
- * 1 through the number of breakpoints
- * Number depends on the number of breakpoints defined in your $breakpoints map
- *
- * @param int $font-size Font size of the line (rem, px, %, or unitless)
- * @param int $i Breakpoint number (1 through the number of breakpoints)
- *
- * @return int The line height in rems
- */
-@function line-height($font-size, $i: 1) {
+//============================================================
+// Line heights and widths
+//============================================================
+
+
+/// Line height for a given `font-size` and breakpoint
+///
+/// Mixins will pass a number to this function to represent a breakpoint
+///
+/// 1 through the number of breakpoints
+///
+/// Number depends on the number of breakpoints defined in your `$breakpoints` map
+/// @param {Number} $font-size - Font size of the line (`rem`, `px`, `%`, or unitless)
+/// @param {Number} $i [1] - Breakpoint number (1 through the number of breakpoints)
+/// @return {Number} The line height in `rem`s
+@function _line-height($font-size, $i: 1) {
   // Validate $i value
   @if $i > length($breakpoints) or $i < 1 {
     @error "There is no breakpoint #{$i}. Enter a valid number (1-#{length($breakpoints)}).";
   }
-  $font-size: to-px($font-size);
+  $font-size: _to-px($font-size);
   // Round line-height to nearest px
-  $line-height: round(bp-base-font-size($i) * bp-base-line-height-ratio($i));
-  // If $font-size is larger than $line-height, need to find a
+  $line-height: round(_bp-base-font-size($i) * _bp-base-line-height-ratio($i));
+  // If `$font-size` is larger than `$line-height`, need to find a
   // multiplier to make sure the text fits on the line. If it is
   // smaller, multiplier will always be 1.
-  $multiplier: ceil(strip-units($font-size) / strip-units($line-height));
-  @return strip-units(($line-height * $multiplier) / $DEFAULT_BROWSER_FONT_SIZE) * 1rem;
+  // Needed when using `line-height`s that are not unitless.
+  // We use `rem` `line-height`s to make easier mathematical assumptions.
+  $multiplier: ceil(_strip-units($font-size) / _strip-units($line-height));
+  @return _strip-units(($line-height * $multiplier) / $default-browser-font-size) * 1rem;
 }
 
-/**
- * Optimal line width
- *
- * Line widths that are too short or too long make it difficult to read.
- * Calculate the optimal line width for a given font-size and line-height.
- *
- * http://www.pearsonified.com/2011/12/golden-ratio-typography.php
- * (line-height (in px))^2
- *
- * @param int $font-size Font size of the line (rem, px, %, or unitless)
- * @param int $line-height Line height of the line (rem, px, %, or unitless)
- *
- * @return int The optimal line width in px
- */
-@function max-line-width($font-size, $line-height) {
-  $line-height: strip-units(to-px($line-height));
+/// Optimal line width
+///
+/// Line widths that are too short or too long make it difficult to read.
+///
+/// Calculate the optimal line width for a given font-size and line-height: `(line-height (in px))^2`
+/// @link http://www.pearsonified.com/2011/12/golden-ratio-typography.php
+/// @param {Number} $font-size Font size of the line (`rem`, `px`, `%`, or unitless)
+/// @param {Number} $line-height Line height of the line (`rem`, `px`, `%`, or unitless)
+/// @return {Number} The optimal line width in `px`
+@function _max-line-width($font-size, $line-height) {
+  $line-height: _strip-units(_to-px($line-height));
   @return $line-height * $line-height * 1px;
 }
 
-/*------------------------------------------------------------ */
-/* Modular scale functions
--------------------------------------------------------------- */
+//============================================================
+// Modular scale functions
+//============================================================
 
-/**
- * Finds the numerical value of a named modular scale
- * golden, minor-second, etc.
- *
- * Will return an unitless int if an int is passed instead of a str.
- * If $scale-name does not exist, will return 1.618 (golden ratio).
- *
- * @param str Name of the modular scale
- *
- * @return int Unitless modular scale value
- */
-@function modular-scale-value($scale-name) {
-  // If $scale-name is a number, return $scale-name as a unitless value.
+/// Finds the numerical value of a named modular scale: `golden`, `minor-second`, etc.
+///
+/// Will return an unitless `{Number}` if a `{Number}` is passed instead of a `{String}`.
+///
+/// If `$scale-name` does not exist, will return 1.618 (`golden` ratio).
+/// @param {String} $scale-name [golden] - Name of the modular scale
+/// @return {Number} - Unitless modular scale value
+/// @group helpers-modular-scale
+@function _modular-scale-value($scale-name: golden) {
+  // If `$scale-name` is a number, return `$scale-name` as a unitless value.
   @if(type-of($scale-name) == number) {
-    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `#{to-unitless($scale-name)}` will be used as the modular scale (`#{$scale-name}` converted into unitless rem equivalent). Use the `add-custom-scale` function to add a custom scale.";
-    @return to-unitless($scale-name);
-  // Check to see if $scale-name is a valid value. Return the value of $scale-name if it is valid.
+    @warn "`#{$scale-name}` is not a valid value for `$modular-scale` variable. `#{_to-unitless($scale-name)}` will be used as the modular scale (`#{$scale-name}` converted into unitless `rem` equivalent). To use a custom scale, define the `$modular-scales` variable with your desired scale before importing this library.";
+    @return _to-unitless($scale-name);
+  // Check to see if `$scale-name` is a valid value. Return the value of `$scale-name` if it is valid.
   } @else if map-has-key($modular-scales, unquote($scale-name)) {
     @return map-get($modular-scales, $scale-name);
-  // Otherwise, return the golden ratio scale (1.618).
+  // Otherwise, return the `golden` ratio scale (1.618).
   } @else {
-    @warn "`#{$scale-name}` is not a valid value for $modular-scale variable. `golden` was used instead. Use the `add-custom-scale` function to add a custom scale.";
+    @warn "`#{$scale-name}` is not a valid value for `$modular-scale` variable. `golden` was used instead. To use a custom scale, define the `$modular-scales` variable with your desired scale before importing this library.";
     @return map-get($modular-scales, golden);
   }
 }
 
-/**
- * Creates modular scales for each font-size strand
- *
- * Supports double-stranded modular scales
- * http://alistapart.com/article/more-meaningful-typography
- *
- * Technically, create-scale() supports as many strands as you pass
- * to it but 2 is the recommended maximum.
- *
- * @param list List for each font-size strand in your modular scale
- * @param str Name of modular scale you want to use as basis for scale
- *
- * @return list List of 9 values based on $font-sizes and $modular-scale
- */
-@function create-scale($font-sizes, $modular-scale: golden) {
-  $modular-scale: modular-scale-value($modular-scale);
+/// Creates modular scales for each font-size strand
+///
+/// Supports double-stranded modular scales
+///
+/// Technically, `_create-scale()` supports as many strands as you pass to it but 2 is the recommended maximum.
+///
+/// @todo Use an `arglist` for `font-size`s rather than a list: http://www.sitepoint.com/sass-multiple-arguments-lists-or-arglist/
+///
+/// @link http://alistapart.com/article/more-meaningful-typography
+/// @param {List} $font-sizes - List of each `font-size` strand in your modular scale
+/// @param {String} $modular-scale [golden] - Name of modular scale you want to use as basis for scale
+/// @return {List} - List of 9 values based on `$font-size`s and `$modular-scale`
+/// @group helpers-modular-scale
+@function _create-scale($font-sizes, $modular-scale: golden) {
+  $modular-scale: _modular-scale-value($modular-scale);
   $scale-values: ();
-
   // Use all listed font-sizes to generate a modular scale
   @each $font-size in $font-sizes {
-    $font-size:    to-px($font-size);
-    $scale:        create-scale-values($font-size, $modular-scale); // returns 9 font-sizes on the same modular scale
+    $font-size:    _to-px($font-size);
+    $scale:        _create-scale-values($font-size, $modular-scale); // returns 9 `font-size`s on the same modular scale
     $scale-values: sort-list(append($scale, $scale-values)); // sort from smallest to largest
   }
-
-  // For scales that include more than one font-size
+  // For scales that include more than one `font-size`
   @if length($scale-values) > 9 {
     $scale-values:       remove-duplicates($scale-values);
-    $base-font-size:     to-px(nth($font-sizes, 1));
+    $base-font-size:     _to-px(nth($font-sizes, 1));
     $base-font-location: index($scale-values, $base-font-size);
-
     // Use 2 values smaller than base font size and 6 values larger than base font size
     $first-value:  $base-font-location - 2;
     $last-value:   $base-font-location + 6;
     $scale-values: slice($scale-values, $first-value, $last-value);
   }
-
   @return $scale-values;
 }
 
-/**
- * Creates 9 values based on a single font-size for chosen scale value
- *
- * @param int Font size in px
- * @param int Modular scale as unitless value
- *
- * @return list List of 9 values based on the scale
- *              2 smaller than $font-size
- *              7 larger than or equal to $font-size
- */
-@function create-scale-values($font-size, $modular-scale) {
+/// Creates 9 values based on a single `font-size` for chosen scale value
+/// @param {Number} $font-size - Font size in `px`
+/// @param {Number} $modular-scale - Modular scale as unitless value
+/// @return {List} - List of 9 values based on the modular scale;
+///                  2 smaller than `$font-size`;
+///                  7 larger than or equal to `$font-size`
+/// @group helpers-modular-scale
+@function _create-scale-values($font-size, $modular-scale) {
   $scale-values: $font-size;
-
   // larger or equal font than base size (7 values)
   $i: 1;
   @while $i < 7 {
-    $ms: pow($modular-scale, $i);
+    $ms: _pow($modular-scale, $i);
     $scale-values: append($scale-values, round($font-size * $ms));
     $i: $i + 1;
   }
-
   // smaller font than base size (2 values)
   $j: -2;
   @while $j < 0 {
-    $ms: pow($modular-scale, abs($j));
+    $ms: _pow($modular-scale, abs($j));
     $scale-values: append($scale-values, round($font-size / $ms));
     $j: $j + 1;
   }
-
   @return $scale-values;
 }
 
-/*------------------------------------------------------------ */
-/* Breakpoint functions
--------------------------------------------------------------- */
+//============================================================
+// Breakpoint functions
+//============================================================
 
-/**
- * Get all breakpoint names from $breakpoints map
- *
- * @param null
- *
- * @return list List of all names for breakpoints
- */
-@function get-bp-names() {
+/// Get all breakpoint names from `$breakpoints` map
+/// @return {List} - List of all names for breakpoints
+/// @group helpers-breakpoints
+@function _get-bp-names() {
   @return map-keys($breakpoints);
 }
 
-/* Functions to get data about specified breakpoint $i
--------------------------------------------------------------- */
-/**
- * Get breakpoint name for breakpoint $i
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return str Name of specified breakpoint
- */
-@function bp-name($i) {
-  @return nth(get-bp-names(), $i);
+// Functions to get data about specified breakpoint $i
+//============================================================
+
+/// Get breakpoint name for breakpoint `$i`
+///
+/// @todo Figure out if this is still used
+///
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {String} - Name of specified breakpoint
+/// @group helpers-breakpoints
+@function _bp-name($i) {
+  @return nth(_get-bp-names(), $i);
 }
 
-/**
- * Get all data about breakpoint $i
- * Breakpoint location, font-size, line-height, and name of modular scale
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return map Map of data for specified breakpoint
- */
-@function get-bp-data($i) {
-  // $breakpoints is a nested map. Bypass the name of the breakpoint and get to its properties.
+/// Get all data about breakpoint `$i`
+///
+/// Breakpoint location, `font-size`, `line-height`, and name of modular scale
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Map} - Map of data for specified breakpoint
+/// @group helpers-breakpoints
+@function _get-bp-data($i) {
+  // `$breakpoints` is a nested map. Bypass the name of the breakpoint and get to its properties.
   @return nth(nth($breakpoints, $i), 2);
 }
 
-/**
- * Breakpoint location returned in rem for breakpoint $i
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return int Breakpoint location expressed as rem
- */
-@function bp-size($i) {
-  @return to-rem(map-get(get-bp-data($i), breakpoint));
+/// Breakpoint location returned in `rem` for breakpoint `$i`
+///
+/// @todo Figure out if this is still used
+///
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Number} - Breakpoint location expressed as `rem`
+/// @group helpers-breakpoints
+@function _bp-size($i) {
+  @return _to-rem(map-get(_get-bp-data($i), breakpoint));
 }
 
-/**
- * Stranded font-sizes for breakpoint $i
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return list List of font-size strands for breakpoint $i
- */
-@function bp-font-sizes($i) {
-  @return map-get(get-bp-data($i), font-size);
+/// Stranded `font-size`s for breakpoint `$i`
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {List} - List of font-size strands for breakpoint `$i`
+/// @group helpers-breakpoints
+@function _bp-font-sizes($i) {
+  @return map-get(_get-bp-data($i), font-size);
 }
 
-/**
- * Line height for the breakpoint in unitless value
- * If it doesn't exist, use the modular scale as the line-height
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return int Unitless line-height value for breakpoint $i
- */
-@function bp-line-height($i) {
-  @if map-has-key(get-bp-data($i), line-height) {
-    @return to-unitless(map-get(get-bp-data($i), line-height));
+/// Line height for the breakpoint in unitless value
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Number} - Unitless `line-height` value for breakpoint `$i`. If it doesn't exist, use the modular scale value as the line-height.
+/// @group helpers-breakpoints
+@function _bp-line-height($i) {
+  @if map-has-key(_get-bp-data($i), line-height) {
+    @return _to-unitless(map-get(_get-bp-data($i), line-height));
   } @else {
-    @return modular-scale-value(bp-scale-name($i));
+    @return _modular-scale-value(_bp-scale-name($i));
   }
 }
 
-/**
- * Name of modular scale for breakpoint $i
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return str Name of modular scale
- */
-@function bp-scale-name($i) {
-  @return map-get(get-bp-data($i), modular-scale);
+/// Name of modular scale for breakpoint `$i`
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {String} - Name of modular scale
+/// @group helpers-breakpoints
+@function _bp-scale-name($i) {
+  @return map-get(_get-bp-data($i), modular-scale);
 }
 
-/**
- * Ratio value for creating modular scales of breakpoint $i
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return int Unitless ratio value of named modular scale
- */
-@function bp-scale($i) {
-  @return modular-scale-value(bp-scale-name($i));
+/// Ratio value for creating modular scales of breakpoint `$i`
+///
+/// @todo Figure out if this is still used
+///
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Number} - Unitless ratio value of named modular scale
+/// @group helpers-breakpoints
+@function _bp-scale($i) {
+  @return _modular-scale-value(_bp-scale-name($i));
 }
 
-/**
- * 9 values derived from the modular scale and base font-size for breakpoint $i
- * 2 smaller than base font-size
- * 7 larger than or equal to base font-size
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return list List of values based on modular scale of breakpoint $i
- */
-@function bp-scale-values($i) {
-  @return create-scale(bp-font-sizes($i), bp-scale-name($i));
+/// 9 values derived from the modular scale and base `font-size` for breakpoint `$i`;
+/// 2 smaller than base `font-size`;
+/// 7 larger than or equal to base `font-size`
+///
+/// @todo Figure out if this is still used
+///
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {List} - List of values based on modular scale of breakpoint `$i`
+/// @group helpers-breakpoints
+@function _bp-scale-values($i) {
+  @return _create-scale(_bp-font-sizes($i), _bp-scale-name($i));
 }
 
-/**
- * Gets the first value in the font-size list for breakpoint $i
- * Assumes first value in list is the base font-size
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return int Base font-size in px
- */
-@function bp-base-font-size($i) {
-  @return to-px(nth(bp-font-sizes($i), 1));
+/// Gets the first value in the font-size list for breakpoint `$i`
+///
+/// Assumes first value in list is the base `font-size`
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Number} - Base `font-size` in `px`
+/// @group helpers-breakpoints
+@function _bp-base-font-size($i) {
+  @return _to-px(nth(_bp-font-sizes($i), 1));
 }
 
-/**
- * Base line-height for breakpoint $i in px
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return int Base line-height for breakpoint $i rounded to nearest px
- */
-@function bp-base-line-height($i) {
-  @return round(bp-line-height($i) * bp-base-font-size($i));
+/// Base line-height for breakpoint `$i` in `px`
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Number} - Base `line-height` for breakpoint `$i` rounded to nearest `px`
+/// @group helpers-breakpoints
+@function _bp-base-line-height($i) {
+  @return round(_bp-line-height($i) * _bp-base-font-size($i));
 }
 
-/**
- * Base line-height expressed as a unitless ratio for breakpoint $i
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return int Unitless ratio of line-height for breakpoint $i
- */
-@function bp-base-line-height-ratio($i) {
-  @return strip-units(bp-base-line-height($i) / bp-base-font-size($i));
+/// Base `line-height` expressed as a unitless ratio for breakpoint `$i`
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Number} - Unitless ratio of `line-height` for breakpoint `$i`
+/// @group helpers-breakpoints
+@function _bp-base-line-height-ratio($i) {
+  @return _strip-units(_bp-base-line-height($i) / _bp-base-font-size($i));
 }
 
-/**
- * Base modular scale for breakpoint $i
- *
- * @param int Breakpoint number 1 through number of breakpoints
- *            defined in $breakpoints map variable
- *
- * @return int Untiless ratio for modular scale
- */
-@function bp-base-scale-ratio($i) {
-  @return bp-base-line-height-ratio($i);
+/// Base modular scale for breakpoint `$i`
+///
+/// @todo Figure out if this is still used
+///
+/// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
+/// @return {Number} - Untiless ratio for modular scale
+/// @group helpers-breakpoints
+@function _bp-base-scale-ratio($i) {
+  @return _bp-base-line-height-ratio($i);
 }

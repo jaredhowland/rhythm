@@ -1,0 +1,21 @@
+title: Rhythm
+sort:
+  - access
+  - group
+  - file
+  - line
+groups:
+  undefined: General
+  configuration: Configuration—General
+  configuration-fonts: Configuration—Fonts
+  configuration-typography: Configuration—Typography
+  configuration-colors: Configuration—Colors
+  helpers: Private Helpers—General
+  helpers-modular-scale: Private Helpers—Modular Scale
+  helpers-breakpoints: Private Helpers—Breakpoints
+display:
+  access:
+    - public
+    - private
+  alias: true
+theme: flippant
