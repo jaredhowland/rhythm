@@ -12,6 +12,8 @@ Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-fir
 
 Click on "[Toggle grid]" at the top of this page to see Rhythm in action. The grid must be toggled off and on again after resizing the page to a different breakpoint.
 
+[SassDoc][15] documentation is also available: [documentation][16]
+
 Installation
 ============
 Rhythm is available as a [Bower package][14], a [Composer][9] [package][10], and as a manual download.
@@ -661,8 +663,10 @@ License
 [7]:  http://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
 [8]:  http://bradfrost.com/blog/web/mobile-first-responsive-web-design/
 [9]:  https://getcomposer.org
-[10]: http://packagist.org/
+[10]: http://packagist.org
 [11]: https://github.com/jaredhowland/rhythm/releases/latest
 [12]: http://meyerweb.com/eric/tools/css/reset/
 [13]: https://github.com/jaredhowland/rhythm/blob/master/LICENSE.md
-[14]: http://bower.io/
+[14]: http://bower.io
+[15]: http://sassdoc.com
+[16]: /sassdoc
