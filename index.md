@@ -669,4 +669,4 @@ License
 [13]: https://github.com/jaredhowland/rhythm/blob/master/LICENSE.md
 [14]: http://bower.io
 [15]: http://sassdoc.com
-[16]: rhythm/sassdoc
+[16]: sassdoc
