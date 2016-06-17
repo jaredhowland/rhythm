@@ -12,7 +12,7 @@ Rhythm is a small set of [Sass files][1] built to assist in creating [mobile-fir
 
 Click on "[Toggle grid]" at the top of this page to see Rhythm in action. The grid must be toggled off and on again after resizing the page to a different breakpoint.
 
-[SassDoc][15] documentation is also available: [documentation][16]
+[SassDoc][15] documentation is also available: [documentation][16].
 
 Installation
 ============
