@@ -154,8 +154,6 @@
 
 /// Get breakpoint name for breakpoint `$i`
 ///
-/// @todo Figure out if this is still used
-///
 /// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
 /// @return {String} - Name of specified breakpoint
 /// @group helpers-breakpoints
@@ -176,7 +174,7 @@
 
 /// Breakpoint location returned in `rem` for breakpoint `$i`
 ///
-/// @todo Figure out if this is still used
+/// Not actively used yet.
 ///
 /// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
 /// @return {Number} - Breakpoint location expressed as `rem`
@@ -215,7 +213,7 @@
 
 /// Ratio value for creating modular scales of breakpoint `$i`
 ///
-/// @todo Figure out if this is still used
+/// Not actively used yet.
 ///
 /// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
 /// @return {Number} - Unitless ratio value of named modular scale
@@ -227,8 +225,6 @@
 /// 9 values derived from the modular scale and base `font-size` for breakpoint `$i`;
 /// 2 smaller than base `font-size`;
 /// 7 larger than or equal to base `font-size`
-///
-/// @todo Figure out if this is still used
 ///
 /// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
 /// @return {List} - List of values based on modular scale of breakpoint `$i`
@@ -265,7 +261,7 @@
 
 /// Base modular scale for breakpoint `$i`
 ///
-/// @todo Figure out if this is still used
+/// Not actively used yet
 ///
 /// @param {Number} $i - Breakpoint number. Must be between 1 and the number of breakpoints defined in `$breakpoints` map variable.
 /// @return {Number} - Untiless ratio for modular scale
